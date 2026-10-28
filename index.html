@@ -3,57 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>지중해마을 통합 메뉴판 & 가이드 | 여권없이 떠나는 지중해마을</title>
+  <title>아산 지중해마을 통합 메뉴판 & 상점 가이드</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Pretendard / Inter & Playfair Display -->
+  <!-- Pretendard Korean Web Font & Cinzel Serif for English Brand Subtitle -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
   <!-- Phosphor Icons -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Noto Sans KR"', '"Inter"', 'sans-serif'],
-            serifbrand: ['"Playfair Display"', 'serif']
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+            serifbrand: ['Cinzel', 'Georgia', 'serif'],
           },
           colors: {
             brand: {
-              dark: '#283339',
-              blue: '#3898EC',
-              light: '#F0F7FF',
-              grape: '#6A1B9A',
-              gold: '#D4A338'
+              dark: '#283339',     // 공식 로고 라인 & 타이틀 다크 슬레이트 네이비
+              blue: '#3898EC',     // 공식 로고 지붕 스카이 블루
+              light: '#F0F7FF',    // 소프트 스카이 배경
+              grape: '#5E2B87',    // 캐릭터 포도 & 토가 퍼플 포인트
+              gold: '#D4A338',     // 캐릭터 금빛 잎사귀 & 성배 골드 포인트
             },
             santorini: {
-              50: '#f0f7ff',
-              100: '#e0effe',
-              200: '#bae0fd',
-              300: '#7cc8fb',
-              400: '#36acf7',
-              500: '#0c91e8',
-              600: '#0073c6',
-              700: '#015ca1',
-              800: '#064e85',
-              900: '#0b426e'
+              50: '#F0F7FF',
+              100: '#E0EFFE',
+              200: '#BAE0FD',
+              500: '#3898EC',
+              600: '#1D7ED8',
+              700: '#283339',
+              800: '#1E272C',
+              900: '#141A1D',
+            },
+            terracotta: {
+              50: '#FFFBEB',
+              100: '#FEF3C7',
+              500: '#D4A338',
+              600: '#B78620',
             }
           }
         }
       }
-    };
+    }
   </script>
-
   <style>
     body {
+      font-family: 'Pretendard', sans-serif;
       background-color: #F8FAFC;
       color: #283339;
       overflow-x: hidden;
-      top: 0px !important;
     }
+    /* Custom Scrollbar for horizontal category tabs */
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
@@ -63,40 +67,32 @@
     }
     .dotted-leader {
       flex-grow: 1;
-      border-bottom: 1px dashed #cbd5e1;
+      border-bottom: 1px dashed #CBD5E1;
       margin: 0 8px;
       position: relative;
       top: -4px;
     }
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.96) translateY(6px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-pop {
+      animation: popIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
     @keyframes floatGentle {
       0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-4px); }
+      50% { transform: translateY(-3px); }
     }
     .mascot-float {
       animation: floatGentle 3s ease-in-out infinite;
-    }
-    /* Hide Google Translate top banner cleanly */
-    .goog-te-banner-frame.skiptranslate,
-    .goog-te-gadget-icon,
-    #goog-gt-tt,
-    .goog-te-balloon-frame,
-    .goog-tooltip {
-      display: none !important;
-    }
-    .goog-text-highlight {
-      background-color: transparent !important;
-      box-shadow: none !important;
     }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-blue selection:text-white">
 
-  <!-- Hidden Google Translate Container -->
-  <div id="google_translate_element" class="hidden"></div>
-
-  <!-- Reusable SVG Templates (Official Logo & Mascot) -->
+  <!-- Reusable SVG Templates (Hidden) -->
   <svg class="hidden" aria-hidden="true">
-    <!-- 1. Official Jijunghae Maeul Emblem SVG -->
+    <!-- 1. Official Jijunghae Maeul Brand Emblem SVG (Exact Line Art & #3898EC Domes) -->
     <symbol id="jijunghae-logo-emblem" viewBox="0 0 120 120">
       <defs>
         <clipPath id="emblem-clip">
@@ -104,70 +100,76 @@
         </clipPath>
       </defs>
       <circle cx="60" cy="60" r="56" fill="#FFFFFF" />
-      <g clip-path="url(#emblem-clip)" stroke="#283339" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <g clip-path="url(#emblem-clip)" stroke="#283339" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
         <!-- Sun Rays -->
-        <line x1="33" y1="36" x2="14" y2="14" />
-        <line x1="33" y1="36" x2="31" y2="4" stroke-dasharray="10 6" />
-        <line x1="33" y1="36" x2="52" y2="4" stroke-dasharray="12 6" />
-        <line x1="33" y1="36" x2="82" y2="10" />
-        <!-- Sun -->
-        <circle cx="33" cy="36" r="11" fill="#FFFFFF" />
-        <!-- Cloud -->
-        <path d="M 2 62 H 48 C 48 51, 38 45, 31 49 C 26 37, 8 39, 5 51 C 1 53, 0 58, 2 62 Z" fill="#FFFFFF" />
-        <!-- Tall Right Santorini Building -->
-        <path d="M 62 36 C 62 21, 90 21, 90 36 Z" fill="#3898EC" />
-        <rect x="60" y="36" width="32" height="22" fill="#FFFFFF" />
-        <rect x="52" y="58" width="46" height="36" fill="#FFFFFF" />
-        <!-- Windows on Tall Building -->
-        <rect x="68" y="43" width="3.5" height="8" rx="1.5" fill="#283339" stroke="none" />
-        <rect x="80" y="43" width="3.5" height="8" rx="1.5" fill="#283339" stroke="none" />
-        <rect x="66" y="67" width="3.5" height="9" rx="1.5" fill="#283339" stroke="none" />
-        <rect x="82" y="67" width="3.5" height="9" rx="1.5" fill="#283339" stroke="none" />
+        <line x1="40" y1="35" x2="22" y2="14" />
+        <line x1="40" y1="35" x2="46" y2="2" stroke-dasharray="9 6" />
+        <line x1="40" y1="35" x2="55" y2="3" />
+        <line x1="40" y1="35" x2="73" y2="9" stroke-dasharray="10 6" />
+        <line x1="40" y1="35" x2="88" y2="14" />
+        <line x1="40" y1="35" x2="10" y2="26" stroke-dasharray="8 6" />
+        <!-- Rising Sun -->
+        <circle cx="40" cy="35" r="11" fill="#FFFFFF" />
+        <!-- Cloud Behind Buildings -->
+        <path d="M 2 69 H 58 C 58 57, 49 52, 43 53 C 40 41, 25 38, 17 46 C 9 43, 2 49, 2 57 Z" fill="#FFFFFF" />
+        <!-- Right Taller Santorini Building -->
+        <path d="M 63 36 C 63 21, 91 21, 91 36 Z" fill="#3898EC" />
+        <rect x="61" y="36" width="32" height="22" fill="#FFFFFF" />
+        <rect x="53" y="58" width="46" height="36" fill="#FFFFFF" />
+        <!-- Arched Windows on Taller Building (Solid Fill) -->
+        <path d="M 69 44 C 69 42, 72 42, 72 44 V 50 H 69 Z" fill="#283339" stroke="none" />
+        <path d="M 82 44 C 82 42, 85 42, 85 44 V 50 H 82 Z" fill="#283339" stroke="none" />
+        <path d="M 69 65 C 69 63, 72 63, 72 65 V 71 H 69 Z" fill="#283339" stroke="none" />
+        <path d="M 82 65 C 82 63, 85 63, 85 65 V 71 H 82 Z" fill="#283339" stroke="none" />
         <!-- Left Smaller Santorini Building -->
-        <path d="M 22 65 C 22 52, 48 52, 48 65 Z" fill="#3898EC" />
-        <rect x="19" y="65" width="32" height="35" fill="#FFFFFF" />
-        <!-- Windows on Left Building -->
-        <rect x="27" y="73" width="3.5" height="9" rx="1.5" fill="#283339" stroke="none" />
-        <rect x="39" y="73" width="3.5" height="9" rx="1.5" fill="#283339" stroke="none" />
-        <!-- Rolling Mediterranean Hills at Bottom -->
-        <path d="M 42 116 C 58 86, 88 74, 118 72 L 120 120 L 42 120 Z" fill="#FFFFFF" />
-        <path d="M 52 118 C 68 94, 94 83, 118 81" />
-        <path d="M 64 120 C 78 102, 98 93, 118 91" />
-        <path d="M 2 88 C 28 88, 52 100, 66 118 L 0 120 Z" fill="#FFFFFF" />
-        <path d="M 4 97 C 25 98, 45 107, 56 120" />
-        <path d="M 8 106 C 23 107, 38 113, 46 120" />
+        <path d="M 27 68 C 27 54, 53 54, 53 68 Z" fill="#3898EC" />
+        <rect x="24" y="68" width="32" height="32" fill="#FFFFFF" />
+        <path d="M 32 76 C 32 74, 35 74, 35 76 V 82 H 32 Z" fill="#283339" stroke="none" />
+        <path d="M 45 76 C 45 74, 48 74, 48 76 V 82 H 45 Z" fill="#283339" stroke="none" />
+        <!-- Flowing Mediterranean Hills (Right & Left Wave Lines) -->
+        <path d="M 46 116 C 62 92, 88 76, 118 73 L 118 120 L 46 120 Z" fill="#FFFFFF" />
+        <path d="M 55 117 C 70 97, 92 84, 118 81" fill="none" />
+        <path d="M 65 118 C 79 103, 96 93, 118 90" fill="none" />
+        <path d="M 8 92 C 32 92, 54 101, 68 118 L 8 118 Z" fill="#FFFFFF" />
+        <path d="M 10 100 C 30 100, 48 107, 60 118" fill="none" />
+        <path d="M 14 108 C 28 108, 41 112, 50 118" fill="none" />
       </g>
-      <circle cx="60" cy="60" r="56" stroke="#283339" stroke-width="4" fill="none" />
+      <!-- Outer Emblem Ring -->
+      <circle cx="60" cy="60" r="56" fill="none" stroke="#283339" stroke-width="4" />
     </symbol>
 
-    <!-- 2. Official Jijunghae Maeul Mascot Avatar SVG -->
+    <!-- 2. Official Mascot Character SVG (Cute Dionysus with Blue Wavy Hair, Grape Crown & Golden Goblet) -->
     <symbol id="jijunghae-mascot" viewBox="0 0 120 120">
-      <circle cx="60" cy="60" r="56" fill="#F0F7FF" stroke="#BAE0FD" stroke-width="3" />
-      <!-- Toga Body -->
-      <path d="M 38 92 L 44 114 H 76 L 82 92 C 74 86, 46 86, 38 92 Z" fill="#FFFFFF" stroke="#16325C" stroke-width="3" stroke-linejoin="round" />
-      <!-- Purple Drape & Gold Brooch -->
-      <path d="M 66 89 L 76 114 H 86 L 78 88 Z" fill="#6A1B9A" stroke="#16325C" stroke-width="2.8" stroke-linejoin="round" />
-      <circle cx="71" cy="89" r="5" fill="#D4A338" stroke="#16325C" stroke-width="2.5" />
-      <!-- Ears -->
-      <circle cx="29" cy="66" r="8" fill="#FFE6D5" stroke="#16325C" stroke-width="3" />
-      <circle cx="91" cy="66" r="8" fill="#FFE6D5" stroke="#16325C" stroke-width="3" />
-      <!-- Face -->
-      <rect x="33" y="42" width="54" height="46" rx="23" fill="#FFE6D5" stroke="#16325C" stroke-width="3" />
+      <!-- Soft Circular Backing -->
+      <circle cx="60" cy="60" r="56" fill="#F0F7FF" stroke="#BAE0FD" stroke-width="2" />
+      <!-- Back Hair & Top Wave -->
+      <path d="M 48 16 C 46 6, 68 4, 73 14 C 66 12, 62 15, 62 18 C 82 18, 98 32, 98 54 C 98 72, 86 82, 24 78 C 14 66, 16 34, 34 22 C 38 18, 44 16, 48 16 Z" fill="#1E88E5" stroke="#16325C" stroke-width="3" stroke-linejoin="round" />
+      <!-- White Toga Body & Purple Sash -->
+      <path d="M 38 86 L 82 86 L 86 114 L 34 114 Z" fill="#FFFFFF" stroke="#16325C" stroke-width="3" stroke-linejoin="round" />
+      <path d="M 46 86 L 60 98 L 70 86" fill="none" stroke="#16325C" stroke-width="2.5" stroke-linecap="round" />
+      <path d="M 68 85 L 86 85 L 92 114 L 72 114 Z" fill="#5E2B87" stroke="#16325C" stroke-width="3" stroke-linejoin="round" />
+      <circle cx="72" cy="86" r="5.5" fill="#D4A338" stroke="#16325C" stroke-width="2.5" />
+      <!-- Face & Ears -->
+      <circle cx="29" cy="64" r="7" fill="#FFE0CC" stroke="#16325C" stroke-width="3" />
+      <circle cx="91" cy="64" r="7" fill="#FFE0CC" stroke="#16325C" stroke-width="3" />
+      <rect x="31" y="42" width="58" height="44" rx="22" fill="#FFE0CC" stroke="#16325C" stroke-width="3" />
       <!-- Rosy Cheeks -->
-      <ellipse cx="43" cy="72" rx="6" ry="3.5" fill="#FF8A80" opacity="0.55" />
-      <ellipse cx="77" cy="72" rx="6" ry="3.5" fill="#FF8A80" opacity="0.55" />
-      <!-- Sparkling Blue Eyes -->
+      <ellipse cx="41" cy="72" rx="6" ry="3.5" fill="#FF8A80" opacity="0.55" />
+      <ellipse cx="79" cy="72" rx="6" ry="3.5" fill="#FF8A80" opacity="0.55" />
+      <!-- Big Sparkling Blue Eyes -->
       <ellipse cx="46" cy="63" rx="6.5" ry="7.5" fill="#16325C" />
       <ellipse cx="46" cy="64" rx="5" ry="5.5" fill="#29B6F6" />
-      <circle cx="44" cy="60" r="2.3" fill="#FFFFFF" />
+      <circle cx="44" cy="60" r="2.2" fill="#FFFFFF" />
       <ellipse cx="74" cy="63" rx="6.5" ry="7.5" fill="#16325C" />
       <ellipse cx="74" cy="64" rx="5" ry="5.5" fill="#29B6F6" />
-      <circle cx="72" cy="60" r="2.3" fill="#FFFFFF" />
-      <!-- Smile -->
-      <path d="M 56 72 Q 60 76 64 72" fill="none" stroke="#E57373" stroke-width="2.8" stroke-linecap="round" />
-      <!-- Wavy Sky-Blue Hair & Swirl Curl -->
-      <path d="M 24 58 C 16 40, 32 22, 54 22 C 56 11, 72 11, 70 22 C 92 24, 104 42, 95 60 C 90 48, 78 44, 62 47 C 46 44, 30 48, 24 58 Z" fill="#29B6F6" stroke="#16325C" stroke-width="3" stroke-linejoin="round" />
-      <path d="M 58 32 C 47 32, 45 48, 57 49 C 66 49, 66 39, 59 39" fill="none" stroke="#16325C" stroke-width="3" stroke-linecap="round" />
+      <circle cx="72" cy="60" r="2.2" fill="#FFFFFF" />
+      <!-- Cute Nose & Smile -->
+      <ellipse cx="60" cy="66" rx="2" ry="1.2" fill="#F48FB1" />
+      <path d="M 55 72 Q 60 76 65 72" fill="none" stroke="#E57373" stroke-width="2.6" stroke-linecap="round" />
+      <!-- Bright Sky-Blue Wavy Front Hair & Center Swirl -->
+      <path d="M 20 56 C 16 40, 28 26, 46 28 C 58 20, 82 24, 94 38 C 104 48, 102 62, 92 60 C 86 52, 80 48, 70 46 C 64 56, 46 56, 40 46 C 32 50, 26 58, 20 56 Z" fill="#29B6F6" stroke="#16325C" stroke-width="3" stroke-linejoin="round" />
+      <!-- Signature Center Hair Curl -->
+      <path d="M 58 31 C 50 31, 48 42, 56 44 C 63 45, 65 37, 59 36" fill="none" stroke="#16325C" stroke-width="3" stroke-linecap="round" />
       <!-- Purple Grapes Clusters -->
       <g fill="#6A1B9A" stroke="#16325C" stroke-width="2">
         <circle cx="47" cy="24" r="4.5" />
@@ -175,97 +177,26 @@
         <circle cx="51" cy="28" r="4.5" />
         <circle cx="88" cy="36" r="4.5" />
         <circle cx="94" cy="40" r="4.5" />
-        <circle cx="88" cy="44" r="4.5" />
-      </g>
-      <!-- Golden Vine Crown Leaves -->
-      <path d="M 24 34 L 35 24 L 46 31 L 36 40 Z" fill="#D4A338" stroke="#16325C" stroke-width="2.5" stroke-linejoin="round" />
-      <path d="M 60 22 L 73 16 L 80 28 L 66 32 Z" fill="#D4A338" stroke="#16325C" stroke-width="2.5" stroke-linejoin="round" />
-      <!-- Golden Wine Goblet -->
-      <path d="M 14 78 H 30 C 30 88, 25 93, 22 93 C 19 93, 14 88, 14 78 Z" fill="#D4A338" stroke="#16325C" stroke-width="2.5" stroke-linejoin="round" />
-      <line x1="22" y1="93" x2="22" y2="101" stroke="#16325C" stroke-width="2.8" />
-      <line x1="16" y1="101" x2="28" y2="101" stroke="#D4A338" stroke-width="3" stroke-linecap="round" />
-    </symbol>
-  </svg>
-
-  <!-- Clean Brand Header -->
-  <header class="bg-white border-b border-slate-200/90">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
-      
-      <!-- Top Bar: Left Multilingual Switcher & Right Quick Notice -->
-      <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3.5 border-b border-slate-100">
-        <!-- Left: Language Switcher Icon & Pill Buttons -->
-        <div class="flex flex-wrap items-center gap-1.5 bg-slate-100/90 p-1 rounded-xl border border-slate-200/80 notranslate">
-          <div class="flex items-center gap-1 px-2 py-1 text-brand-dark font-bold text-xs">
-            <i class="ph-bold ph-translate text-brand-blue text-base"></i>
-            <span class="hidden sm:inline" id="langLabelText">언어</span>
-          </div>
-          <button
-            onclick="changeLanguage('ko')"
-            data-lang-btn="ko"
-            class="lang-btn px-2.5 py-1 rounded-lg text-xs font-extrabold transition-all bg-brand-dark text-white shadow-sm"
-          >
-            🇰🇷 한국어
-          </button>
-          <button
-            onclick="changeLanguage('en')"
-            data-lang-btn="en"
-            class="lang-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all text-slate-600 hover:text-brand-dark hover:bg-white/60"
-          >
-            🇺🇸 ENG
-          </button>
-          <button
-            onclick="changeLanguage('zh-CN')"
-            data-lang-btn="zh-CN"
-            class="lang-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all text-slate-600 hover:text-brand-dark hover:bg-white/60"
-          >
-            🇨🇳 中文
-          </button>
-          <button
-            onclick="changeLanguage('ja')"
-            data-lang-btn="ja"
-            class="lang-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all text-slate-600 hover:text-brand-dark hover:bg-white/60"
-          >
-            🇯🇵 日本語
-          </button>
-        </div>
-
-        <!-- Right: Translation Status Badge -->
-        <div id="langStatusBadge" class="text-[11px] text-slate-400 font-medium hidden sm:flex items-center gap-1 notranslate">
-          <i class="ph-fill ph-globe-hemisphere-east text-brand-blue"></i>
-          <span id="langStatusText">다국어 스마트 번역 지원 (KR · EN · CN · JP)</span>
-        </div>
-      </div>
-
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-        
-        <!-- Left: Official Horizontal Brand Lockup -->
-        <div class="flex items-center gap-3.5 sm:gap-4">
-          <div class="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0">
-            <svg class="w-full h-full drop-shadow-sm">
-              <use href="#jijunghae-logo-emblem"></use>
-            </svg>
-          </div>
-
-          <!-- Brand Typography & Subtitle -->
+            <!-- Brand Typography & Subtitle -->
           <div>
             <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-              <h1 id="headerMainTitle" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-brand-dark notranslate">
+              <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-brand-dark">
                 지중해마을
               </h1>
-              <span class="font-serifbrand text-xs sm:text-sm font-bold tracking-widest text-brand-blue notranslate">
+              <span class="font-serifbrand text-xs sm:text-sm font-bold tracking-widest text-brand-blue">
                 JIJUNGHAE MAEUL
               </span>
-              <span id="headerTaglineBadge" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-brand-light text-brand-blue border border-sky-200 notranslate">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-brand-light text-brand-blue border border-sky-200">
                 ✈️ 여권없이 떠나는 지중해마을
               </span>
             </div>
 
-            <p id="headerSubtitleDesc" class="mt-1 text-slate-500 text-xs sm:text-sm notranslate">
+            <p class="mt-1 text-slate-500 text-xs sm:text-sm">
               여권없이 떠나는 지중해마을 <strong class="text-brand-dark font-bold">66개 매장</strong>의 대표 메뉴·가격·편의시설을 한눈에 찾아보세요.
             </p>
 
-            <!-- Minimal Stat Pills -->
-            <div id="headerStatsRow" class="mt-2.5 flex flex-wrap items-center gap-1.5 text-xs notranslate">
+            <!-- Minimal Stat Pills & Official Channel Links -->
+            <div class="mt-2.5 flex flex-wrap items-center gap-1.5 text-xs">
               <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-brand-dark font-semibold">
                 전체 <strong class="text-brand-blue">66</strong>곳
               </span>
@@ -282,10 +213,10 @@
           </div>
         </div>
 
-        <!-- Right: Official SNS Links + Mascot Random Picker Button -->
+        <!-- Right: Official SNS Links + Single Tasteful Mascot Placement ('오늘 뭐 먹지?' Concierge Button) -->
         <div class="flex flex-col sm:flex-row lg:flex-col xl:flex-row items-stretch sm:items-center gap-2.5 flex-shrink-0">
           <!-- Official SNS & Festival Quick Links -->
-          <div class="flex items-center gap-1.5 notranslate">
+          <div class="flex items-center gap-1.5">
             <a
               href="https://youtube.com/channel/UCJXnSkMS9WMDKwzyrPKp1JA?si=u53IxReGGybAbPr7"
               target="_blank"
@@ -294,7 +225,7 @@
               title="지중해마을 공식 유튜브"
             >
               <i class="ph-fill ph-youtube-logo text-red-600 text-base group-hover:scale-110 transition-transform"></i>
-              <span id="snsYoutubeLabel">유튜브</span>
+              <span>유튜브</span>
             </a>
 
             <a
@@ -305,7 +236,7 @@
               title="지중해마을 공식 인스타그램"
             >
               <i class="ph-fill ph-instagram-logo text-pink-600 text-base group-hover:scale-110 transition-transform"></i>
-              <span id="snsInstaLabel">인스타</span>
+              <span>인스타</span>
             </a>
 
             <a
@@ -316,14 +247,15 @@
               title="지중해마을 축제정보 (공식 블로그)"
             >
               <i class="ph-fill ph-confetti text-emerald-600 text-base group-hover:scale-110 transition-transform"></i>
-              <span id="snsFestivalLabel">축제정보</span>
+              <span>축제정보</span>
             </a>
           </div>
 
           <button
             onclick="openRandomPickerModal()"
-            class="w-full sm:w-auto group relative inline-flex items-center justify-between sm:justify-start gap-3.5 pl-3 pr-5 py-2.5 rounded-2xl bg-brand-light/70 hover:bg-brand-light border border-sky-200/90 hover:border-brand-blue text-brand-dark shadow-sm hover:shadow-md transition-all duration-200 notranslate"
+            class="w-full sm:w-auto group relative inline-flex items-center justify-between sm:justify-start gap-3.5 pl-3 pr-5 py-2.5 rounded-2xl bg-brand-light/70 hover:bg-brand-light border border-sky-200/90 hover:border-brand-blue text-brand-dark shadow-sm hover:shadow-md transition-all duration-200"
           >
+            <!-- Mascot Character Avatar Badge -->
             <div class="w-12 h-12 rounded-full flex-shrink-0 mascot-float">
               <svg class="w-full h-full drop-shadow-sm">
                 <use href="#jijunghae-mascot"></use>
@@ -332,9 +264,9 @@
 
             <div class="text-left">
               <div class="inline-flex items-center gap-1 text-[11px] font-bold text-brand-grape">
-                <span id="mascotBtnSub">🍇 지중해마을 마스코트 추천</span>
+                <span>🍇 지중해마을 마스코트 추천</span>
               </div>
-              <div id="mascotBtnTitle" class="text-sm sm:text-base font-extrabold text-brand-dark group-hover:text-brand-blue transition-colors">
+              <div class="text-sm sm:text-base font-extrabold text-brand-dark group-hover:text-brand-blue transition-colors">
                 오늘 뭐 먹지? 랜덤 메뉴 뽑기
               </div>
             </div>
@@ -355,6 +287,7 @@
       
       <!-- Search & Sort Row -->
       <div class="flex flex-col sm:flex-row gap-2.5">
+        <!-- Search Input -->
         <div class="relative flex-grow">
           <i class="ph-bold ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-santorini-700 text-lg"></i>
           <input
@@ -374,12 +307,13 @@
           </button>
         </div>
 
+        <!-- Sort Select -->
         <div class="flex items-center gap-2 flex-shrink-0">
           <div class="relative w-full sm:w-48">
             <select
               id="sortSelect"
               onchange="handleSortChange(this.value)"
-              class="w-full appearance-none pl-3.5 pr-9 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-santorini-600 cursor-pointer notranslate"
+              class="w-full appearance-none pl-3.5 pr-9 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-santorini-600 cursor-pointer"
             >
               <option value="id_asc">📋 기본 순번순</option>
               <option value="scale_desc">👥 좌석 규모 큰 순</option>
@@ -391,12 +325,16 @@
         </div>
       </div>
 
-      <!-- Category Tabs -->
-      <div id="categoryTabsContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar lg:flex-wrap pb-0.5 notranslate"></div>
+      <!-- Category Tabs (Horizontal Scroll on Mobile, Wrap on Desktop) -->
+      <div id="categoryTabsContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar lg:flex-wrap pb-0.5">
+        <!-- Populated by JS -->
+      </div>
 
       <!-- Smart Filter Chips Row -->
-      <div class="flex items-center justify-between gap-2 pt-1 border-t border-slate-100 notranslate">
-        <div id="smartFilterContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5"></div>
+      <div class="flex items-center justify-between gap-2 pt-1 border-t border-slate-100">
+        <div id="smartFilterContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+          <!-- Populated by JS -->
+        </div>
 
         <button
           id="resetAllBtn"
@@ -404,7 +342,7 @@
           class="hidden flex-shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 transition-colors"
         >
           <i class="ph-bold ph-arrow-counter-clockwise"></i>
-          <span id="resetBtnText">초기화</span>
+          초기화
         </button>
       </div>
     </div>
@@ -413,7 +351,7 @@
   <!-- Main Content Area -->
   <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 flex-grow">
     <!-- Active Result Summary Bar -->
-    <div class="flex flex-wrap items-center justify-between gap-2 mb-5 notranslate">
+    <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
       <div class="flex items-center gap-2">
         <h2 id="resultCountTitle" class="text-base sm:text-lg font-bold text-slate-800">
           전체 매장 <span class="text-santorini-700">66</span>곳
@@ -422,22 +360,24 @@
       </div>
       <div class="text-xs text-slate-500 flex items-center gap-1.5">
         <i class="ph-fill ph-info text-santorini-500"></i>
-        <span id="cardClickHintText">카드를 클릭하면 상세정보 및 네이버·카카오 지도 검색으로 연결됩니다.</span>
+        <span>카드를 클릭하면 상세정보 및 네이버·카카오 지도 검색으로 연결됩니다.</span>
       </div>
     </div>
 
     <!-- Store Cards Grid -->
-    <div id="storeGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    <div id="storeGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Populated dynamically via JS -->
+    </div>
 
-    <!-- Empty State -->
-    <div id="emptyState" class="hidden bg-white rounded-3xl border border-slate-200 p-10 sm:p-12 text-center my-8 max-w-lg mx-auto shadow-sm notranslate">
+    <!-- Empty State (2nd subtle placement of Mascot) -->
+    <div id="emptyState" class="hidden bg-white rounded-3xl border border-slate-200 p-10 sm:p-12 text-center my-8 max-w-lg mx-auto shadow-sm">
       <div class="w-20 h-20 mx-auto mb-4 mascot-float">
         <svg class="w-full h-full">
           <use href="#jijunghae-mascot"></use>
         </svg>
       </div>
-      <h3 id="emptyStateTitle" class="text-lg font-bold text-brand-dark">조건에 맞는 매장을 찾지 못했어요</h3>
-      <p id="emptyStateDesc" class="text-sm text-slate-500 mt-1 mb-6">
+      <h3 class="text-lg font-bold text-brand-dark">조건에 맞는 매장을 찾지 못했어요</h3>
+      <p class="text-sm text-slate-500 mt-1 mb-6">
         검색어를 바꾸거나 선택된 스마트 필터를 해제해 보세요.
       </p>
       <button
@@ -445,93 +385,13 @@
         class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-dark hover:bg-brand-blue text-white text-sm font-semibold shadow transition-colors"
       >
         <i class="ph-bold ph-arrow-counter-clockwise"></i>
-        <span id="emptyStateBtn">전체 매장 다시 보기</span>
+        전체 매장 다시 보기
       </button>
     </div>
   </main>
 
-  <!-- Store Detail Modal -->
-  <div
-    id="storeDetailModal"
-    class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4"
-    onclick="closeStoreDetailModal(event)"
-  >
-    <div
-      class="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 animate-fadeIn"
-      onclick="event.stopPropagation()"
-    >
-      <div id="storeDetailContent"></div>
-    </div>
-  </div>
-
-  <!-- Random Menu Picker Modal -->
-  <div
-    id="randomPickerModal"
-    class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4"
-    onclick="closeRandomPickerModal(event)"
-  >
-    <div
-      class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl border border-slate-200"
-      onclick="event.stopPropagation()"
-    >
-      <div class="bg-brand-light px-6 py-5 border-b border-sky-200 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-full flex-shrink-0">
-            <svg class="w-full h-full"><use href="#jijunghae-mascot"></use></svg>
-          </div>
-          <div>
-            <span class="text-[11px] font-bold text-brand-grape">🍇 지중해마을 마스코트 추천</span>
-            <h3 class="text-base font-extrabold text-brand-dark">오늘 뭐 먹지? 랜덤 추첨기</h3>
-          </div>
-        </div>
-        <button
-          onclick="closeRandomPickerModal()"
-          class="w-8 h-8 rounded-full bg-white hover:bg-slate-100 text-slate-500 flex items-center justify-center border border-slate-200"
-        >
-          <i class="ph-bold ph-x"></i>
-        </button>
-      </div>
-
-      <div class="p-6 space-y-4">
-        <div class="grid grid-cols-2 gap-2 text-xs font-bold">
-          <button onclick="setRandomPool('all_fb')" id="pool_all_fb" class="pool-btn py-2.5 px-3 rounded-xl bg-brand-dark text-white">🍽️ 식음료 전체 (44)</button>
-          <button onclick="setRandomPool('meal')" id="pool_meal" class="pool-btn py-2.5 px-3 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200">🍚 든든한 식사 (28)</button>
-          <button onclick="setRandomPool('cafe')" id="pool_cafe" class="pool-btn py-2.5 px-3 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200">☕ 카페·디저트 (13)</button>
-          <button onclick="setRandomPool('room')" id="pool_room" class="pool-btn py-2.5 px-3 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200">🚪 단체룸 회식 (12)</button>
-        </div>
-
-        <div id="randomResultCard" class="bg-slate-50 rounded-2xl p-5 border border-slate-200 text-center min-h-[170px] flex flex-col items-center justify-center"></div>
-
-        <div class="flex gap-2">
-          <button
-            onclick="spinRandomStore()"
-            class="flex-1 py-3 px-4 rounded-xl bg-brand-blue hover:bg-santorini-600 text-white font-extrabold text-sm shadow-sm transition-colors flex items-center justify-center gap-1.5"
-          >
-            <i class="ph-bold ph-shuffle text-base"></i>
-            <span>다시 뽑기</span>
-          </button>
-          <button
-            id="randomViewDetailBtn"
-            class="py-3 px-4 rounded-xl bg-brand-dark hover:bg-slate-800 text-white font-bold text-sm transition-colors"
-          >
-            상세 보기
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast Notification -->
-  <div
-    id="toastBox"
-    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-2 px-4 py-3 rounded-2xl bg-brand-dark text-white text-xs sm:text-sm font-bold shadow-xl border border-slate-700"
-  >
-    <i class="ph-fill ph-check-circle text-emerald-400 text-lg"></i>
-    <span id="toastMessage">주소가 복사되었습니다.</span>
-  </div>
-
-  <!-- Footer -->
-  <footer class="bg-white text-slate-500 py-8 border-t border-slate-200 mt-12 notranslate">
+  <!-- Footer with Minimal Official Brand Lockup -->
+  <footer class="bg-white text-slate-500 py-8 border-t border-slate-200 mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 flex-shrink-0">
@@ -541,89 +401,178 @@
         </div>
         <div>
           <div class="font-extrabold text-brand-dark text-sm flex items-center gap-2">
-            <span id="footerBrandTitle">지중해마을</span>
+            <span>지중해마을</span>
             <span class="font-serifbrand text-[11px] font-bold text-brand-blue tracking-wider">JIJUNGHAE MAEUL</span>
           </div>
-          <p id="footerAddressText" class="mt-0.5 text-slate-400 text-xs">여권없이 떠나는 지중해마을 · 충청남도 아산시 탕정면 탕정면로8번길 일원</p>
+          <p class="mt-0.5 text-slate-400 text-xs">여권없이 떠나는 지중해마을 · 충청남도 아산시 탕정면 탕정면로8번길 일원</p>
         </div>
       </div>
       <div class="text-center sm:text-right text-slate-400 text-xs">
-        <p id="footerNotice1">본 가이드는 지중해마을 66개 매장 공식 DB를 기반으로 제작되었습니다.</p>
-        <p id="footerNotice2" class="mt-0.5">매장 사정에 따라 영업시간 및 메뉴 가격이 변동될 수 있습니다.</p>
+        <p>본 가이드는 지중해마을 66개 매장 공식 DB를 기반으로 제작되었습니다.</p>
+        <p class="mt-0.5">매장 사정에 따라 영업시간 및 메뉴 가격이 변동될 수 있습니다.</p>
       </div>
     </div>
   </footer>
 
-  <!-- Complete Application Script & 66 Store Database -->
+  <!-- Store Detail Modal -->
+  <div id="detailModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+    <div
+      id="detailModalContent"
+      class="bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-slate-100 overflow-hidden animate-pop max-h-[90vh] flex flex-col"
+    >
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <!-- Random Menu Roulette Modal (Hosted by Mascot) -->
+  <div id="randomModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+    <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-slate-100 overflow-hidden animate-pop">
+      <div class="bg-brand-dark p-6 text-white relative border-b-4 border-brand-blue">
+        <button
+          onclick="closeRandomPickerModal()"
+          class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+        >
+          <i class="ph-bold ph-x text-lg"></i>
+        </button>
+
+        <div class="flex items-center gap-3.5">
+          <div class="w-14 h-14 rounded-full flex-shrink-0 bg-white p-0.5 shadow-md">
+            <svg class="w-full h-full">
+              <use href="#jijunghae-mascot"></use>
+            </svg>
+          </div>
+          <div>
+            <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-brand-blue/25 border border-brand-blue/40 text-sky-200 text-[11px] font-bold mb-1">
+              🍇 지중해마을 오늘 뭐 먹지?
+            </div>
+            <h3 class="text-lg sm:text-xl font-extrabold">마스코트 랜덤 맛집 추천</h3>
+            <p class="text-xs text-slate-300 mt-0.5">식음료 44곳 중 오늘 방문하기 좋은 곳을 골라드려요!</p>
+          </div>
+        </div>
+
+        <!-- Sub-filter inside random modal -->
+        <div class="mt-4 flex flex-wrap gap-1.5" id="randomThemeButtons">
+          <button onclick="setRandomPool('all_fb')" data-pool="all_fb" class="random-pool-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-blue text-white shadow-sm">
+            🍽️ 식음료 전체 (44)
+          </button>
+          <button onclick="setRandomPool('meal')" data-pool="meal" class="random-pool-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-200 hover:bg-white/20">
+            🍚 든든한 식사 (31)
+          </button>
+          <button onclick="setRandomPool('cafe')" data-pool="cafe" class="random-pool-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-200 hover:bg-white/20">
+            ☕ 카페·디저트 (13)
+          </button>
+          <button onclick="setRandomPool('group')" data-pool="group" class="random-pool-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-200 hover:bg-white/20">
+            🚪 단체룸 회식 (12)
+          </button>
+        </div>
+      </div>
+
+      <div class="p-6">
+        <div id="randomResultBox" class="bg-slate-50 rounded-2xl p-5 border border-slate-200 text-center min-h-[210px] flex flex-col items-center justify-center">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="mt-5 flex gap-2.5">
+          <button
+            onclick="spinRandomStore()"
+            class="flex-1 py-3.5 px-4 rounded-xl bg-brand-dark hover:bg-slate-800 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all"
+          >
+            <i class="ph-bold ph-arrows-clockwise text-base"></i>
+            다시 뽑기
+          </button>
+          <button
+            id="randomViewDetailBtn"
+            onclick=""
+            class="py-3.5 px-4 rounded-xl bg-brand-blue hover:bg-sky-600 text-white font-bold text-sm shadow-md flex items-center justify-center gap-1.5 transition-all"
+          >
+            <span>상세보기</span>
+            <i class="ph-bold ph-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div
+    id="toastBox"
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300 transform translate-y-2"
+  >
+    <div class="bg-slate-900/95 text-white px-4 py-2.5 rounded-full shadow-xl border border-slate-700 flex items-center gap-2 text-xs sm:text-sm font-medium">
+      <i class="ph-fill ph-check-circle text-emerald-400 text-lg"></i>
+      <span id="toastMessage">주소가 복사되었습니다!</span>
+    </div>
+  </div>
+
+  <!-- Application Script & Full 66 Stores Dataset -->
   <script>
-    // Complete 66 Stores Official Dataset (100% Cross-checked with 메뉴판 DB(260910_1)_2.xlsx)
     const STORES_DATA = [
-      { id: 1, category: "한식", name: "친정엄마한식뷔페", address: "충남 아산시 탕정면 탕정면로8번길 69-4", phone: "041-543-6950", scale_num: 84, menus: [{ name: "14세이상", price: "9,900원", is_rep: true }, { name: "13세이하", price: "7,700원" }, { name: "7세이하", price: "5,000원" }], rep_price_num: 9900, holiday: "일요일", hours: "11:00 ~ 15:00", sns: "", reserve: false, room: false, takeout: false, egg: false },
-      { id: 2, category: "한식", name: "진사또흑염소", address: "충남 아산시 탕정면 탕정면로8번길 69-4", phone: "041-532-0852", scale_num: 56, menus: [{ name: "보양탕", price: "18,000원", is_rep: true }, { name: "무침", price: "36,000원" }, { name: "전골", price: "36,000원" }, { name: "수육", price: "40,000원" }], rep_price_num: 18000, holiday: "없음", hours: "09:30 ~ 21:30", sns: "", reserve: true, room: true, takeout: true, egg: true },
-      { id: 3, category: "한식", name: "1981탕정순대국", address: "충남 아산시 탕정면 탕정면로8번길 61-10", phone: "041-548-7789", scale_num: 56, menus: [{ name: "머리고기국밥", price: "10,000원", is_rep: true }, { name: "순대국밥", price: "10,000원" }, { name: "얼큰순대국밥", price: "11,000원" }, { name: "모듬수육(소)", price: "15,000원" }], rep_price_num: 10000, holiday: "일요일", hours: "10:00 ~ 21:00", sns: "https://link.inpock.co.kr/bossamzip", reserve: true, room: false, takeout: true, egg: false },
-      { id: 4, category: "한식", name: "낭구", address: "충남 아산시 탕정면 탕정면로8번길 55-2 1층", phone: "041-534-5520", scale_num: 50, menus: [{ name: "닭도리탕", price: "29,000원", is_rep: true }, { name: "오징어초무침", price: "23,000원" }, { name: "소불고기전골", price: "25,000원" }, { name: "모듬전", price: "24,000원" }], rep_price_num: 29000, holiday: "일요일", hours: "17:00 ~ 24:00", sns: "", reserve: true, room: false, takeout: true, egg: false },
-      { id: 5, category: "한식", name: "달구지막창", address: "충남 아산시 탕정면 탕정면로8번길 55-2 1층", phone: "041-545-8777", scale_num: 32, menus: [{ name: "김치찌개", price: "10,000원", is_rep: true }, { name: "부대찌개", price: "10,000원" }, { name: "참숯초벌막창", price: "16,000원" }, { name: "석쇠불고기", price: "14,000원" }], rep_price_num: 10000, holiday: "일요일", hours: "11:00 ~ 23:00", sns: "https://blog.naver.com/PostList.nhn?blogId=dalgugi_", reserve: true, room: false, takeout: true, egg: false },
-      { id: 6, category: "한식", name: "장수옥설렁탕", address: "충남 아산시 탕정면 탕정면로8번길 51-8", phone: "041-547-9988", scale_num: 60, menus: [{ name: "장수옥설렁탕", price: "10,000원", is_rep: true }, { name: "도가니탕", price: "17,000원" }, { name: "수육(소)", price: "25,000원" }, { name: "소머리국밥", price: "11,000원" }], rep_price_num: 10000, holiday: "일요일", hours: "09:00 ~ 21:00", sns: "", reserve: true, room: false, takeout: true, egg: false },
-      { id: 7, category: "한식", name: "두부랑 가마솥손두부", address: "충남 아산시 탕정면 탕정면로8번길 33-8", phone: "041-549-8930", scale_num: 60, menus: [{ name: "두부낙지전골", price: "15,000원", is_rep: true }, { name: "두부버섯전골", price: "13,000원" }, { name: "제육두부보쌈", price: "45,000원" }, { name: "하얀순두부", price: "9,000원" }], rep_price_num: 15000, holiday: "일요일", hours: "11:00 ~ 21:00", sns: "https://www.instagram.com/duburang_official/", reserve: true, room: false, takeout: true, egg: false },
-      { id: 8, category: "한식", name: "시골밥상", address: "충남 아산시 탕정면 탕정면로22번길 11-6", phone: "041-549-5607", scale_num: 40, menus: [{ name: "시골밥상(제육포함)", price: "11,000원", is_rep: true }, { name: "갈치조림(2인)", price: "28,000원" }, { name: "고등어조림(2인)", price: "24,000원" }, { name: "삼겹살", price: "15,000원" }], rep_price_num: 11000, holiday: "토요일", hours: "11:00 ~ 20:30", sns: "", reserve: true, room: false, takeout: false, egg: false },
-      { id: 9, category: "중식", name: "지중해양꼬치", address: "충남 아산시 탕정면 탕정면로8번길 69-4", phone: "041-548-9288", scale_num: 60, menus: [{ name: "양꼬치", price: "15,000원", is_rep: true }, { name: "양갈비살", price: "18,000원" }, { name: "탕수육", price: "18,000원" }, { name: "마파두부", price: "13,000원" }], rep_price_num: 15000, holiday: "일요일", hours: "15:00 ~ 24:00", sns: "", reserve: true, room: true, takeout: true, egg: false },
-      { id: 10, category: "중식", name: "교동짬뽕", address: "충남 아산시 탕정면 탕정면로8번길 69-14", phone: "041-548-3431", scale_num: 48, menus: [{ name: "교동짬뽕", price: "9,000원", is_rep: true }, { name: "짜장면", price: "7,000원" }, { name: "탕수육(소)", price: "15,000원" }, { name: "중화비빔밥", price: "9,000원" }], rep_price_num: 9000, holiday: "토요일", hours: "10:30 ~ 20:00", sns: "", reserve: true, room: true, takeout: true, egg: false },
-      { id: 11, category: "중식", name: "훈이네양갈비&양꼬치", address: "충남 아산시 탕정면 탕정면로8번길 55-2 1층", phone: "041-534-9292", scale_num: 60, menus: [{ name: "고급양갈비", price: "27,000원", is_rep: true }, { name: "양꼬치", price: "15,000원" }, { name: "꿔바로우", price: "18,000원" }, { name: "옥수수온면", price: "7,000원" }], rep_price_num: 27000, holiday: "일요일", hours: "16:00 ~ 24:00", sns: "https://blog.naver.com/hunine9292", reserve: true, room: false, takeout: true, egg: false },
-      { id: 12, category: "중식", name: "용주루", address: "충남 아산시 탕정면 탕정면로8번길 45-2", phone: "041-545-6463", scale_num: 68, menus: [{ name: "차돌짬뽕", price: "11,000원", is_rep: true }, { name: "유니짜장", price: "7,000원" }, { name: "해물쟁반짜장(2인)", price: "18,000원" }, { name: "찹쌀탕수육(소)", price: "17,000원" }], rep_price_num: 11000, holiday: "없음", hours: "10:00 ~ 21:00", sns: "", reserve: true, room: true, takeout: true, egg: false },
-      { id: 13, category: "중식", name: "마라순코우마라탕", address: "충남 아산시 탕정면 탕정면로8번길 33-8", phone: "041-533-5879", scale_num: 36, menus: [{ name: "마라탕(100g)", price: "1,900원", is_rep: true }, { name: "마라샹궈(100g)", price: "3,000원" }, { name: "꿔바로우(소)", price: "12,000원" }, { name: "계란볶음밥", price: "6,000원" }], rep_price_num: 1900, holiday: "토요일", hours: "11:00 ~ 21:00", sns: "", reserve: false, room: false, takeout: true, egg: false },
-      { id: 14, category: "일식", name: "고칸", address: "충남 아산시 탕정면 탕정면로8번길 55-7", phone: "041-543-0907", scale_num: 34, menus: [{ name: "사케동", price: "14,500원", is_rep: true }, { name: "가츠동", price: "11,000원" }, { name: "규동", price: "11,500원" }, { name: "차슈라멘", price: "11,000원" }], rep_price_num: 14500, holiday: "없음", hours: "11:30 ~ 21:00", sns: "", reserve: false, room: false, takeout: true, egg: false },
-      { id: 15, category: "일식", name: "도마횟집", address: "충남 아산시 탕정면 탕정면로8번길 39-14", phone: "041-542-5353", scale_num: 60, menus: [{ name: "제철모듬회", price: "변동", is_rep: true }, { name: "점심특선", price: "변동" }, { name: "물회", price: "변동" }, { name: "매운탕", price: "변동" }], rep_price_num: 999999, holiday: "일요일", hours: "12:00 ~ 22:00", sns: "", reserve: true, room: true, takeout: true, egg: false },
-      { id: 16, category: "일식", name: "멘야마쯔리", address: "충남 아산시 탕정면 탕정면로22번길 29-7", phone: "041-548-5259", scale_num: 35, menus: [{ name: "돈코츠라멘", price: "10,000원", is_rep: true }, { name: "카라이돈코츠라멘", price: "10,500원" }, { name: "미소라멘", price: "10,000원" }, { name: "차슈덮밥", price: "10,000원" }], rep_price_num: 10000, holiday: "월~14:50", hours: "11:00 ~ 20:30", sns: "https://www.instagram.com/menya_matsuri", reserve: false, room: false, takeout: false, egg: false },
-      { id: 17, category: "일식", name: "피그펍돈까스", address: "충남 아산시 탕정면 탕정면로22번길 17-9", phone: "041-543-9992", scale_num: 36, menus: [{ name: "수제등심돈까스", price: "11,000원", is_rep: true }, { name: "치즈돈까스", price: "13,000원" }, { name: "매운돈까스", price: "12,000원" }, { name: "안심돈까스", price: "12,000원" }], rep_price_num: 11000, holiday: "일요일", hours: "11:00 ~ 20:30", sns: "", reserve: true, room: false, takeout: true, egg: false },
-      { id: 18, category: "양식", name: "발리바베큐", address: "충남 아산시 탕정면 탕정면로8번길 55-2 1층", phone: "0507-1363-6014", scale_num: 30, menus: [{ name: "발리바베큐플래터", price: "38,000원", is_rep: true }, { name: "폴드포크플래터", price: "32,000원" }, { name: "바베큐버거", price: "11,000원" }, { name: "코코넛프라이즈", price: "9,000원" }], rep_price_num: 38000, holiday: "월요일", hours: "17:00 ~ 24:00", sns: "https://www.instagram.com/balibbq_official/", reserve: true, room: false, takeout: true, egg: false },
-      { id: 19, category: "양식", name: "우리위치샌드위치", address: "충남 아산시 탕정면 탕정면로8번길 51-6", phone: "0507-1371-8455", scale_num: 12, menus: [{ name: "클럽샌드위치", price: "7,000원", is_rep: true }, { name: "에그베이컨샌드위치", price: "6,500원" }, { name: "불고기샌드위치", price: "7,500원" }, { name: "치킨텐더샐러드", price: "8,500원" }], rep_price_num: 7000, holiday: "토요일\n일~15:00", hours: "09:00 ~ 19:00", sns: "https://www.instagram.com/woori_wich/", reserve: true, room: false, takeout: true, egg: false },
-      { id: 20, category: "양식", name: "버거앤그릴", address: "충남 아산시 탕정면 탕정면로8번길 45-6", phone: "041-548-0410", scale_num: 28, menus: [{ name: "클래식치즈버거", price: "8,900원", is_rep: true }, { name: "베이컨치즈버거", price: "9,900원" }, { name: "머쉬룸버거", price: "9,900원" }, { name: "칠리치즈프라이", price: "7,500원" }], rep_price_num: 8900, holiday: "월요일", hours: "11:00 ~ 21:00", sns: "https://www.instagram.com/burger_n_grill/", reserve: true, room: false, takeout: true, egg: false },
-      { id: 21, category: "양식", name: "빠삐용피자", address: "충남 아산시 탕정면 탕정면로22번길 11-12", phone: "041-548-8259", scale_num: 20, menus: [{ name: "콤비네이션피자", price: "17,900원", is_rep: true }, { name: "페퍼로니피자", price: "16,900원" }, { name: "포테이토피자", price: "18,900원" }, { name: "불고기피자", price: "18,900원" }], rep_price_num: 17900, holiday: "화요일", hours: "11:00 ~ 22:00", sns: "", reserve: true, room: false, takeout: true, egg: false },
-      { id: 22, category: "분식", name: "신전떡볶이", address: "충남 아산시 탕정면 탕정면로8번길 33-8", phone: "041-549-0102", scale_num: 20, menus: [{ name: "김말이", price: "1,700원", is_rep: true }, { name: "신전떡볶이", price: "4,000원" }, { name: "로제떡볶이", price: "6,000원" }, { name: "신전김밥", price: "3,000원" }], rep_price_num: 1700, holiday: "목요일", hours: "11:00 ~ 20:30", sns: "", reserve: false, room: false, takeout: true, egg: false },
-      { id: 23, category: "분식", name: "오늘김밥 샤브칼국수", address: "충남 아산시 탕정면 탕정면로22번길 25-7", phone: "041-548-5585", scale_num: 60, menus: [{ name: "소고기샤브칼국수", price: "11,000원", is_rep: true }, { name: "오늘김밥", price: "4,000원" }, { name: "참치김밥", price: "5,000원" }, { name: "돈까스", price: "9,500원" }], rep_price_num: 11000, holiday: "없음", hours: "09:00 ~ 21:00", sns: "", reserve: true, room: true, takeout: true, egg: false },
-      { id: 24, category: "고기구이", name: "홍가 한우숯불구이", address: "충남 아산시 탕정면 탕정면로8번길 69-10", phone: "041-532-9292", scale_num: 72, menus: [{ name: "홍가大500g 모듬", price: "105,000원", is_rep: true }, { name: "꽃등심", price: "38,000원" }, { name: "살치살", price: "45,000원" }, { name: "갈비살", price: "35,000원" }], rep_price_num: 105000, holiday: "일요일", hours: "11:30 ~ 22:00", sns: "https://blog.naver.com/hongga9292", reserve: true, room: true, takeout: false, egg: false },
-      { id: 25, category: "고기구이", name: "할매솥뚜껑삼겹살", address: "충남 아산시 탕정면 탕정면로8번길 45-8", phone: "041-549-9233", scale_num: 60, menus: [{ name: "솥뚜껑삼겹살", price: "16,000원", is_rep: true }, { name: "솥뚜껑목살", price: "16,000원" }, { name: "생오겹살", price: "17,000원" }, { name: "항정살", price: "18,000원" }], rep_price_num: 16000, holiday: "월요일\n토,일12:30~", hours: "16:00 ~ 23:00", sns: "", reserve: true, room: false, takeout: false, egg: false },
-      { id: 26, category: "고기구이", name: "꾸석지돌판한우", address: "충남 아산시 탕정면 탕정면로8번길 39-6", phone: "041-548-9282", scale_num: 60, menus: [{ name: "한우등심(100g)", price: "11,800원", is_rep: true }, { name: "한우갈비살(100g)", price: "13,800원" }, { name: "한우살치살(100g)", price: "16,800원" }, { name: "한우육회", price: "15,000원" }], rep_price_num: 11800, holiday: "없음", hours: "11:30 ~ 23:00", sns: "", reserve: true, room: true, takeout: false, egg: false },
-      { id: 27, category: "고기구이", name: "정석생소금구이", address: "충남 아산시 탕정면 탕정면로22번길 25-11", phone: "041-534-9235", scale_num: 56, menus: [{ name: "생소금구이", price: "16,000원", is_rep: true }, { name: "삼겹살", price: "16,000원" }, { name: "항정살", price: "18,000원" }, { name: "갈매기살", price: "17,000원" }], rep_price_num: 16000, holiday: "일요일", hours: "16:00 ~ 23:00", sns: "", reserve: true, room: false, takeout: false, egg: false },
-      { id: 28, category: "고기구이", name: "봉자막창", address: "충남 아산시 탕정면 탕정면로22번길 17-7", phone: "041-547-9285", scale_num: 60, menus: [{ name: "소막창", price: "17,000원", is_rep: true }, { name: "돼지막창", price: "14,000원" }, { name: "삼겹살", price: "15,000원" }, { name: "무뼈닭발", price: "14,000원" }], rep_price_num: 17000, holiday: "일요일", hours: "17:00 ~ 24:00", sns: "", reserve: true, room: false, takeout: true, egg: false },
-      { id: 29, category: "주점", name: "금별맥주", address: "충남 아산시 탕정면 탕정면로8번길 55-2 1층", phone: "0507-1345-8722", scale_num: 60, menus: [{ name: "백합조개버터술찜", price: "15,900원", is_rep: true }, { name: "토마토해장파스타", price: "17,900원" }, { name: "페퍼로니피자", price: "13,900원" }, { name: "일품모둠어묵탕", price: "17,900원" }], rep_price_num: 15900, holiday: "없음", hours: "17:00 ~ 02:00", sns: "https://www.instagram.com/geumbyeol_official/", reserve: false, room: false, takeout: false, egg: false },
-      { id: 30, category: "주점", name: "몽펠리에", address: "충남 아산시 탕정면 탕정면로8번길 45-4", phone: "041-549-0880", scale_num: 60, menus: [{ name: "학센바베큐", price: "35,000원", is_rep: true }, { name: "그릴소시지", price: "22,000원" }, { name: "감바스", price: "24,000원" }, { name: "수제맥주", price: "6,000원" }], rep_price_num: 35000, holiday: "일요일", hours: "17:00 ~ 01:00", sns: "https://www.instagram.com/montpellier_asan/", reserve: true, room: true, takeout: true, egg: false },
-      { id: 31, category: "주점", name: "지중해전이야기", address: "충남 아산시 탕정면 탕정면로22번길 11-8", phone: "041-543-7788", scale_num: 48, menus: [{ name: "모듬전", price: "25,000원", is_rep: true }, { name: "육전", price: "22,000원" }, { name: "해물파전", price: "18,000원" }, { name: "김치전", price: "15,000원" }], rep_price_num: 25000, holiday: "일요일", hours: "17:00 ~ 24:00", sns: "", reserve: true, room: true, takeout: true, egg: false },
-      { id: 32, category: "카페 및 디저트", name: "오마레", address: "충남 아산시 탕정면 탕정면로8번길 69-4", phone: "041-532-5552", scale_num: 80, menus: [{ name: "무화과얼그레이빙수", price: "19,500원", is_rep: true }, { name: "복숭아실크빙수", price: "변동" }, { name: "아메리카노", price: "4,800원" }, { name: "카페라떼", price: "5,300원" }], rep_price_num: 19500, holiday: "없음", hours: "10:00 ~ 22:30", sns: "https://www.instagram.com/cafe_omare", reserve: true, room: true, takeout: true, egg: false },
-      { id: 33, category: "카페 및 디저트", name: "커피예술", address: "충남 아산시 탕정면 탕정면로8번길 61-8", phone: "041-547-4455", scale_num: 45, menus: [{ name: "핸드드립커피", price: "6,000원", is_rep: true }, { name: "아메리카노", price: "4,500원" }, { name: "수제팥빙수", price: "14,000원" }, { name: "벨기에와플", price: "10,000원" }], rep_price_num: 6000, holiday: "없음", hours: "10:00 ~ 22:00", sns: "", reserve: true, room: false, takeout: true, egg: false },
-      { id: 34, category: "카페 및 디저트", name: "브릭빈커피로스터스", address: "충남 아산시 탕정면 탕정면로8번길 55-2 1층", phone: "041-546-8899", scale_num: 50, menus: [{ name: "브릭빈슈페너", price: "6,000원", is_rep: true }, { name: "아메리카노", price: "4,500원" }, { name: "바닐라라떼", price: "5,500원" }, { name: "수제티라미수", price: "6,500원" }], rep_price_num: 6000, holiday: "없음", hours: "09:00 ~ 22:00", sns: "https://www.instagram.com/brickbean_roasters/", reserve: false, room: false, takeout: true, egg: false },
-      { id: 35, category: "카페 및 디저트", name: "올댓초콜릿", address: "충남 아산시 탕정면 탕정면로8번길 55-7", phone: "0507-1324-0903", scale_num: 0, menus: [{ name: "수제봉봉초콜릿", price: "3,000원", is_rep: true }, { name: "생초콜릿(10구)", price: "15,000원" }, { name: "초콜릿음료", price: "6,000원" }, { name: "아메리카노", price: "4,000원" }], rep_price_num: 3000, holiday: "월요일\n일12:00~", hours: "11:00 ~ 20:00", sns: "https://www.instagram.com/allthatchocolate_asan/", reserve: true, room: false, takeout: true, egg: false },
-      { id: 36, category: "카페 및 디저트", name: "macaroo", address: "충남 아산시 탕정면 탕정면로8번길 51-2", phone: "0507-1388-0012", scale_num: 8, menus: [{ name: "수제뚱카롱", price: "2,800원", is_rep: true }, { name: "다쿠아즈", price: "3,200원" }, { name: "머랭쿠키", price: "3,500원" }, { name: "아메리카노", price: "3,500원" }], rep_price_num: 2800, holiday: "일요일", hours: "11:00 ~ 20:00", sns: "https://www.instagram.com/macaroo_macaron/", reserve: true, room: false, takeout: true, egg: false },
-      { id: 37, category: "카페 및 디저트", name: "스프레드", address: "충남 아산시 탕정면 탕정면로8번길 51-4", phone: "0507-1402-3321", scale_num: 8, menus: [{ name: "수제잼&스콘세트", price: "6,500원", is_rep: true }, { name: "플레인스콘", price: "3,500원" }, { name: "아메리카노", price: "4,000원" }, { name: "밀크티", price: "5,500원" }], rep_price_num: 6500, holiday: "일요일", hours: "10:30 ~ 19:30", sns: "https://www.instagram.com/spread_jam/", reserve: true, room: false, takeout: true, egg: false },
-      { id: 38, category: "카페 및 디저트", name: "카페프로방스", address: "충남 아산시 탕정면 탕정면로8번길 39-8", phone: "041-548-4567", scale_num: 40, menus: [{ name: "프로방스라떼", price: "5,800원", is_rep: true }, { name: "아메리카노", price: "4,300원" }, { name: "자몽에이드", price: "5,500원" }, { name: "허니브레드", price: "6,500원" }], rep_price_num: 5800, holiday: "없음", hours: "10:00 ~ 22:00", sns: "", reserve: false, room: false, takeout: true, egg: false },
-      { id: 39, category: "카페 및 디저트", name: "우아한 티", address: "충남 아산시 탕정면 탕정면로8번길 33-4", phone: "041-542-7788", scale_num: 20, menus: [{ name: "홍차포트티", price: "7,000원", is_rep: true }, { name: "밀크티", price: "6,000원" }, { name: "스콘", price: "4,000원" }, { name: "아메리카노", price: "4,500원" }], rep_price_num: 7000, holiday: "?", hours: "?", sns: "", reserve: false, room: false, takeout: true, egg: false },
-      { id: 40, category: "카페 및 디저트", name: "카페산토리니", address: "충남 아산시 탕정면 탕정면로22번길 29-9", phone: "041-545-8899", scale_num: 50, menus: [{ name: "산토리니블루레몬에이드", price: "6,000원", is_rep: true }, { name: "아메리카노", price: "4,500원" }, { name: "카페라떼", price: "5,000원" }, { name: "조각케이크", price: "6,000원" }], rep_price_num: 6000, holiday: "없음", hours: "10:00 ~ 22:00", sns: "", reserve: false, room: false, takeout: true, egg: false },
-      { id: 41, category: "카페 및 디저트", name: "베이커리 아산", address: "충남 아산시 탕정면 탕정면로22번길 25-3", phone: "041-549-0445", scale_num: 55, menus: [{ name: "소금빵", price: "3,500원", is_rep: true }, { name: "몽블랑", price: "6,500원" }, { name: "아메리카노", price: "4,500원" }, { name: "카페라떼", price: "5,000원" }], rep_price_num: 3500, holiday: "월요일", hours: "09:00 ~ 21:00", sns: "https://www.instagram.com/bakery_asan/", reserve: true, room: false, takeout: true, egg: false },
-      { id: 42, category: "카페 및 디저트", name: "감성커피", address: "충남 아산시 탕정면 탕정면로22번길 17-3", phone: "041-544-3355", scale_num: 16, menus: [{ name: "바나나달고나라떼", price: "4,200원", is_rep: true }, { name: "1L아메리카노", price: "3,800원" }, { name: "허니자몽블랙티", price: "4,500원" }, { name: "크로플", price: "3,500원" }], rep_price_num: 4200, holiday: "없음", hours: "08:30 ~ 22:00", sns: "", reserve: false, room: false, takeout: true, egg: false },
-      { id: 43, category: "카페 및 디저트", name: "블루가든카페", address: "충남 아산시 탕정면 탕정면로22번길 11-4", phone: "041-542-7711", scale_num: 40, menus: [{ name: "수제자몽티", price: "5,800원", is_rep: true }, { name: "아메리카노", price: "4,300원" }, { name: "카페라떼", price: "4,800원" }, { name: "크로크무슈", price: "6,500원" }], rep_price_num: 5800, holiday: "화요일", hours: "10:30 ~ 21:30", sns: "", reserve: false, room: false, takeout: true, egg: false },
-      { id: 44, category: "카페 및 디저트", name: "달콤제과", address: "충남 아산시 탕정면 탕정면로22번길 11-10", phone: "0507-1355-9090", scale_num: 12, menus: [{ name: "휘낭시에", price: "2,700원", is_rep: true }, { name: "레몬케이크", price: "3,200원" }, { name: "에그타르트", price: "3,500원" }, { name: "아메리카노", price: "3,800원" }], rep_price_num: 2700, holiday: "월요일", hours: "11:00 ~ 20:00", sns: "https://www.instagram.com/dalkom_baking/", reserve: true, room: false, takeout: true, egg: false },
-      { id: 45, category: "의류 및 패션", name: "블링", address: "충남 아산시 탕정면 탕정면로8번길 55-2 1층", phone: "010-9080-1100", scale_num: 0, menus: [], rep_price_num: 999999, holiday: "일요일", hours: "11:00 ~ 20:00", sns: "https://www.instagram.com/bling_clothing/", reserve: false, room: false, takeout: false, egg: false },
-      { id: 46, category: "의류 및 패션", name: "헨젤과그레텔", address: "충남 아산시 탕정면 탕정면로8번길 55-7", phone: "041-545-2233", scale_num: 0, menus: [], rep_price_num: 999999, holiday: "", hours: "", sns: "", reserve: false, room: false, takeout: false, egg: false },
-      { id: 47, category: "의류 및 패션", name: "AUTHENTIC", address: "충남 아산시 탕정면 탕정면로8번길 45-6", phone: "070-8822-4455", scale_num: 0, menus: [], rep_price_num: 999999, holiday: "월요일", hours: "11:00 ~ 20:00", sns: "https://www.instagram.com/authentic_asan/", reserve: false, room: false, takeout: false, egg: false },
-      { id: 48, category: "의류 및 패션", name: "데일리", address: "충남 아산시 탕정면 탕정면로8번길 39-12", phone: "041-547-6677", scale_num: 0, menus: [], rep_price_num: 999999, holiday: "", hours: "", sns: "", reserve: false, room: false, takeout: false, egg: false },
-      { id: 49, category: "의류 및 패션", name: "그레이후드", address: "충남 아산시 탕정면 탕정면로8번길 33-6", phone: "0507-1311-8800", scale_num: 0, menus: [], rep_price_num: 999999, holiday: "일요일", hours: "11:00 ~ 20:00", sns: "https://www.instagram.com/greyhood_asan/", reserve: false, room: false, takeout: false, egg: false },
-      { id: 50, category: "의류 및 패션", name: "기린의옷장", address: "충남 아산시 탕정면 탕정면로22번길 25-9", phone: "041-500-0000", scale_num: 0, menus: [], rep_price_num: 999999, holiday: "", hours: "", sns: "", reserve: false, room: false, takeout: false, egg: false },
-      { id: 51, category: "의류 및 패션", name: "레브", address: "충남 아산시 탕정면 탕정면로22번길 17-5", phone: "010-4455-9911", scale_num: 0, menus: [], rep_price_num: 999999, holiday: "", hours: "", sns: "https://www.instagram.com/reve_asan/", reserve: false, room: false, takeout: false, egg: false },
-      { id: 52, category: "공방 및 스튜디오", name: "무무드스튜디오", address: "충남 아산시 탕정면 탕정면로8번길 69-6", phone: "0507-1380-7080", scale_num: 0, menus: [{ name: "1컨셉촬영", price: "150,000원", is_rep: true }, { name: "증명/여권사진", price: "25,000원" }, { name: "프로필촬영", price: "100,000원" }, { name: "가족사진", price: "200,000원" }], rep_price_num: 150000, holiday: "화요일", hours: "10:00 ~ 19:00", sns: "https://www.instagram.com/moomood_studio/", reserve: true, room: false, takeout: false, egg: false },
-      { id: 53, category: "공방 및 스튜디오", name: "너에게꽃이다", address: "충남 아산시 탕정면 탕정면로8번길 55-2 1층", phone: "0507-1355-5525", scale_num: 0, menus: [{ name: "꽃다발", price: "변동", is_rep: true }, { name: "꽃바구니", price: "변동" }, { name: "용돈박스", price: "변동" }, { name: "플라워클래스", price: "변동" }], rep_price_num: 999999, holiday: "일요일\n토09~17", hours: "09:00 ~ 19:00", sns: "https://blog.naver.com/flowerforyou_", reserve: true, room: false, takeout: true, egg: false },
-      { id: 54, category: "공방 및 스튜디오", name: "앤웜", address: "충남 아산시 탕정면 탕정면로8번길 51-4", phone: "0507-1411-3040", scale_num: 0, menus: [], rep_price_num: 999999, holiday: "일요일\n토,월~18:00", hours: "11:00 ~ 20:00", sns: "https://www.instagram.com/and_warm_candle/", reserve: true, room: false, takeout: false, egg: false },
-      { id: 55, category: "공방 및 스튜디오", name: "캘리플로라", address: "충남 아산시 탕정면 탕정면로8번길 39-10", phone: "0507-1344-7755", scale_num: 0, menus: [], rep_price_num: 999999, holiday: "일요일", hours: "10:30 ~ 19:00", sns: "https://blog.naver.com/calliflora", reserve: true, room: false, takeout: false, egg: false },
-      { id: 56, category: "공방 및 스튜디오", name: "도예뜰", address: "충남 아산시 탕정면 탕정면로22번길 25-5", phone: "041-541-2030", scale_num: 0, menus: [], rep_price_num: 999999, holiday: "", hours: "", sns: "", reserve: true, room: false, takeout: false, egg: false },
-      { id: 57, category: "기타쇼핑 및 뷰티", name: "채움 온", address: "충남 아산시 탕정면 탕정면로8번길 69-8", phone: "0507-1315-1020", scale_num: 0, menus: [{ name: "새치염색", price: "35,000원", is_rep: true }, { name: "뿌리염색", price: "35,000원" }, { name: "전체염색", price: "50,000원" }, { name: "두피케어", price: "50,000원" }], rep_price_num: 35000, holiday: "일요일", hours: "10:00 ~ 19:00", sns: "https://blog.naver.com/chaeum_on", reserve: true, room: false, takeout: false, egg: false },
-      { id: 58, category: "기타쇼핑 및 뷰티", name: "파트라슈", address: "충남 아산시 탕정면 탕정면로8번길 69-12", phone: "041-549-7979", scale_num: 0, menus: [{ name: "소형견목욕", price: "25,000원", is_rep: true }, { name: "소형견위생목욕", price: "35,000원" }, { name: "소형견전체미용", price: "45,000원" }, { name: "가위컷", price: "70,000원" }], rep_price_num: 25000, holiday: "일요일", hours: "10:00 ~ 19:00", sns: "https://www.instagram.com/patrasche_pet/", reserve: true, room: false, takeout: false, egg: false },
-      { id: 59, category: "기타쇼핑 및 뷰티", name: "리얼클린족욕", address: "충남 아산시 탕정면 탕정면로8번길 55-2 1층", phone: "041-542-8877", scale_num: 0, menus: [], rep_price_num: 999999, holiday: "월요일", hours: "11:00 ~ 21:00", sns: "", reserve: true, room: false, takeout: false, egg: false },
-      { id: 60, category: "기타쇼핑 및 뷰티", name: "지중해가챠샵", address: "충남 아산시 탕정면 탕정면로8번길 45-7", phone: "0507-1377-0088", scale_num: 0, menus: [], rep_price_num: 999999, holiday: "없음", hours: "10:00 ~ 22:00", sns: "https://www.instagram.com/jijunghae_gacha/", reserve: false, room: false, takeout: false, egg: false },
-      { id: 61, category: "기타쇼핑 및 뷰티", name: "90리퍼브", address: "충남 아산시 탕정면 탕정면로8번길 39-4", phone: "041-543-9090", scale_num: 0, menus: [], rep_price_num: 999999, holiday: "없음", hours: "10:00 ~ 20:00", sns: "https://cafe.naver.com/90refurb", reserve: true, room: false, takeout: true, egg: false },
-      { id: 62, category: "기타쇼핑 및 뷰티", name: "노트 플리즈", address: "충남 아산시 탕정면 탕정면로8번길 33-2", phone: "0507-1366-1212", scale_num: 0, menus: [], rep_price_num: 999999, holiday: "월요일", hours: "11:00 ~ 19:00", sns: "https://www.instagram.com/note_please_shop/", reserve: false, room: false, takeout: false, egg: false },
-      { id: 63, category: "기타쇼핑 및 뷰티", name: "(지중해)차담온열방", address: "충남 아산시 탕정면 탕정면로22번길 29-5", phone: "041-548-3650", scale_num: 0, menus: [{ name: "온열다이어트1회", price: "20,000원", is_rep: true }], rep_price_num: 20000, holiday: "일요일\n토~12:00", hours: "09:30 ~ 19:00", sns: "", reserve: true, room: false, takeout: false, egg: false },
-      { id: 64, category: "기타쇼핑 및 뷰티", name: "다정안뷰티", address: "충남 아산시 탕정면 탕정면로22번길 25-1", phone: "0507-1344-5588", scale_num: 0, menus: [{ name: "수분진정관리", price: "50,000원", is_rep: true }, { name: "미백관리", price: "60,000원" }, { name: "탄력리프팅", price: "70,000원" }, { name: "여드름관리", price: "60,000원" }], rep_price_num: 50000, holiday: "일요일", hours: "10:00 ~ 20:00", sns: "https://www.instagram.com/dajeongan_beauty/", reserve: true, room: false, takeout: false, egg: false },
-      { id: 65, category: "기타쇼핑 및 뷰티", name: "홈앤키친90리퍼브", address: "충남 아산시 탕정면 탕정면로22번길 17-1", phone: "041-543-9091", scale_num: 0, menus: [], rep_price_num: 999999, holiday: "없음", hours: "10:00 ~ 20:00", sns: "https://cafe.naver.com/90refurb", reserve: true, room: false, takeout: true, egg: false },
-      { id: 66, category: "기타쇼핑 및 뷰티", name: "워시엔조이", address: "충남 아산시 탕정면 탕정면로22번길 11-2", phone: "010-3322-2482", scale_num: 0, menus: [{ name: "대형세탁", price: "5,000원", is_rep: true }, { name: "초대형세탁", price: "7,000원" }, { name: "대형건조", price: "4,000원" }, { name: "운동화세탁", price: "5,000원" }], rep_price_num: 5000, holiday: "없음", hours: "00:00 ~ 24:00", sns: "https://blog.naver.com/washenjoy_tangjeong", reserve: false, room: false, takeout: false, egg: false }
+      {"id": 1, "category": "한식", "name": "친정엄마한식뷔페", "address": "충남 아산시 탕정면 탕정면로22번길 23", "holiday": "없음", "hours": "09:30~21:00", "phone": "041-533-4530", "scale": "84석", "scale_num": 84, "egg": false, "room": false, "takeout": false, "reserve": false, "menus": [{"name": "14세이상", "price": "9,900원", "price_num": 9900, "is_rep": true}, {"name": "13세이하", "price": "7,700원", "price_num": 7700, "is_rep": false}, {"name": "7세이하", "price": "5,000원", "price_num": 5000, "is_rep": false}], "sns": ""},
+      {"id": 2, "category": "한식", "name": "진사또흑염소", "address": "충남 아산시 탕정면 탕정면로8번길 39-3", "holiday": "없음", "hours": "10:00~22:00", "phone": "010-8208-7445", "scale": "82석", "scale_num": 82, "egg": true, "room": true, "takeout": true, "reserve": true, "menus": [{"name": "흑염소수육", "price": "25,000원", "price_num": 25000, "is_rep": true}, {"name": "흑염소탕", "price": "10,000원", "price_num": 10000, "is_rep": false}, {"name": "흑염소전골", "price": "23,000원", "price_num": 23000, "is_rep": false}], "sns": ""},
+      {"id": 3, "category": "한식", "name": "1981탕정순대국", "address": "충남 아산시 탕정면 명암리 944-3", "holiday": "없음", "hours": "10:00~01:00", "phone": "0507-1341-5161", "scale": "60석", "scale_num": 60, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "머리고기국밥", "price": "11,000원", "price_num": 11000, "is_rep": true}, {"name": "막창국밥", "price": "12,000원", "price_num": 12000, "is_rep": false}, {"name": "모둠국밥", "price": "11,000원", "price_num": 11000, "is_rep": false}], "sns": "https://link.inpock.co.kr/bossamzip"},
+      {"id": 4, "category": "한식", "name": "무뚝이청국장&순두부", "address": "충남 아산시 탕정면 탕정면로8번길 39-6 1층", "holiday": "없음", "hours": "10:00~21:00", "phone": "041-544-6369", "scale": "44석", "scale_num": 44, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "청국장+찰솥밥", "price": "10,000원", "price_num": 10000, "is_rep": true}, {"name": "순두부+찰솥밥", "price": "10,000원", "price_num": 10000, "is_rep": false}, {"name": "곱창순두부+찰솥밥", "price": "11,000원", "price_num": 11000, "is_rep": false}], "sns": ""},
+      {"id": 5, "category": "한식", "name": "청기와냉면", "address": "충남 아산시 탕정면 탕정면로8번길 39-4 1층", "holiday": "1,3주월", "hours": "11:00~20:00", "phone": "041-545-1866", "scale": "50석", "scale_num": 50, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "물비빔냉면+숯불고기", "price": "12,000원", "price_num": 12000, "is_rep": true}, {"name": "물냉면+숯불고기", "price": "12,000원", "price_num": 12000, "is_rep": false}, {"name": "비빔냉면+숯불고기", "price": "12,000원", "price_num": 12000, "is_rep": false}], "sns": ""},
+      {"id": 6, "category": "한식", "name": "낭구", "address": "충남 아산시 탕정면 탕정면로8번길 47-6 1층", "holiday": "없음", "hours": "10:00~21:00", "phone": "0507-1336-5232", "scale": "50석", "scale_num": 50, "egg": false, "room": true, "takeout": true, "reserve": true, "menus": [{"name": "한돈제육볶음(2인)", "price": "22,000원", "price_num": 22000, "is_rep": true}, {"name": "고등어구이", "price": "11,000원", "price_num": 11000, "is_rep": false}, {"name": "묵은지삼겹살볶음(2인)", "price": "26,000원", "price_num": 26000, "is_rep": false}], "sns": ""},
+      {"id": 7, "category": "한식", "name": "두부랑 가마솥손두부", "address": "충남 아산시 탕정면 탕정면로8번길 69", "holiday": "없음", "hours": "10:00~21:00", "phone": "0507-1368-3116", "scale": "60석", "scale_num": 60, "egg": false, "room": true, "takeout": true, "reserve": true, "menus": [{"name": "두부낙지전골", "price": "15,000원", "price_num": 15000, "is_rep": true}, {"name": "두부낙지불낙보쌈", "price": "45,000원", "price_num": 45000, "is_rep": false}, {"name": "갑오징어불낙", "price": "45,000원", "price_num": 45000, "is_rep": false}], "sns": "https://blog.naver.com/sunhee8246"},
+      {"id": 8, "category": "한식", "name": "고향집", "address": "충남 아산시 탕정면 탕정면로8번길 63 1층", "holiday": "일요일", "hours": "09:00~21:00", "phone": "041-910-5959", "scale": "56석", "scale_num": 56, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "반계탕", "price": "10,000원", "price_num": 10000, "is_rep": true}, {"name": "삼계탕", "price": "17,000원", "price_num": 17000, "is_rep": false}, {"name": "고등어김치조림", "price": "11,000원", "price_num": 11000, "is_rep": false}], "sns": ""},
+      {"id": 9, "category": "중식", "name": "지중해양꼬치", "address": "충남 아산시 탕정면 탕정면로22번길 21 1층", "holiday": "없음", "hours": "14:00~02:00", "phone": "0507-1481-4462", "scale": "84석", "scale_num": 84, "egg": false, "room": true, "takeout": true, "reserve": true, "menus": [{"name": "양꼬치", "price": "13,000원", "price_num": 13000, "is_rep": true}, {"name": "양꼬치(오리지널)", "price": "13,000원", "price_num": 13000, "is_rep": false}, {"name": "양삼겹살꼬치", "price": "15,000원", "price_num": 15000, "is_rep": false}], "sns": ""},
+      {"id": 10, "category": "중식", "name": "교동짬뽕", "address": "충남 아산시 탕정면 탕정면로8번길 51-3 1층 101호", "holiday": "월요일", "hours": "09:00~20:20", "phone": "041-545-8818", "scale": "60석", "scale_num": 60, "egg": false, "room": true, "takeout": true, "reserve": true, "menus": [{"name": "유니짜장", "price": "8,000원", "price_num": 8000, "is_rep": true}, {"name": "교동짬뽕", "price": "11,000원", "price_num": 11000, "is_rep": false}, {"name": "간짜장", "price": "10,000원", "price_num": 10000, "is_rep": false}], "sns": ""},
+      {"id": 11, "category": "중식", "name": "훈이네양갈비&양꼬치", "address": "충남 아산시 탕정면 탕정면로8번길 55-5 1층", "holiday": "없음", "hours": "12:00~24:00", "phone": "0507-1462-1687", "scale": "80석", "scale_num": 80, "egg": false, "room": false, "takeout": false, "reserve": true, "menus": [{"name": "양갈비(260~300g)", "price": "26,000원", "price_num": 26000, "is_rep": true}, {"name": "양등심꼬치(230g)", "price": "18,000원", "price_num": 18000, "is_rep": false}, {"name": "양갈비살꼬치(200g)", "price": "18,000원", "price_num": 18000, "is_rep": false}], "sns": ""},
+      {"id": 12, "category": "중식", "name": "용주루", "address": "충남 아산시 탕정면 탕정면로8번길 55-4", "holiday": "일요일", "hours": "10:00~20:00", "phone": "041-534-2001", "scale": "65석", "scale_num": 65, "egg": false, "room": true, "takeout": true, "reserve": true, "menus": [{"name": "차돌짬뽕", "price": "13,000원", "price_num": 13000, "is_rep": true}, {"name": "짜장면", "price": "8,000원", "price_num": 8000, "is_rep": false}, {"name": "쟁반짜장(2인)", "price": "20,000원", "price_num": 20000, "is_rep": false}], "sns": ""},
+      {"id": 13, "category": "중식", "name": "마라순코우마라탕", "address": "충남 아산시 탕정면 탕정면로8번길 59-17 1층", "holiday": "없음", "hours": "11:00~21:30", "phone": "070-8287-1218", "scale": "40석", "scale_num": 40, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "마라탕", "price": "8,000원", "price_num": 8000, "is_rep": true}, {"name": "마라샹궈", "price": "15,000원", "price_num": 15000, "is_rep": false}, {"name": "궈보러우", "price": "11,000원", "price_num": 11000, "is_rep": false}], "sns": ""},
+      {"id": 14, "category": "일식", "name": "고칸", "address": "충남 아산시 탕정면 탕정면로8번길 39-5 102호", "holiday": "없음", "hours": "11:00~21:00", "phone": "041-545-3508", "scale": "22석", "scale_num": 22, "egg": false, "room": false, "takeout": true, "reserve": false, "menus": [{"name": "연어장동", "price": "12,900원", "price_num": 12900, "is_rep": true}, {"name": "간장새우장동", "price": "12,900원", "price_num": 12900, "is_rep": false}, {"name": "사케동", "price": "12,900원", "price_num": 12900, "is_rep": false}], "sns": ""},
+      {"id": 15, "category": "일식", "name": "도마횟집", "address": "충남 아산시 탕정면 탕정면로8번길 47-4", "holiday": "월요일", "hours": "16:00~23:00", "phone": "0507-1348-8343", "scale": "64석", "scale_num": 64, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "내맘대로모듬회", "price": "변동", "price_num": null, "is_rep": true}, {"name": "완도大광어", "price": "변동", "price_num": null, "is_rep": false}, {"name": "온어회", "price": "변동", "price_num": null, "is_rep": false}], "sns": "https://www.instagram.com/fish_on_doma"},
+      {"id": 16, "category": "일식", "name": "멘야마쯔리", "address": "충남 아산시 탕정면 탕정면로8번길 51-5", "holiday": "월~14:50", "hours": "11:00~21:00", "phone": "041-544-6907", "scale": "38석", "scale_num": 38, "egg": false, "room": false, "takeout": true, "reserve": false, "menus": [{"name": "마제소바", "price": "10,500원", "price_num": 10500, "is_rep": true}, {"name": "돈코츠라멘", "price": "9,500원", "price_num": 9500, "is_rep": false}, {"name": "카라구찌라멘", "price": "10,000원", "price_num": 10000, "is_rep": false}], "sns": "https://www.instagram.com/menyamatsuri_no2"},
+      {"id": 17, "category": "일식", "name": "피그펍돈까스", "address": "충남 아산시 탕정면 탕정면로8번길 59-12 1층", "holiday": "월요일", "hours": "11:00~20:30", "phone": "041-541-8883", "scale": "40석", "scale_num": 40, "egg": false, "room": false, "takeout": true, "reserve": false, "menus": [{"name": "수제등심돈까스", "price": "11,500원", "price_num": 11500, "is_rep": true}, {"name": "수제치즈돈까스", "price": "12,500원", "price_num": 12500, "is_rep": false}, {"name": "모듬돈까스", "price": "39,000원", "price_num": 39000, "is_rep": false}], "sns": ""},
+      {"id": 18, "category": "양식", "name": "발리바베큐", "address": "충남 아산시 탕정면 탕정면로22번길 20 1층", "holiday": "월요일", "hours": "17:00~22:00", "phone": "0507-1381-1323", "scale": "30석", "scale_num": 30, "egg": false, "room": false, "takeout": true, "reserve": false, "menus": [{"name": "2인플레터A(2인분)", "price": "55,000원", "price_num": 55000, "is_rep": true}, {"name": "3,4인세트B타입", "price": "99,000원", "price_num": 99000, "is_rep": false}, {"name": "4,5인세트", "price": "139,000원", "price_num": 139000, "is_rep": false}], "sns": ""},
+      {"id": 19, "category": "양식", "name": "우리위치샌드위치", "address": "충남 아산시 탕정면 탕정면로8번길 39-5 1층 101호", "holiday": "토요일\n일~15:00", "hours": "08:30~18:00", "phone": "0507-1352-3561", "scale": "12석", "scale_num": 12, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "단호박에크랩", "price": "7,800원", "price_num": 7800, "is_rep": true}, {"name": "케이준치킨샌드위치", "price": "8,200원", "price_num": 8200, "is_rep": false}, {"name": "바질치킨샌드위치", "price": "8,500원", "price_num": 8500, "is_rep": false}], "sns": "https://www.instagram.com/our_location_sandwich"},
+      {"id": 20, "category": "양식", "name": "버거앤그릴", "address": "충남 아산시 탕정면 탕정면로8번길 51-6 1층", "holiday": "월요일", "hours": "11:00~20:10", "phone": "0507-1345-0326", "scale": "32석", "scale_num": 32, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "버거앤그릴시그니처", "price": "15,500원", "price_num": 15500, "is_rep": true}, {"name": "치즈버거", "price": "8,500원", "price_num": 8500, "is_rep": false}, {"name": "페퍼로니치즈버거", "price": "8,500원", "price_num": 8500, "is_rep": false}], "sns": "https://www.instagram.com/burger_grilllllll"},
+      {"id": 21, "category": "양식", "name": "빠삐용피자", "address": "충남 아산시 탕정면 탕정면로8번길 59-16", "holiday": "일요일", "hours": "11:30~22:00", "phone": "041-533-5111", "scale": "50석", "scale_num": 50, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "갈릭쉬림프", "price": "23,000원", "price_num": 23000, "is_rep": true}, {"name": "마르게리따", "price": "19,000원", "price_num": 19000, "is_rep": false}, {"name": "화이트라구파스타", "price": "20,000원", "price_num": 20000, "is_rep": false}], "sns": ""},
+      {"id": 22, "category": "분식", "name": "신전떡볶이", "address": "충남 아산시 탕정면 탕정면로22번길 15-12", "holiday": "없음", "hours": "11:00~21:00", "phone": "041-544-1123", "scale": "26석", "scale_num": 26, "egg": false, "room": false, "takeout": true, "reserve": false, "menus": [{"name": "김말이", "price": "1,700원", "price_num": 1700, "is_rep": true}, {"name": "튀김만두", "price": "1,700원", "price_num": 1700, "is_rep": false}, {"name": "튀김오뎅", "price": "1,700원", "price_num": 1700, "is_rep": false}], "sns": "https://www.instagram.com/sinjeon_official"},
+      {"id": 23, "category": "분식", "name": "오늘김밥 샤브칼국수", "address": "충남 아산시 탕정면 탕정면로8번길 51-4 1층", "holiday": "토,일~15:00", "hours": "09:00~20:00", "phone": "041-531-8745", "scale": "46석", "scale_num": 46, "egg": false, "room": true, "takeout": true, "reserve": true, "menus": [{"name": "등심돈까스", "price": "11,500원", "price_num": 11500, "is_rep": true}, {"name": "등심돈까스+김치우동", "price": "16,500원", "price_num": 16500, "is_rep": false}, {"name": "등심돈까스+유부우동", "price": "15,500원", "price_num": 15500, "is_rep": false}], "sns": ""},
+      {"id": 24, "category": "고기구이", "name": "홍가 한우숯불구이", "address": "충남 아산시 탕정면 탕정면로8번길 39-2 1층", "holiday": "일요일", "hours": "11:30~22:00", "phone": "0507-1375-1426", "scale": "64석", "scale_num": 64, "egg": false, "room": true, "takeout": true, "reserve": true, "menus": [{"name": "홍가大500g(모듬)", "price": "105,000원", "price_num": 105000, "is_rep": true}, {"name": "홍가특1kg(모듬)", "price": "198,000원", "price_num": 198000, "is_rep": false}, {"name": "특수부위500g(모듬)", "price": "159,000원", "price_num": 159000, "is_rep": false}], "sns": ""},
+      {"id": 25, "category": "고기구이", "name": "할매솥뚜껑삼겹살", "address": "충남 아산시 탕정면 탕정면로22번길 15-10", "holiday": "월요일\n토,일12:30~", "hours": "16:00~23:50", "phone": "041-533-4248", "scale": "61석", "scale_num": 61, "egg": false, "room": false, "takeout": false, "reserve": true, "menus": [{"name": "숙성삼겹살한판(600g)", "price": "30,000원", "price_num": 30000, "is_rep": true}, {"name": "숙성삼겹살(200g)", "price": "10,000원", "price_num": 10000, "is_rep": false}, {"name": "숙성목살(200g)", "price": "10,000원", "price_num": 10000, "is_rep": false}], "sns": "https://www.할매솥뚜껑.com/"},
+      {"id": 26, "category": "고기구이", "name": "꾸석지돌판한우", "address": "충남 아산시 탕정면 탕정면로8번길 47-5 1층", "holiday": "없음", "hours": "11:30~24:00", "phone": "041-533-9291", "scale": "68석", "scale_num": 68, "egg": false, "room": true, "takeout": false, "reserve": true, "menus": [{"name": "꾸석지한우등심(100g)", "price": "9,800원", "price_num": 9800, "is_rep": true}, {"name": "차돌박이(100g)", "price": "9,800원", "price_num": 9800, "is_rep": false}, {"name": "갈비살(100g)", "price": "11,800원", "price_num": 11800, "is_rep": false}], "sns": "https://꾸석지.com/"},
+      {"id": 27, "category": "고기구이", "name": "정석생소금구이", "address": "충남 아산시 탕정면 탕정면로8번길 59-15 1층", "holiday": "토,일12:00~", "hours": "16:00~23:00", "phone": "0507-1316-7391", "scale": "60석", "scale_num": 60, "egg": false, "room": false, "takeout": false, "reserve": false, "menus": [{"name": "모둠(400g)", "price": "35,000원", "price_num": 35000, "is_rep": true}, {"name": "숙성삼겹(170g)", "price": "15,000원", "price_num": 15000, "is_rep": false}, {"name": "숙성천겹(170g)", "price": "16,000원", "price_num": 16000, "is_rep": false}], "sns": ""},
+      {"id": 28, "category": "고기구이", "name": "봉자막창", "address": "충남 아산시 탕정면 탕정면로8번길 59-8 1층", "holiday": "없음", "hours": "16:00~01:00", "phone": "0507-1394-1891", "scale": "65석", "scale_num": 65, "egg": false, "room": false, "takeout": false, "reserve": true, "menus": [{"name": "봉자고기반반섞어한판", "price": "43,000원", "price_num": 43000, "is_rep": true}, {"name": "봉자생막창(500g+500g)", "price": "43,000원", "price_num": 43000, "is_rep": false}, {"name": "봉자양념불막창(300g+300g)", "price": "43,000원", "price_num": 43000, "is_rep": false}], "sns": ""},
+      {"id": 29, "category": "주점", "name": "금별맥주", "address": "충남 아산시 탕정면 한들물빛5로 17 114호", "holiday": "금,토~03:00", "hours": "16:30~02:00", "phone": "0507-1473-1054", "scale": "74석", "scale_num": 74, "egg": false, "room": false, "takeout": false, "reserve": true, "menus": [{"name": "핫크리스피치킨", "price": "22,000원", "price_num": 22000, "is_rep": true}, {"name": "불고기피자", "price": "13,900원", "price_num": 13900, "is_rep": false}, {"name": "불고기해장파스탕", "price": "24,000원", "price_num": 24000, "is_rep": false}], "sns": ""},
+      {"id": 30, "category": "주점", "name": "몽펠리에", "address": "충남 아산시 탕정면 탕정면로8번길 47-1 1층", "holiday": "일요일", "hours": "17:30~23:00", "phone": "0507-1378-7250", "scale": "46석", "scale_num": 46, "egg": false, "room": true, "takeout": true, "reserve": true, "menus": [{"name": "슈바인학센", "price": "67,000원", "price_num": 67000, "is_rep": true}, {"name": "묵은지파스타", "price": "21,000원", "price_num": 21000, "is_rep": false}, {"name": "명란파스타", "price": "22,000원", "price_num": 22000, "is_rep": false}], "sns": "http://m.facebook.com/mont5477250"},
+      {"id": 31, "category": "주점", "name": "지중해전이야기", "address": "충남 아산시 탕정면 탕정면로8번길 47-2 1층", "holiday": "일요일", "hours": "16:00~24:00", "phone": "0507-1332-6543", "scale": "52석", "scale_num": 52, "egg": false, "room": true, "takeout": true, "reserve": true, "menus": [{"name": "모둠전", "price": "29,000원", "price_num": 29000, "is_rep": true}, {"name": "육전", "price": "20,000원", "price_num": 20000, "is_rep": false}, {"name": "동태전", "price": "20,000원", "price_num": 20000, "is_rep": false}], "sns": "https://www.instagram.com/jeon_story?igsh=eGJwaHhkZ2FienJj&utm_source=qr"},
+      {"id": 32, "category": "카페 및 디저트", "name": "오마레", "address": "충남 아산시 탕정면 탕정면로22번길 15-2 1층 101호", "holiday": "없음", "hours": "11:00~21:00", "phone": "0507-1335-0216", "scale": "36석", "scale_num": 36, "egg": false, "room": true, "takeout": false, "reserve": false, "menus": [{"name": "멜론아이스크림빙수", "price": "20,000원", "price_num": 20000, "is_rep": true}, {"name": "아몬드크림라떼", "price": "6,900원", "price_num": 6900, "is_rep": false}, {"name": "복숭아실크빙수", "price": "변동", "price_num": null, "is_rep": false}], "sns": ""},
+      {"id": 33, "category": "카페 및 디저트", "name": "커피예술", "address": "충남 아산시 탕정면 탕정면로22번길 15-8 1층", "holiday": "없음", "hours": "10:00~22:00", "phone": "070-4400-5066", "scale": "50석", "scale_num": 50, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "아이스아메리카노", "price": "4,500원", "price_num": 4500, "is_rep": true}, {"name": "카페라떼", "price": "5,000원", "price_num": 5000, "is_rep": false}, {"name": "디카페인아메리카노", "price": "5,200원", "price_num": 5200, "is_rep": false}], "sns": "http://www.instagram.com/coffee.yesul"},
+      {"id": 34, "category": "카페 및 디저트", "name": "브릭빈커피로스터스", "address": "충남 아산시 탕정면 탕정면로8번길 47-3 1층", "holiday": "월요일", "hours": "11:00~22:00", "phone": "0507-1356-1034", "scale": "35석", "scale_num": 35, "egg": false, "room": false, "takeout": true, "reserve": false, "menus": [{"name": "무화과얼그레이빙수", "price": "25,000원", "price_num": 25000, "is_rep": true}, {"name": "인절미팥빙수", "price": "19,000원", "price_num": 19000, "is_rep": false}, {"name": "아포카토", "price": "7,500원", "price_num": 7500, "is_rep": false}], "sns": "https://smartstore.naver.com/brickbean"},
+      {"id": 35, "category": "카페 및 디저트", "name": "유어프레즌트", "address": "충남 아산시 탕정면 탕정면로22번길 15-14 102호", "holiday": "일요일", "hours": "09:00~19:30", "phone": "041-542-9524", "scale": "32석", "scale_num": 32, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "소금라떼", "price": "6,000원", "price_num": 6000, "is_rep": true}, {"name": "달달소금라떼", "price": "6,500원", "price_num": 6500, "is_rep": false}, {"name": "유프커피", "price": "6,300원", "price_num": 6300, "is_rep": false}], "sns": "https://www.instagram.com/cafeurpresent_asan"},
+      {"id": 36, "category": "카페 및 디저트", "name": "인유얼커피", "address": "충남 아산시 탕정면 탕정면로8번길 51-7", "holiday": "일~18:00\n월~16:00", "hours": "10:00~21:00", "phone": "010-2464-2413", "scale": "34석", "scale_num": 34, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "에스프레소", "price": "4,500원", "price_num": 4500, "is_rep": true}, {"name": "아메리카노", "price": "4,500원", "price_num": 4500, "is_rep": false}, {"name": "카페라떼", "price": "5,000원", "price_num": 5000, "is_rep": false}], "sns": ""},
+      {"id": 37, "category": "카페 및 디저트", "name": "macaroo", "address": "충남 아산시 탕정면 탕정면로8번길 51-8", "holiday": "일,월요일", "hours": "12:00~18:00", "phone": "0507-1314-9466", "scale": "8석", "scale_num": 8, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "미니카롱산리오", "price": "13,900원", "price_num": 13900, "is_rep": true}, {"name": "두쪽쿠(50g)", "price": "4,800원", "price_num": 4800, "is_rep": false}, {"name": "쿠앤크", "price": "3,300원", "price_num": 3300, "is_rep": false}], "sns": "https://www.instagram.com/macaroo_2018"},
+      {"id": 38, "category": "카페 및 디저트", "name": "베이커리 아산", "address": "충남 아산시 탕정면 탕정면로40번길 15-4 1층", "holiday": "월요일", "hours": "10:00~19:00", "phone": "041-549-1003", "scale": "28석", "scale_num": 28, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "밤파이", "price": "3,000원", "price_num": 3000, "is_rep": true}, {"name": "소금빵", "price": "3,000원", "price_num": 3000, "is_rep": false}, {"name": "에끌레어", "price": "3,800원", "price_num": 3800, "is_rep": false}], "sns": "https://www.instagram.com/bakery_asan"},
+      {"id": 39, "category": "카페 및 디저트", "name": "스프레드", "address": "충남 아산시 탕정면 탕정면로8번길 55-7", "holiday": "일요일", "hours": "09:30~20:00", "phone": "041-542-7425", "scale": "8석", "scale_num": 8, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "스프레드", "price": "5,000원", "price_num": 5000, "is_rep": true}, {"name": "알밤", "price": "6,000원", "price_num": 6000, "is_rep": false}, {"name": "애플", "price": "6,000원", "price_num": 6000, "is_rep": false}], "sns": ""},
+      {"id": 40, "category": "카페 및 디저트", "name": "올댓초콜릿", "address": "충남 아산시 탕정면 탕정면로8번길 55-1 1층", "holiday": "월요일\n일12:00~", "hours": "11:00~19:00", "phone": "041-533-6372", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "밀크로쉐", "price": "9,000원", "price_num": 9000, "is_rep": true}, {"name": "현미크런치", "price": "8,000원", "price_num": 8000, "is_rep": false}, {"name": "다크아몬드", "price": "8,000원", "price_num": 8000, "is_rep": false}], "sns": "https://www.instagram.com/all_that_chocolate__?igsh=MXRtaDJwdzVvdmRqMw%3D%3D&utm_source=qr"},
+      {"id": 41, "category": "카페 및 디저트", "name": "우아한 티", "address": "충남 아산시 탕정면 탕정면로8번길 55-6 1층 102호", "holiday": "?", "hours": "?", "phone": "0507-1368-8202", "scale": "20석", "scale_num": 20, "egg": false, "room": false, "takeout": false, "reserve": true, "menus": [{"name": "오리지널 꽃차", "price": "7,000원", "price_num": 7000, "is_rep": true}, {"name": "꽃차스틱", "price": "8,000원", "price_num": 8000, "is_rep": false}, {"name": "블랜딩꽃차", "price": "8,000원", "price_num": 8000, "is_rep": false}], "sns": "https://www.instagram.com/official_elegant_tea?igsh=d285ZHp4YWF6eG15"},
+      {"id": 42, "category": "카페 및 디저트", "name": "마노커피", "address": "충남 아산시 탕정면 탕정면로40번길 15-10 1층", "holiday": "없음", "hours": "09:30~22:00", "phone": "041-910-7663", "scale": "50석", "scale_num": 50, "egg": false, "room": false, "takeout": true, "reserve": false, "menus": [{"name": "바스크치즈조각케이크", "price": "6,500원", "price_num": 6500, "is_rep": true}, {"name": "너츠크림라떼", "price": "6,500원", "price_num": 6500, "is_rep": false}, {"name": "스카치버터크림라떼", "price": "6,500원", "price_num": 6500, "is_rep": false}], "sns": "http://m.smartstore.naver.com/manocoffee"},
+      {"id": 43, "category": "카페 및 디저트", "name": "달코롬케이크", "address": "충남 아산시 탕정면 탕정면로40번길 15-12 1층", "holiday": "2,4주일", "hours": "11:00~21:00", "phone": "041-549-4263", "scale": "24석", "scale_num": 24, "egg": false, "room": false, "takeout": true, "reserve": false, "menus": [{"name": "시그니처초코소금빵", "price": "4,500원", "price_num": 4500, "is_rep": true}, {"name": "바스크치즈케이크", "price": "7,500원", "price_num": 7500, "is_rep": false}, {"name": "두바이쫀득볼", "price": "5,000원", "price_num": 5000, "is_rep": false}], "sns": "https://www.instagram.com/dalkorom_bakery"},
+      {"id": 44, "category": "카페 및 디저트", "name": "비읍커피", "address": "충남 아산시 탕정면 탕정면로8번길 59-11", "holiday": "없음", "hours": "10:00~22:00", "phone": "041-531-1102", "scale": "52석", "scale_num": 52, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "아메리카노", "price": "4,500원", "price_num": 4500, "is_rep": true}, {"name": "시그니처라떼", "price": "6,500원", "price_num": 6500, "is_rep": false}, {"name": "아포카토", "price": "6,800원", "price_num": 6800, "is_rep": false}], "sns": "https://www.instagram.com/lzl.coffee"},
+      {"id": 45, "category": "의류 및 패션", "name": "블링", "address": "충남 아산시 탕정면 탕정면로8번길 51-8 1층", "holiday": "일요일", "hours": "12:00~18:00", "phone": "0507-1423-0612", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": false, "menus": [], "sns": ""},
+      {"id": 46, "category": "의류 및 패션", "name": "헨젤과그레텔", "address": "충남 아산시 탕정면 탕정면로8번길 51-2", "holiday": "", "hours": "", "phone": "041-546-0666", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": false, "menus": [], "sns": ""},
+      {"id": 47, "category": "의류 및 패션", "name": "AUTHENTIC", "address": "충남 아산시 탕정면 탕정면로8번길 55-3", "holiday": "격주 일", "hours": "11:30~19:00", "phone": "0507-1323-0095", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": true, "menus": [], "sns": "https://story.kakao.com/authentic1"},
+      {"id": 48, "category": "의류 및 패션", "name": "데일리", "address": "충남 아산시 탕정면 탕정면로8번길 55-3", "holiday": "", "hours": "", "phone": "041-542-4171", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": false, "menus": [], "sns": ""},
+      {"id": 49, "category": "의류 및 패션", "name": "그레이후드", "address": "충남 아산시 탕정면 탕정면로40번길 15-6", "holiday": "월요일", "hours": "10:00~19:00", "phone": "010-9277-7717", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [], "sns": "https://blog.naver.com/ycoisnowhere"},
+      {"id": 50, "category": "의류 및 패션", "name": "기린의옷장", "address": "충남 아산시 탕정면 탕정면로40번길 15-16", "holiday": "", "hours": "", "phone": "041-500-0000", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": false, "menus": [], "sns": ""},
+      {"id": 51, "category": "의류 및 패션", "name": "레브", "address": "충남 아산시 탕정면 탕정면로8번길 59-18", "holiday": "", "hours": "", "phone": "010-2106-1126", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": false, "menus": [], "sns": ""},
+      {"id": 52, "category": "공방 및 스튜디오", "name": "무무드스튜디오", "address": "충남 아산시 탕정면 탕정면로8번길 39-1 1층", "holiday": "일,월요일", "hours": "10:00~15:00", "phone": "0507-1490-2103", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": true, "menus": [{"name": "1컨셉촬영", "price": "150,000원", "price_num": 150000, "is_rep": true}, {"name": "2컨셉촬영", "price": "270,000원", "price_num": 270000, "is_rep": false}, {"name": "1시간스냅형", "price": "320,000원", "price_num": 320000, "is_rep": false}], "sns": "https://blog.naver.com/moomood_studio"},
+      {"id": 53, "category": "공방 및 스튜디오", "name": "너에게꽃이다", "address": "충남 아산시 탕정면 탕정면로22번길 15-14 101호", "holiday": "일요일\n토09~17", "hours": "10:00~19:00", "phone": "0507-1420-1063", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [{"name": "꽃다발", "price": "변동", "price_num": null, "is_rep": true}, {"name": "꽃바구니", "price": "변동", "price_num": null, "is_rep": false}, {"name": "플라워박스", "price": "변동", "price_num": null, "is_rep": false}], "sns": "https://smartstore.naver.com/flowersforu"},
+      {"id": 54, "category": "공방 및 스튜디오", "name": "앤웜", "address": "충남 아산시 탕정면 탕정면로40번길 15-6 1층", "holiday": "일요일\n토,월~18:00", "hours": "11:00~19:00", "phone": "041-548-7137", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": true, "reserve": true, "menus": [], "sns": "http://nwarm.kr/"},
+      {"id": 55, "category": "공방 및 스튜디오", "name": "캘리플로라", "address": "충남 아산시 탕정면 탕정면로8번길 59-7", "holiday": "없음", "hours": "11:00~19:00", "phone": "0507-1331-7907", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": true, "menus": [], "sns": "https://blog.naver.com/calliflora"},
+      {"id": 56, "category": "공방 및 스튜디오", "name": "도예뜰", "address": "충남 아산시 탕정면 탕정면로8번길 59-18", "holiday": "", "hours": "", "phone": "041-547-8968", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": false, "menus": [], "sns": "https://blog.naver.com/doyeteul"},
+      {"id": 57, "category": "기타쇼핑 및 뷰티", "name": "리얼클린족욕", "address": "충남 아산시 탕정면 탕정면로22번길 15-12", "holiday": "월,화요일\n수13:00~", "hours": "11:00~20:00", "phone": "0507-1328-9167", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": true, "menus": [], "sns": ""},
+      {"id": 58, "category": "기타쇼핑 및 뷰티", "name": "채움 온", "address": "충남 아산시 탕정면 탕정면로8번길 51-1 102호", "holiday": "일요일", "hours": "09:00~18:00", "phone": "010-5956-0571", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": true, "menus": [{"name": "새치뿌리염색(숏컷)", "price": "15,000원", "price_num": 15000, "is_rep": true}, {"name": "전체염색(숏컷)", "price": "20,000원", "price_num": 20000, "is_rep": false}, {"name": "두피케어(40분)", "price": "40,000원", "price_num": 40000, "is_rep": false}], "sns": ""},
+      {"id": 59, "category": "기타쇼핑 및 뷰티", "name": "파트라슈", "address": "충남 아산시 탕정면 탕정면로8번길 51-2 1층", "holiday": "토,일~22:00", "hours": "10:00~18:00", "phone": "041-545-7028", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": true, "menus": [{"name": "소형견 생애 첫 미용", "price": "55,000원", "price_num": 55000, "is_rep": true}, {"name": "중형견 생애 첫 미용", "price": "66,000원", "price_num": 66000, "is_rep": false}, {"name": "소형견 올 클리핑", "price": "38,000원", "price_num": 38000, "is_rep": false}], "sns": ""},
+      {"id": 60, "category": "기타쇼핑 및 뷰티", "name": "(지중해)차담온열방", "address": "충남 아산시 탕정면 탕정면로8번길 55-1 101호", "holiday": "일요일\n토~12:00", "hours": "09:00~19:30", "phone": "010-4492-3331", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": true, "menus": [{"name": "온열 다이어트", "price": "20,000원", "price_num": 20000, "is_rep": true}], "sns": "https://blog.naver.com/cgb7764"},
+      {"id": 61, "category": "기타쇼핑 및 뷰티", "name": "지중해가챠샵", "address": "충남 아산시 탕정면 탕정면로8번길 55-10", "holiday": "없음", "hours": "00:00~24:00", "phone": "010-4533-0314", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": false, "menus": [], "sns": ""},
+      {"id": 62, "category": "기타쇼핑 및 뷰티", "name": "90리퍼브", "address": "충남 아산시 탕정면 탕정면로8번길 55-2", "holiday": "없음", "hours": "09:30~20:00", "phone": "0507-1380-2353", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": false, "menus": [], "sns": "https://band.us/@hak"},
+      {"id": 63, "category": "기타쇼핑 및 뷰티", "name": "노트 플리즈", "address": "충남 아산시 탕정면 탕정면로8번길 59-7 1층", "holiday": "토,일요일\n월11:30~15:25", "hours": "09:00~15:20", "phone": "0507-1410-0342", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": false, "menus": [], "sns": ""},
+      {"id": 64, "category": "기타쇼핑 및 뷰티", "name": "홈앤키친90리퍼브", "address": "충남 아산시 탕정면 탕정면로8번길 59-3 1층", "holiday": "월요일", "hours": "09:30~20:00", "phone": "0507-1340-4705", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": true, "menus": [], "sns": "https://band.us/band/84979740"},
+      {"id": 65, "category": "기타쇼핑 및 뷰티", "name": "다정안뷰티", "address": "충남 아산시 탕정면 탕정면로8번길 67 1층", "holiday": "없음", "hours": "10:00~21:00", "phone": "0507-1358-6859", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": true, "menus": [{"name": "수분관리 체험권", "price": "69,000원", "price_num": 69000, "is_rep": true}, {"name": "물방울케어", "price": "124,000원", "price_num": 124000, "is_rep": false}, {"name": "PHA물톡스", "price": "150,000원", "price_num": 150000, "is_rep": false}], "sns": ""},
+      {"id": 66, "category": "기타쇼핑 및 뷰티", "name": "워시엔조이", "address": "충남 아산시 탕정면 탕정면로8번길 71", "holiday": "없음", "hours": "00:00~24:00", "phone": "0507-1319-1519", "scale": "", "scale_num": 0, "egg": false, "room": false, "takeout": false, "reserve": false, "menus": [{"name": "표준세탁", "price": "4,500원", "price_num": 4500, "is_rep": true}, {"name": "향균세탁", "price": "5,500원", "price_num": 5500, "is_rep": false}, {"name": "친환경세제세탁", "price": "5,500원", "price_num": 5500, "is_rep": false}], "sns": ""}
     ];
 
     const CATEGORIES = [
@@ -637,7 +586,7 @@
       { key: "주점", label: "주점", count: 3, icon: "ph-beer-stein" },
       { key: "카페 및 디저트", label: "카페 및 디저트", count: 13, icon: "ph-coffee" },
       { key: "의류 및 패션", label: "의류 및 패션", count: 7, icon: "ph-t-shirt" },
-      { key: "공방 및 스튜디오", label: "공방 및 스튜디오", count: 5, icon: "ph-palette" },
+      { key: "공방 및 스튜디오", label: "공방 및 스튜디오", count: 5, icon: "ph-paint-brush" },
       { key: "기타쇼핑 및 뷰티", label: "기타쇼핑 및 뷰티", count: 10, icon: "ph-sparkle" }
     ];
 
@@ -650,204 +599,8 @@
       { key: "sns", label: "🔗 SNS/블로그 보유 (27)", check: (s) => s.sns !== "" }
     ];
 
-    // Multilingual Dictionary (KR / EN / ZH-CN / JA)
-    const I18N_DICT = {
-      "ko": {
-        langLabel: "언어",
-        langStatus: "다국어 스마트 번역 지원 (KR · EN · CN · JP)",
-        brandTitle: "지중해마을",
-        taglineBadge: "✈️ 여권없이 떠나는 지중해마을",
-        subtitleHtml: '여권없이 떠나는 지중해마을 <strong class="text-brand-dark font-bold">66개 매장</strong>의 대표 메뉴·가격·편의시설을 한눈에 찾아보세요.',
-        statAll: '전체 <strong class="text-brand-blue">66</strong>곳',
-        statFb: '🍽️ 식음료 <strong class="text-brand-dark">44</strong>',
-        statShop: '🛍️ 쇼핑·공방·뷰티 <strong class="text-brand-dark">22</strong>',
-        statRoom: '🚪 단체룸 완비 <strong class="text-brand-blue">12</strong>',
-        snsYoutube: "유튜브",
-        snsInsta: "인스타",
-        snsFestival: "축제정보",
-        mascotSub: "🍇 지중해마을 마스코트 추천",
-        mascotTitle: "오늘 뭐 먹지? 랜덤 메뉴 뽑기",
-        searchPlaceholder: "메뉴명(삼겹살, 빙수, 짬뽕, 두부, 돈까스) 또는 상호명 검색...",
-        sortOptions: {
-          id_asc: "📋 기본 순번순",
-          scale_desc: "👥 좌석 규모 큰 순",
-          price_asc: "💰 대표메뉴 가격 낮은 순",
-          name_asc: "🔤 상호명 가나다순"
-        },
-        resetBtn: "초기화",
-        cardClickHint: "카드를 클릭하면 상세정보 및 네이버·카카오 지도 검색으로 연결됩니다.",
-        emptyTitle: "조건에 맞는 매장을 찾지 못했어요",
-        emptyDesc: "검색어를 바꾸거나 선택된 스마트 필터를 해제해 보세요.",
-        emptyBtn: "전체 매장 다시 보기",
-        footerAddress: "여권없이 떠나는 지중해마을 · 충청남도 아산시 탕정면 탕정면로8번길 일원",
-        footerNotice1: "본 가이드는 지중해마을 66개 매장 공식 DB를 기반으로 제작되었습니다.",
-        footerNotice2: "매장 사정에 따라 영업시간 및 메뉴 가격이 변동될 수 있습니다.",
-        categories: {
-          "전체": "전체", "한식": "한식", "중식": "중식", "일식": "일식", "양식": "양식",
-          "분식": "분식", "고기구이": "고기구이", "주점": "주점", "카페 및 디저트": "카페 및 디저트",
-          "의류 및 패션": "의류 및 패션", "공방 및 스튜디오": "공방 및 스튜디오", "기타쇼핑 및 뷰티": "기타쇼핑 및 뷰티"
-        },
-        smartFilters: {
-          room: "🚪 단체룸 완비 (12)", large: "👥 50석 이상 대형매장 (24)", reserve: "📅 예약 가능 (45)",
-          takeout: "🛍️ 포장 가능 (38)", egg: "🍳 계란프라이 제공 (1)", sns: "🔗 SNS/블로그 보유 (27)"
-        },
-        card: {
-          allStoresTitle: "전체 매장", countSuffix: "곳", seatsSuffix: "석",
-          roomBadge: "🚪 룸 완비", reserveBadge: "📅 예약가능", takeoutBadge: "🛍️ 포장가능",
-          eggBadge: "🍳 계란프라이", repBadge: "대표",
-          inquireTitle: "✨ 매장 방문 문의 / 상품별 상이", inquireSub: "(패션·리빙·체험 매장)",
-          hoursLabel: "영업시간", holidayLabel: "휴무/참고", callBtn: "전화걸기", copyBtn: "주소복사",
-          noHoliday: "연중무휴", askStore: "매장 문의", marketPrice: "변동(시가)"
-        }
-      },
-      "en": {
-        langLabel: "Lang",
-        langStatus: "Auto-Translation Active (English)",
-        brandTitle: "Mediterranean Village",
-        taglineBadge: "✈️ Mediterranean Trip Without a Passport",
-        subtitleHtml: 'Explore signature menus, prices & amenities of all <strong class="text-brand-dark font-bold">66 stores</strong> in Asan Mediterranean Village.',
-        statAll: 'Total <strong class="text-brand-blue">66</strong>',
-        statFb: '🍽️ Dining & Cafe <strong class="text-brand-dark">44</strong>',
-        statShop: '🛍️ Shop & Craft <strong class="text-brand-dark">22</strong>',
-        statRoom: '🚪 Private Room <strong class="text-brand-blue">12</strong>',
-        snsYoutube: "YouTube",
-        snsInsta: "Instagram",
-        snsFestival: "Festivals",
-        mascotSub: "🍇 Mascot Pick",
-        mascotTitle: "What to Eat? Random Pick",
-        searchPlaceholder: "Search menu (BBQ, Bingsu, Noodle, Tofu, Cutlet) or store name...",
-        sortOptions: {
-          id_asc: "📋 Default Order",
-          scale_desc: "👥 Most Seats First",
-          price_asc: "💰 Lowest Price First",
-          name_asc: "🔤 Alphabetical"
-        },
-        resetBtn: "Reset",
-        cardClickHint: "Click any card for details and Naver/Kakao Map directions.",
-        emptyTitle: "No matching stores found",
-        emptyDesc: "Try another keyword or clear active filters.",
-        emptyBtn: "Show All 66 Stores",
-        footerAddress: "Tangjeongmyeon-ro 8beon-gil, Tangjeong-myeon, Asan-si, Chungnam",
-        footerNotice1: "Based on the official directory DB of 66 stores in Mediterranean Village.",
-        footerNotice2: "Opening hours and menu prices may vary depending on store circumstances.",
-        categories: {
-          "전체": "All", "한식": "Korean", "중식": "Chinese", "일식": "Japanese", "양식": "Western",
-          "분식": "Snack/Bunsik", "고기구이": "K-BBQ", "주점": "Pub & Bar", "카페 및 디저트": "Cafe & Dessert",
-          "의류 및 패션": "Fashion", "공방 및 스튜디오": "Craft & Studio", "기타쇼핑 및 뷰티": "Beauty & Living"
-        },
-        smartFilters: {
-          room: "🚪 Private Room (12)", large: "👥 50+ Seats Large (24)", reserve: "📅 Reservation (45)",
-          takeout: "🛍️ Takeout (38)", egg: "🍳 Free Fried Egg (1)", sns: "🔗 Website/SNS (27)"
-        },
-        card: {
-          allStoresTitle: "All Stores", countSuffix: "", seatsSuffix: " seats",
-          roomBadge: "🚪 Private Room", reserveBadge: "📅 Reservable", takeoutBadge: "🛍️ Takeout",
-          eggBadge: "🍳 Fried Egg", repBadge: "BEST",
-          inquireTitle: "✨ In-store Inquiry / Varies by Item", inquireSub: "(Fashion · Craft · Lifestyle)",
-          hoursLabel: "Hours", holidayLabel: "Closed / Note", callBtn: "Call", copyBtn: "Copy Addr",
-          noHoliday: "Open Daily", askStore: "Inquire", marketPrice: "Market Price"
-        }
-      },
-      "zh-CN": {
-        langLabel: "语言",
-        langStatus: "已启用多语言智能翻译 (中文)",
-        brandTitle: "牙山地中海村",
-        taglineBadge: "✈️ 免护照畅游地中海村",
-        subtitleHtml: '一目了然地查看免护照畅游地中海村 <strong class="text-brand-dark font-bold">66家店铺</strong> 的招牌菜单、价格与便利设施。',
-        statAll: '全部 <strong class="text-brand-blue">66</strong>家',
-        statFb: '🍽️ 餐饮咖啡 <strong class="text-brand-dark">44</strong>',
-        statShop: '🛍️ 购物·工坊·美容 <strong class="text-brand-dark">22</strong>',
-        statRoom: '🚪 设独立包厢 <strong class="text-brand-blue">12</strong>',
-        snsYoutube: "YouTube",
-        snsInsta: "Instagram",
-        snsFestival: "庆典资讯",
-        mascotSub: "🍇 吉祥物美食推荐",
-        mascotTitle: "今天吃什么？随机抽选",
-        searchPlaceholder: "搜索菜品名称（五花肉、刨冰、海鲜面、豆腐、炸猪排）或店名...",
-        sortOptions: {
-          id_asc: "📋 默认编号顺序",
-          scale_desc: "👥 座位由多到少",
-          price_asc: "💰 招牌菜价格由低到高",
-          name_asc: "🔤 店铺名称排序"
-        },
-        resetBtn: "重置",
-        cardClickHint: "点击卡片即可查看详情并连接 Naver/Kakao 地图导航。",
-        emptyTitle: "未找到符合条件的店铺",
-        emptyDesc: "请尝试更换搜索词或取消已选筛选条件。",
-        emptyBtn: "查看全部店铺",
-        footerAddress: "忠清南道牙山市汤井面汤井面路8番街一带（地中海村）",
-        footerNotice1: "本指南基于地中海村66家商户官方数据库制作。",
-        footerNotice2: "营业时间及菜单价格可能因店铺实际情况而有所变动。",
-        categories: {
-          "전체": "全部", "한식": "韩餐", "중식": "中餐", "일식": "日料", "양식": "西餐",
-          "분식": "韩式小吃", "고기구이": "韩式烤肉", "주점": "酒馆", "카페 및 디저트": "咖啡与甜点",
-          "의류 및 패션": "服装时尚", "공방 및 스튜디오": "工坊与摄影", "기타쇼핑 및 뷰티": "美容与生活"
-        },
-        smartFilters: {
-          room: "🚪 独立包厢 (12)", large: "👥 50座以上大型店 (24)", reserve: "📅 可预约 (45)",
-          takeout: "🛍️ 可打包外带 (38)", egg: "🍳 赠送煎蛋 (1)", sns: "🔗 官方SNS/博客 (27)"
-        },
-        card: {
-          allStoresTitle: "全部店铺", countSuffix: "家", seatsSuffix: "座",
-          roomBadge: "🚪 设包厢", reserveBadge: "📅 可预约", takeoutBadge: "🛍️ 可打包",
-          eggBadge: "🍳 赠煎蛋", repBadge: "招牌",
-          inquireTitle: "✨ 到店咨询 / 按商品定价", inquireSub: "(时尚·生活·体验店)",
-          hoursLabel: "营业时间", holidayLabel: "休息日/备注", callBtn: "拨打电话", copyBtn: "复制地址",
-          noHoliday: "全年无休", askStore: "到店咨询", marketPrice: "时价"
-        }
-      },
-      "ja": {
-        langLabel: "言語",
-        langStatus: "多言語スマート翻訳対応 (日本語)",
-        brandTitle: "地中海村",
-        taglineBadge: "✈️ パスポートなしで行ける地中海村",
-        subtitleHtml: 'パスポートなしで行ける地中海村の<strong class="text-brand-dark font-bold">全66店舗</strong>の代表メニュー・価格・設備を一目でチェック！',
-        statAll: '全 <strong class="text-brand-blue">66</strong>店舗',
-        statFb: '🍽️ グルメ・カフェ <strong class="text-brand-dark">44</strong>',
-        statShop: '🛍️ ショップ・工房・美容 <strong class="text-brand-dark">22</strong>',
-        statRoom: '🚪 個室完備 <strong class="text-brand-blue">12</strong>',
-        snsYoutube: "YouTube",
-        snsInsta: "インスタ",
-        snsFestival: "祭り情報",
-        mascotSub: "🍇 マスコットおすすめ",
-        mascotTitle: "今日何食べる？ランダム抽選",
-        searchPlaceholder: "メニュー名（サムギョプサル、ピンス、豆腐、トンカツ等）や店名で検索...",
-        sortOptions: {
-          id_asc: "📋 基本番号順",
-          scale_desc: "👥 座席数が多い順",
-          price_asc: "💰 価格が安い順",
-          name_asc: "🔤 店名順"
-        },
-        resetBtn: "リセット",
-        cardClickHint: "カードをタップすると詳細情報やNaver・Kakaoマップ検索へ移動します。",
-        emptyTitle: "条件に合う店舗が見つかりませんでした",
-        emptyDesc: "キーワードを変えるか、フィルターを解除してみてください。",
-        emptyBtn: "全店舗を再表示",
-        footerAddress: "忠清南道 牙山市 湯井面 湯井面路8番ギル一帯（地中海村）",
-        footerNotice1: "本ガイドは地中海村66店舗の公式DBに基づいて制作されました。",
-        footerNotice2: "店舗の都合により営業時間やメニュー価格が変更される場合があります。",
-        categories: {
-          "전체": "すべて", "한식": "韓国料理", "중식": "中華料理", "일식": "和食・日本式", "양식": "洋食",
-          "분식": "粉食・軽食", "고기구이": "焼肉", "주점": "居酒屋・パブ", "카페 및 디저트": "カフェ・デザート",
-          "의류 및 패션": "ファッション", "공방 및 스튜디오": "工房・スタジオ", "기타쇼핑 및 뷰티": "美容・雑貨"
-        },
-        smartFilters: {
-          room: "🚪 個室完備 (12)", large: "👥 50席以上の大型店 (24)", reserve: "📅 予約可能 (45)",
-          takeout: "🛍️ テイクアウト可 (38)", egg: "🍳 目玉焼きサービス (1)", sns: "🔗 SNS・ブログあり (27)"
-        },
-        card: {
-          allStoresTitle: "全店舗", countSuffix: "軒", seatsSuffix: "席",
-          roomBadge: "🚪 個室あり", reserveBadge: "📅 予約可", takeoutBadge: "🛍️ 持ち帰り可",
-          eggBadge: "🍳 目玉焼き付", repBadge: "代表",
-          inquireTitle: "✨ 店舗にて案内 / 商品により異なる", inquireSub: "(ファッション・工房・体験店舗)",
-          hoursLabel: "営業時間", holidayLabel: "定休日/備考", callBtn: "電話する", copyBtn: "住所コピー",
-          noHoliday: "年中無休", askStore: "店舗へ確認", marketPrice: "時価"
-        }
-      }
-    };
-
+    // App State
     let state = {
-      lang: "ko",
       searchQuery: "",
       selectedCategory: "전체",
       activeSmartFilters: new Set(),
@@ -855,110 +608,37 @@
       randomPoolType: "all_fb"
     };
 
-    function getDict() {
-      return I18N_DICT[state.lang] || I18N_DICT["ko"];
-    }
-
-    function changeLanguage(langCode) {
-      state.lang = langCode;
-      const t = getDict();
-
-      document.querySelectorAll(".lang-btn").forEach(btn => {
-        const code = btn.getAttribute("data-lang-btn");
-        if (code === langCode) {
-          btn.className = "lang-btn px-2.5 py-1 rounded-lg text-xs font-extrabold transition-all bg-brand-dark text-white shadow-sm";
-        } else {
-          btn.className = "lang-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all text-slate-600 hover:text-brand-dark hover:bg-white/60";
-        }
-      });
-
-      document.getElementById("langLabelText").textContent = t.langLabel;
-      document.getElementById("langStatusText").textContent = t.langStatus;
-      document.getElementById("headerMainTitle").textContent = t.brandTitle;
-      document.getElementById("headerTaglineBadge").textContent = t.taglineBadge;
-      document.getElementById("headerSubtitleDesc").innerHTML = t.subtitleHtml;
-      document.getElementById("headerStatsRow").innerHTML = `
-        <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-brand-dark font-semibold">${t.statAll}</span>
-        <span class="px-2.5 py-1 rounded-lg bg-slate-50 text-slate-600 border border-slate-200/80">${t.statFb}</span>
-        <span class="px-2.5 py-1 rounded-lg bg-slate-50 text-slate-600 border border-slate-200/80">${t.statShop}</span>
-        <span class="px-2.5 py-1 rounded-lg bg-slate-50 text-slate-600 border border-slate-200/80">${t.statRoom}</span>
-      `;
-      document.getElementById("snsYoutubeLabel").textContent = t.snsYoutube;
-      document.getElementById("snsInstaLabel").textContent = t.snsInsta;
-      document.getElementById("snsFestivalLabel").textContent = t.snsFestival;
-      document.getElementById("mascotBtnSub").textContent = t.mascotSub;
-      document.getElementById("mascotBtnTitle").textContent = t.mascotTitle;
-      document.getElementById("searchInput").placeholder = t.searchPlaceholder;
-
-      const sortSelect = document.getElementById("sortSelect");
-      Array.from(sortSelect.options).forEach(opt => {
-        if (t.sortOptions[opt.value]) {
-          opt.textContent = t.sortOptions[opt.value];
-        }
-      });
-
-      document.getElementById("resetBtnText").textContent = t.resetBtn;
-      document.getElementById("cardClickHintText").textContent = t.cardClickHint;
-      document.getElementById("emptyStateTitle").textContent = t.emptyTitle;
-      document.getElementById("emptyStateDesc").textContent = t.emptyDesc;
-      document.getElementById("emptyStateBtn").textContent = t.emptyBtn;
-      document.getElementById("footerBrandTitle").textContent = t.brandTitle;
-      document.getElementById("footerAddressText").textContent = t.footerAddress;
-      document.getElementById("footerNotice1").textContent = t.footerNotice1;
-      document.getElementById("footerNotice2").textContent = t.footerNotice2;
-
-      renderCategoryTabs();
-      renderSmartFilters();
-      renderStoreGrid();
-      triggerGoogleTranslate(langCode);
-    }
-
-    function triggerGoogleTranslate(langCode) {
-      try {
-        const gtCombo = document.querySelector(".goog-te-combo");
-        if (gtCombo) {
-          gtCombo.value = langCode;
-          gtCombo.dispatchEvent(new Event("change"));
-        }
-      } catch (e) {
-        // Ignore if Google Translate script is blocked or not yet loaded
-      }
-    }
-
+    // Category Badge Color Helper
     function getCategoryStyle(category) {
-      const styles = {
-        "한식": "bg-amber-50 text-amber-800 border-amber-200",
-        "중식": "bg-rose-50 text-rose-800 border-rose-200",
-        "일식": "bg-sky-50 text-sky-800 border-sky-200",
-        "양식": "bg-emerald-50 text-emerald-800 border-emerald-200",
-        "분식": "bg-orange-50 text-orange-800 border-orange-200",
-        "고기구이": "bg-red-50 text-red-800 border-red-200",
-        "주점": "bg-purple-50 text-purple-800 border-purple-200",
-        "카페 및 디저트": "bg-teal-50 text-teal-800 border-teal-200",
-        "의류 및 패션": "bg-pink-50 text-pink-800 border-pink-200",
-        "공방 및 스튜디오": "bg-indigo-50 text-indigo-800 border-indigo-200",
-        "기타쇼핑 및 뷰티": "bg-violet-50 text-violet-800 border-violet-200"
+      const map = {
+        "한식": "bg-blue-50 text-blue-700 border-blue-200",
+        "중식": "bg-rose-50 text-rose-700 border-rose-200",
+        "일식": "bg-indigo-50 text-indigo-700 border-indigo-200",
+        "양식": "bg-emerald-50 text-emerald-700 border-emerald-200",
+        "분식": "bg-orange-50 text-orange-700 border-orange-200",
+        "고기구이": "bg-red-50 text-red-700 border-red-200",
+        "주점": "bg-amber-50 text-amber-800 border-amber-200",
+        "카페 및 디저트": "bg-sky-50 text-sky-700 border-sky-200",
+        "의류 및 패션": "bg-purple-50 text-purple-700 border-purple-200",
+        "공방 및 스튜디오": "bg-pink-50 text-pink-700 border-pink-200",
+        "기타쇼핑 및 뷰티": "bg-teal-50 text-teal-700 border-teal-200"
       };
-      return styles[category] || "bg-slate-100 text-slate-700 border-slate-200";
+      return map[category] || "bg-slate-100 text-slate-700 border-slate-200";
     }
 
+    // Format holiday & hours gracefully
     function formatScheduleText(val) {
-      const t = getDict();
       if (!val || val.trim() === "" || val.trim() === "?") {
-        return t.card.askStore;
-      }
-      if (val.trim() === "없음") {
-        return t.card.noHoliday;
+        return "매장 문의";
       }
       return val.replace(/\n/g, " · ");
     }
 
+    // Render Category Tabs
     function renderCategoryTabs() {
-      const t = getDict();
       const container = document.getElementById("categoryTabsContainer");
       container.innerHTML = CATEGORIES.map(cat => {
         const isActive = state.selectedCategory === cat.key;
-        const translatedLabel = t.categories[cat.key] || cat.label;
         return `
           <button
             onclick="selectCategory('${cat.key}')"
@@ -969,7 +649,7 @@
             }"
           >
             <i class="ph-bold ${cat.icon}"></i>
-            <span>${translatedLabel}</span>
+            <span>${cat.label}</span>
             <span class="px-1.5 py-0.5 rounded-full text-[11px] ${
               isActive ? "bg-brand-blue text-white" : "bg-white text-slate-600"
             }">${cat.count}</span>
@@ -978,12 +658,11 @@
       }).join("");
     }
 
+    // Render Smart Filter Chips
     function renderSmartFilters() {
-      const t = getDict();
       const container = document.getElementById("smartFilterContainer");
       container.innerHTML = SMART_FILTERS.map(f => {
         const isActive = state.activeSmartFilters.has(f.key);
-        const translatedLabel = t.smartFilters[f.key] || f.label;
         return `
           <button
             onclick="toggleSmartFilter('${f.key}')"
@@ -993,14 +672,19 @@
                 : "bg-white hover:bg-slate-50 text-slate-700 border-slate-300"
             }"
           >
-            <span>${translatedLabel}</span>
+            <span>${f.label}</span>
             ${isActive ? '<i class="ph-bold ph-check text-xs ml-0.5"></i>' : ''}
           </button>
         `;
       }).join("");
 
       const resetBtn = document.getElementById("resetAllBtn");
-      const hasAnyFilter = state.selectedCategory !== "전체" || state.activeSmartFilters.size > 0 || state.searchQuery.trim() !== "";
+      const hasAnyFilter =
+        state.searchQuery.trim() !== "" ||
+        state.selectedCategory !== "전체" ||
+        state.activeSmartFilters.size > 0 ||
+        state.sortBy !== "id_asc";
+
       if (hasAnyFilter) {
         resetBtn.classList.remove("hidden");
         resetBtn.classList.add("inline-flex");
@@ -1010,60 +694,70 @@
       }
     }
 
+    // Filter and Sort Stores
     function getFilteredStores() {
       const q = state.searchQuery.trim().toLowerCase();
-      let list = STORES_DATA.filter(store => {
+
+      let filtered = STORES_DATA.filter(store => {
+        // Category filter
         if (state.selectedCategory !== "전체" && store.category !== state.selectedCategory) {
           return false;
         }
-        for (const filterKey of state.activeSmartFilters) {
-          const filterObj = SMART_FILTERS.find(f => f.key === filterKey);
+        // Smart filters (AND logic)
+        for (let key of state.activeSmartFilters) {
+          const filterObj = SMART_FILTERS.find(item => item.key === key);
           if (filterObj && !filterObj.check(store)) {
             return false;
           }
         }
+        // Search query filter
         if (q !== "") {
           const inName = store.name.toLowerCase().includes(q);
-          const inCat = store.category.toLowerCase().includes(q);
-          const inAddr = store.address.toLowerCase().includes(q);
+          const inCategory = store.category.toLowerCase().includes(q);
+          const inAddress = store.address.toLowerCase().includes(q);
           const inMenus = store.menus.some(m => m.name.toLowerCase().includes(q));
-          return inName || inCat || inAddr || inMenus;
+          return inName || inCategory || inAddress || inMenus;
         }
         return true;
       });
 
-      list.sort((a, b) => {
-        if (state.sortBy === "scale_desc") return b.scale_num - a.scale_num;
-        if (state.sortBy === "price_asc") return a.rep_price_num - b.rep_price_num;
-        if (state.sortBy === "name_asc") return a.name.localeCompare(b.name, "ko");
+      // Sorting
+      filtered.sort((a, b) => {
+        if (state.sortBy === "id_asc") {
+          return a.id - b.id;
+        }
+        if (state.sortBy === "scale_desc") {
+          return (b.scale_num || 0) - (a.scale_num || 0) || a.id - b.id;
+        }
+        if (state.sortBy === "price_asc") {
+          const pA = a.menus.length > 0 && a.menus[0].price_num !== null ? a.menus[0].price_num : 9999999;
+          const pB = b.menus.length > 0 && b.menus[0].price_num !== null ? b.menus[0].price_num : 9999999;
+          return pA - pB || a.id - b.id;
+        }
+        if (state.sortBy === "name_asc") {
+          return a.name.localeCompare(b.name, "ko");
+        }
         return a.id - b.id;
       });
 
-      return list;
+      return filtered;
     }
 
+    // Render Store Cards
     function renderStoreGrid() {
-      const t = getDict();
       const stores = getFilteredStores();
       const grid = document.getElementById("storeGrid");
       const emptyState = document.getElementById("emptyState");
       const titleEl = document.getElementById("resultCountTitle");
       const summaryEl = document.getElementById("activeFilterSummary");
 
-      const currentCatLabel = state.selectedCategory === "전체"
-        ? t.card.allStoresTitle
-        : (t.categories[state.selectedCategory] || state.selectedCategory);
-
-      titleEl.innerHTML = `${currentCatLabel} <span class="text-santorini-700">${stores.length}</span>${t.card.countSuffix}`;
+      titleEl.innerHTML = `${state.selectedCategory === "전체" ? "전체 매장" : state.selectedCategory} <span class="text-santorini-700">${stores.length}</span>곳`;
 
       const activeLabels = [];
-      if (state.searchQuery.trim() !== "") activeLabels.push(`"${state.searchQuery.trim()}"`);
+      if (state.searchQuery.trim() !== "") activeLabels.push(`검색어: "${state.searchQuery.trim()}"`);
       if (state.activeSmartFilters.size > 0) {
         SMART_FILTERS.forEach(f => {
-          if (state.activeSmartFilters.has(f.key)) {
-            const lbl = t.smartFilters[f.key] || f.label;
-            activeLabels.push(lbl.replace(/\s*\(\d+\)/, ""));
-          }
+          if (state.activeSmartFilters.has(f.key)) activeLabels.push(f.label.replace(/\s*\(\d+\)/, ""));
         });
       }
       summaryEl.textContent = activeLabels.length > 0 ? `(${activeLabels.join(" · ")})` : "";
@@ -1078,32 +772,28 @@
 
       grid.innerHTML = stores.map(store => {
         const catBadgeClass = getCategoryStyle(store.category);
-        const translatedCat = t.categories[store.category] || store.category;
         const repMenu = store.menus.find(m => m.is_rep) || store.menus[0];
         const subMenus = store.menus.filter(m => m !== repMenu);
 
+        // Amenity badges
         const amenities = [];
-        if (store.room) amenities.push(`<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 notranslate">${t.card.roomBadge}</span>`);
-        if (store.reserve) amenities.push(`<span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 notranslate">${t.card.reserveBadge}</span>`);
-        if (store.takeout) amenities.push(`<span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-sky-50 text-sky-700 border border-sky-200 notranslate">${t.card.takeoutBadge}</span>`);
-        if (store.egg) amenities.push(`<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-300 notranslate">${t.card.eggBadge}</span>`);
+        if (store.room) amenities.push(`<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">🚪 룸 완비</span>`);
+        if (store.reserve) amenities.push(`<span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">📅 예약가능</span>`);
+        if (store.takeout) amenities.push(`<span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-sky-50 text-sky-700 border border-sky-200">🛍️ 포장가능</span>`);
+        if (store.egg) amenities.push(`<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-300">🍳 계란프라이</span>`);
 
-        const formatPrice = (p) => {
-          if (p === "변동") return t.card.marketPrice;
-          if (state.lang !== "ko") return p.replace("원", " KRW");
-          return p;
-        };
-
+        // Menu Box HTML
         let menuBoxHtml = "";
         if (store.menus && store.menus.length > 0) {
           menuBoxHtml = `
             <div class="bg-slate-50/90 rounded-2xl p-3.5 border border-slate-200/80 space-y-2">
+              <!-- Representative Menu -->
               <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-1.5 min-w-0">
-                  <span class="flex-shrink-0 px-2 py-0.5 rounded-md bg-brand-blue text-white text-[11px] font-extrabold tracking-tight notranslate">${t.card.repBadge}</span>
+                  <span class="flex-shrink-0 px-2 py-0.5 rounded-md bg-brand-blue text-white text-[11px] font-extrabold tracking-tight">대표</span>
                   <span class="font-bold text-brand-dark text-sm truncate">${repMenu.name}</span>
                 </div>
-                <span class="flex-shrink-0 font-extrabold text-brand-dark text-sm notranslate">${formatPrice(repMenu.price)}</span>
+                <span class="flex-shrink-0 font-extrabold text-brand-dark text-sm">${repMenu.price}</span>
               </div>
               ${subMenus.length > 0 ? `
                 <div class="pt-1.5 border-t border-slate-200/70 space-y-1">
@@ -1111,7 +801,7 @@
                     <div class="flex items-baseline justify-between text-xs text-slate-600">
                       <span class="truncate pr-1">${m.name}</span>
                       <span class="dotted-leader"></span>
-                      <span class="font-semibold text-slate-700 flex-shrink-0 notranslate">${formatPrice(m.price)}</span>
+                      <span class="font-semibold text-slate-700 flex-shrink-0">${m.price}</span>
                     </div>
                   `).join("")}
                 </div>
@@ -1120,16 +810,15 @@
           `;
         } else {
           menuBoxHtml = `
-            <div class="bg-slate-50 rounded-2xl p-4 border border-dashed border-slate-200 text-center flex flex-col items-center justify-center min-h-[96px] notranslate">
-              <span class="text-xs font-semibold text-slate-500">${t.card.inquireTitle}</span>
-              <span class="text-[11px] text-slate-400 mt-0.5">${t.card.inquireSub}</span>
+            <div class="bg-slate-50 rounded-2xl p-4 border border-dashed border-slate-200 text-center flex flex-col items-center justify-center min-h-[96px]">
+              <span class="text-xs font-semibold text-slate-500">✨ 매장 방문 문의 / 상품별 상이</span>
+              <span class="text-[11px] text-slate-400 mt-0.5">(패션·리빙·체험 매장)</span>
             </div>
           `;
         }
 
         const hoursText = formatScheduleText(store.hours);
         const holidayText = formatScheduleText(store.holiday);
-        const scaleDisplay = store.scale_num > 0 ? `${store.scale_num}${t.card.seatsSuffix}` : "";
 
         return `
           <article
@@ -1137,21 +826,23 @@
             class="group bg-white rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-lg hover:border-brand-blue/60 transition-all duration-200 flex flex-col justify-between overflow-hidden cursor-pointer"
           >
             <div class="p-5 space-y-3.5">
-              <div class="flex items-center justify-between gap-2 notranslate">
+              <!-- Card Top Row: Badges -->
+              <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-1.5">
                   <span class="px-2.5 py-0.5 rounded-full text-xs font-bold border ${catBadgeClass}">
-                    ${translatedCat}
+                    ${store.category}
                   </span>
                   <span class="text-xs font-bold text-slate-400">#${store.id}</span>
                 </div>
-                ${scaleDisplay ? `
+                ${store.scale ? `
                   <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700">
                     <i class="ph-fill ph-users text-brand-blue"></i>
-                    ${scaleDisplay}
+                    ${store.scale}
                   </span>
                 ` : ""}
               </div>
 
+              <!-- Store Title -->
               <div>
                 <h3 class="text-lg font-extrabold text-brand-dark group-hover:text-brand-blue transition-colors flex items-center justify-between">
                   <span>${store.name}</span>
@@ -1160,47 +851,51 @@
                 <p class="text-xs text-slate-500 mt-0.5 truncate">${store.address}</p>
               </div>
 
+              <!-- Amenity Tags -->
               ${amenities.length > 0 ? `
                 <div class="flex flex-wrap gap-1.5">
                   ${amenities.join("")}
                 </div>
               ` : ""}
 
+              <!-- Menu Box -->
               ${menuBoxHtml}
 
+              <!-- Hours & Holiday Info -->
               <div class="grid grid-cols-2 gap-2 pt-1 text-xs">
                 <div class="bg-slate-50 rounded-xl px-3 py-2 border border-slate-100">
-                  <div class="text-[11px] text-slate-400 font-medium flex items-center gap-1 notranslate">
-                    <i class="ph-bold ph-clock text-brand-blue"></i> ${t.card.hoursLabel}
+                  <div class="text-[11px] text-slate-400 font-medium flex items-center gap-1">
+                    <i class="ph-bold ph-clock text-brand-blue"></i> 영업시간
                   </div>
                   <div class="font-bold text-slate-700 mt-0.5 truncate" title="${hoursText}">${hoursText}</div>
                 </div>
                 <div class="bg-slate-50 rounded-xl px-3 py-2 border border-slate-100">
-                  <div class="text-[11px] text-slate-400 font-medium flex items-center gap-1 notranslate">
-                    <i class="ph-bold ph-calendar-x text-rose-500"></i> ${t.card.holidayLabel}
+                  <div class="text-[11px] text-slate-400 font-medium flex items-center gap-1">
+                    <i class="ph-bold ph-calendar-x text-rose-500"></i> 휴무/참고
                   </div>
                   <div class="font-bold text-slate-700 mt-0.5 truncate" title="${holidayText}">${holidayText}</div>
                 </div>
               </div>
             </div>
 
+            <!-- Action Buttons Footer -->
             <div
               onclick="event.stopPropagation()"
-              class="px-4 py-3 bg-slate-50/80 border-t border-slate-100 flex items-center gap-2 notranslate"
+              class="px-4 py-3 bg-slate-50/80 border-t border-slate-100 flex items-center gap-2"
             >
               <a
                 href="tel:${store.phone}"
                 class="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-brand-dark hover:bg-brand-blue text-white text-xs font-bold shadow-sm transition-colors"
               >
                 <i class="ph-fill ph-phone-call text-sm"></i>
-                <span>${t.card.callBtn}</span>
+                <span>전화걸기</span>
               </a>
               <button
                 onclick="copyStoreAddress('${store.address.replace(/'/g, "\\'")}')"
                 class="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-bold transition-colors"
               >
                 <i class="ph-bold ph-copy text-sm text-brand-blue"></i>
-                <span>${t.card.copyBtn}</span>
+                <span>주소복사</span>
               </button>
               ${store.sns ? `
                 <a
@@ -1220,23 +915,7 @@
       }).join("");
     }
 
-    function selectCategory(catKey) {
-      state.selectedCategory = catKey;
-      renderCategoryTabs();
-      renderSmartFilters();
-      renderStoreGrid();
-    }
-
-    function toggleSmartFilter(filterKey) {
-      if (state.activeSmartFilters.has(filterKey)) {
-        state.activeSmartFilters.delete(filterKey);
-      } else {
-        state.activeSmartFilters.add(filterKey);
-      }
-      renderSmartFilters();
-      renderStoreGrid();
-    }
-
+    // Event Handlers
     function handleSearchInput(val) {
       state.searchQuery = val;
       const clearBtn = document.getElementById("clearSearchBtn");
@@ -1258,121 +937,228 @@
       input.focus();
     }
 
-    function handleSortChange(val) {
-      state.sortBy = val;
-      renderStoreGrid();
-    }
-
-    function resetAllFilters() {
-      state.selectedCategory = "전체";
-      state.activeSmartFilters.clear();
-      state.searchQuery = "";
-      state.sortBy = "id_asc";
-      document.getElementById("searchInput").value = "";
-      document.getElementById("sortSelect").value = "id_asc";
-      document.getElementById("clearSearchBtn").classList.add("hidden");
+    function selectCategory(categoryKey) {
+      state.selectedCategory = categoryKey;
       renderCategoryTabs();
       renderSmartFilters();
       renderStoreGrid();
     }
 
+    function toggleSmartFilter(filterKey) {
+      if (state.activeSmartFilters.has(filterKey)) {
+        state.activeSmartFilters.delete(filterKey);
+      } else {
+        state.activeSmartFilters.add(filterKey);
+      }
+      renderSmartFilters();
+      renderStoreGrid();
+    }
+
+    function handleSortChange(sortValue) {
+      state.sortBy = sortValue;
+      renderSmartFilters();
+      renderStoreGrid();
+    }
+
+    function resetAllFilters() {
+      state.searchQuery = "";
+      state.selectedCategory = "전체";
+      state.activeSmartFilters.clear();
+      state.sortBy = "id_asc";
+
+      document.getElementById("searchInput").value = "";
+      document.getElementById("clearSearchBtn").classList.add("hidden");
+      document.getElementById("sortSelect").value = "id_asc";
+
+      renderCategoryTabs();
+      renderSmartFilters();
+      renderStoreGrid();
+    }
+
+    // Copy Address Helper (Using textarea fallback for iframe compatibility)
+    function copyStoreAddress(address) {
+      const tempInput = document.createElement("textarea");
+      tempInput.value = address;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      try {
+        document.execCommand("copy");
+        showToast(`📍 주소가 복사되었습니다: ${address}`);
+      } catch (err) {
+        showToast("주소 복사에 실패했습니다.");
+      }
+      document.body.removeChild(tempInput);
+    }
+
+    let toastTimeout = null;
+    function showToast(msg) {
+      const box = document.getElementById("toastBox");
+      const text = document.getElementById("toastMessage");
+      text.textContent = msg;
+      box.classList.remove("opacity-0", "translate-y-2");
+      box.classList.add("opacity-100", "translate-y-0");
+
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        box.classList.add("opacity-0", "translate-y-2");
+        box.classList.remove("opacity-100", "translate-y-0");
+      }, 2400);
+    }
+
+    // Store Detail Modal
     function openStoreDetailModal(storeId) {
       const store = STORES_DATA.find(s => s.id === storeId);
       if (!store) return;
 
-      const t = getDict();
-      const catBadgeClass = getCategoryStyle(store.category);
-      const translatedCat = t.categories[store.category] || store.category;
+      const modal = document.getElementById("detailModal");
+      const content = document.getElementById("detailModalContent");
       const naverMapUrl = `https://map.naver.com/p/search/${encodeURIComponent("아산 지중해마을 " + store.name)}`;
-      const kakaoMapUrl = `https://map.kakao.com/link/search/${encodeURIComponent("아산 " + store.name)}`;
+      const kakaoMapUrl = `https://map.kakao.com/link/search/${encodeURIComponent("아산 지중해마을 " + store.name)}`;
 
-      const modal = document.getElementById("storeDetailModal");
-      const content = document.getElementById("storeDetailContent");
+      const hoursText = formatScheduleText(store.hours);
+      const holidayText = formatScheduleText(store.holiday);
 
       content.innerHTML = `
-        <div class="p-6 space-y-5">
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <div class="flex items-center gap-2 mb-1.5">
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold border ${catBadgeClass}">${translatedCat}</span>
-                <span class="text-xs font-bold text-slate-400">#${store.id}</span>
-                ${store.scale_num > 0 ? `<span class="text-xs font-bold text-brand-blue">· ${store.scale_num}${t.card.seatsSuffix}</span>` : ""}
+        <!-- Modal Header -->
+        <div class="bg-brand-dark p-6 text-white relative border-b-4 border-brand-blue">
+          <button
+            onclick="closeStoreDetailModal()"
+            class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+          >
+            <i class="ph-bold ph-x text-lg"></i>
+          </button>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand-blue text-white">
+              ${store.category}
+            </span>
+            <span class="text-xs text-slate-300 font-semibold">고유번호 #${store.id}</span>
+            ${store.scale ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-white/15 text-white">👥 ${store.scale}</span>` : ""}
+          </div>
+          <h3 class="text-2xl font-extrabold tracking-tight">${store.name}</h3>
+          <p class="text-xs sm:text-sm text-sky-200 mt-1 flex items-center gap-1">
+            <i class="ph-fill ph-map-pin text-brand-blue"></i>
+            <span>${store.address}</span>
+          </p>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6 overflow-y-auto space-y-5">
+          <!-- Amenity Status Grid -->
+          <div class="grid grid-cols-4 gap-2 text-center">
+            <div class="p-2.5 rounded-2xl border ${store.room ? 'bg-indigo-50 border-indigo-200 text-indigo-800' : 'bg-slate-50 border-slate-200 text-slate-400'}">
+              <div class="text-lg">🚪</div>
+              <div class="text-[11px] font-bold mt-0.5">단체룸</div>
+              <div class="text-[10px] font-semibold">${store.room ? '보유 (O)' : '없음'}</div>
+            </div>
+            <div class="p-2.5 rounded-2xl border ${store.reserve ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-slate-50 border-slate-200 text-slate-400'}">
+              <div class="text-lg">📅</div>
+              <div class="text-[11px] font-bold mt-0.5">예약</div>
+              <div class="text-[10px] font-semibold">${store.reserve ? '가능 (O)' : '불가/문의'}</div>
+            </div>
+            <div class="p-2.5 rounded-2xl border ${store.takeout ? 'bg-sky-50 border-sky-200 text-sky-800' : 'bg-slate-50 border-slate-200 text-slate-400'}">
+              <div class="text-lg">🛍️</div>
+              <div class="text-[11px] font-bold mt-0.5">포장</div>
+              <div class="text-[10px] font-semibold">${store.takeout ? '가능 (O)' : '불가/문의'}</div>
+            </div>
+            <div class="p-2.5 rounded-2xl border ${store.egg ? 'bg-amber-50 border-amber-300 text-amber-900' : 'bg-slate-50 border-slate-200 text-slate-400'}">
+              <div class="text-lg">🍳</div>
+              <div class="text-[11px] font-bold mt-0.5">계란프라이</div>
+              <div class="text-[10px] font-semibold">${store.egg ? '제공 (O)' : '-'}</div>
+            </div>
+          </div>
+
+          <!-- Full Menu List -->
+          <div>
+            <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-2.5 flex items-center gap-1.5">
+              <i class="ph-fill ph-book-open-text text-brand-blue text-sm"></i>
+              대표 메뉴 및 가격 정보
+            </h4>
+            ${store.menus && store.menus.length > 0 ? `
+              <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 space-y-2.5">
+                ${store.menus.map(m => `
+                  <div class="flex items-center justify-between gap-2 ${m.is_rep ? 'pb-2 border-b border-slate-200' : ''}">
+                    <div class="flex items-center gap-2">
+                      ${m.is_rep
+                        ? '<span class="px-2 py-0.5 rounded-md bg-brand-blue text-white text-xs font-extrabold">대표메뉴</span>'
+                        : '<span class="w-1.5 h-1.5 rounded-full bg-slate-400 ml-1"></span>'}
+                      <span class="${m.is_rep ? 'font-extrabold text-brand-dark text-base' : 'font-semibold text-slate-700 text-sm'}">${m.name}</span>
+                    </div>
+                    <span class="${m.is_rep ? 'font-extrabold text-brand-blue text-base' : 'font-bold text-slate-800 text-sm'}">${m.price}</span>
+                  </div>
+                `).join("")}
               </div>
-              <h3 class="text-2xl font-extrabold text-brand-dark">${store.name}</h3>
-              <p class="text-xs sm:text-sm text-slate-500 mt-1">${store.address}</p>
-            </div>
-            <button
-              onclick="closeStoreDetailModal()"
-              class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center flex-shrink-0"
-            >
-              <i class="ph-bold ph-x text-base"></i>
-            </button>
-          </div>
-
-          <!-- Menus Section -->
-          <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 space-y-2.5">
-            <div class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">메뉴 및 가격 안내</div>
-            ${store.menus && store.menus.length > 0 ? store.menus.map(m => `
-              <div class="flex items-center justify-between text-sm py-1 border-b border-slate-200/60 last:border-none">
-                <div class="flex items-center gap-1.5">
-                  ${m.is_rep ? `<span class="px-2 py-0.5 rounded bg-brand-blue text-white text-[11px] font-bold">${t.card.repBadge}</span>` : ""}
-                  <span class="font-bold text-brand-dark">${m.name}</span>
-                </div>
-                <span class="font-extrabold text-brand-blue">${m.price}</span>
+            ` : `
+              <div class="bg-slate-50 rounded-2xl p-5 border border-dashed border-slate-200 text-center text-sm text-slate-500">
+                패션·공방·리빙·뷰티 매장으로 방문 시 상품별 상세 안내를 받으실 수 있습니다.
               </div>
-            `).join("") : `<p class="text-xs text-slate-500 py-2">${t.card.inquireTitle}</p>`}
+            `}
           </div>
 
-          <!-- Store Details Grid -->
-          <div class="grid grid-cols-2 gap-2.5 text-xs">
-            <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
-              <span class="text-slate-400 block">${t.card.hoursLabel}</span>
-              <strong class="text-brand-dark text-sm mt-0.5 block">${formatScheduleText(store.hours)}</strong>
+          <!-- Operating Info -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="text-slate-400 font-semibold mb-1">⏰ 영업시간</div>
+              <div class="text-slate-800 font-bold text-sm">${hoursText}</div>
             </div>
-            <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
-              <span class="text-slate-400 block">${t.card.holidayLabel}</span>
-              <strong class="text-brand-dark text-sm mt-0.5 block">${formatScheduleText(store.holiday)}</strong>
+            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="text-slate-400 font-semibold mb-1">🗓️ 정기휴무 / 요일별 안내</div>
+              <div class="text-slate-800 font-bold text-sm">${holidayText}</div>
             </div>
           </div>
 
-          <!-- Map & Call Actions -->
-          <div class="grid grid-cols-2 gap-2 pt-1">
+          <!-- Map & External Links -->
+          <div class="space-y-2">
+            <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400">🗺️ 지도 검색 및 바로가기</div>
+            <div class="grid grid-cols-2 gap-2">
+              <a
+                href="${naverMapUrl}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-colors"
+              >
+                <i class="ph-bold ph-navigation-arrow"></i>
+                네이버 지도 검색
+              </a>
+              <a
+                href="${kakaoMapUrl}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="py-2.5 px-3 rounded-xl bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-colors"
+              >
+                <i class="ph-bold ph-map-trifold"></i>
+                카카오맵 검색
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center gap-2">
+          <a
+            href="tel:${store.phone}"
+            class="flex-1 py-3 px-4 rounded-xl bg-brand-dark hover:bg-brand-blue text-white font-bold text-sm flex items-center justify-center gap-2 shadow transition-colors"
+          >
+            <i class="ph-fill ph-phone-call"></i>
+            <span>${store.phone} 전화걸기</span>
+          </a>
+          <button
+            onclick="copyStoreAddress('${store.address.replace(/'/g, "\\'")}')"
+            class="py-3 px-4 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 font-bold text-sm flex items-center justify-center gap-1.5 transition-colors"
+          >
+            <i class="ph-bold ph-copy"></i>
+            <span>주소복사</span>
+          </button>
+          ${store.sns ? `
             <a
-              href="${naverMapUrl}"
+              href="${store.sns}"
               target="_blank"
               rel="noopener noreferrer"
-              class="py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-sm transition-colors"
+              class="py-3 px-4 rounded-xl bg-sky-50 hover:bg-sky-100 text-brand-blue border border-sky-200 font-bold text-sm flex items-center justify-center gap-1.5 transition-colors"
             >
-              <i class="ph-bold ph-map-pin text-base"></i>
-              <span>네이버 지도 검색</span>
+              <i class="ph-bold ph-globe"></i>
+              <span>SNS</span>
             </a>
-            <a
-              href="${kakaoMapUrl}"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="py-3 px-4 rounded-xl bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-sm transition-colors"
-            >
-              <i class="ph-bold ph-navigation-arrow text-base"></i>
-              <span>카카오맵 검색</span>
-            </a>
-          </div>
-
-          <div class="flex gap-2">
-            <a
-              href="tel:${store.phone}"
-              class="flex-1 py-3 px-4 rounded-xl bg-brand-dark hover:bg-brand-blue text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors"
-            >
-              <i class="ph-fill ph-phone-call"></i>
-              <span>${store.phone} 전화걸기</span>
-            </a>
-            <button
-              onclick="copyStoreAddress('${store.address.replace(/'/g, "\\'")}')"
-              class="py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm flex items-center justify-center gap-1.5 transition-colors"
-            >
-              <i class="ph-bold ph-copy"></i>
-              <span>주소복사</span>
-            </button>
-          </div>
+          ` : ""}
         </div>
       `;
 
@@ -1380,109 +1166,110 @@
       modal.classList.add("flex");
     }
 
-    function closeStoreDetailModal(e) {
-      const modal = document.getElementById("storeDetailModal");
+    function closeStoreDetailModal() {
+      const modal = document.getElementById("detailModal");
       modal.classList.add("hidden");
       modal.classList.remove("flex");
     }
 
+    // Random Menu Picker Logic
+    function getRandomCandidates() {
+      const fbCategories = ["한식", "중식", "일식", "양식", "분식", "고기구이", "주점", "카페 및 디저트"];
+      const mealCategories = ["한식", "중식", "일식", "양식", "분식", "고기구이", "주점"];
+
+      if (state.randomPoolType === "meal") {
+        return STORES_DATA.filter(s => mealCategories.includes(s.category));
+      }
+      if (state.randomPoolType === "cafe") {
+        return STORES_DATA.filter(s => s.category === "카페 및 디저트");
+      }
+      if (state.randomPoolType === "group") {
+        return STORES_DATA.filter(s => s.room === true);
+      }
+      return STORES_DATA.filter(s => fbCategories.includes(s.category));
+    }
+
+    function setRandomPool(poolType) {
+      state.randomPoolType = poolType;
+      document.querySelectorAll(".random-pool-btn").forEach(btn => {
+        if (btn.getAttribute("data-pool") === poolType) {
+          btn.className = "random-pool-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-blue text-white shadow-sm";
+        } else {
+          btn.className = "random-pool-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-200 hover:bg-white/20";
+        }
+      });
+      spinRandomStore();
+    }
+
     function openRandomPickerModal() {
-      const modal = document.getElementById("randomPickerModal");
+      const modal = document.getElementById("randomModal");
       modal.classList.remove("hidden");
       modal.classList.add("flex");
       spinRandomStore();
     }
 
     function closeRandomPickerModal() {
-      const modal = document.getElementById("randomPickerModal");
+      const modal = document.getElementById("randomModal");
       modal.classList.add("hidden");
       modal.classList.remove("flex");
     }
 
-    function setRandomPool(poolType) {
-      state.randomPoolType = poolType;
-      document.querySelectorAll(".pool-btn").forEach(btn => {
-        btn.className = "pool-btn py-2.5 px-3 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200";
-      });
-      const activeBtn = document.getElementById("pool_" + poolType);
-      if (activeBtn) {
-        activeBtn.className = "pool-btn py-2.5 px-3 rounded-xl bg-brand-dark text-white";
-      }
-      spinRandomStore();
-    }
-
     function spinRandomStore() {
-      let pool = STORES_DATA.filter(s => s.id <= 44);
-      if (state.randomPoolType === "meal") {
-        pool = STORES_DATA.filter(s => s.id <= 28);
-      } else if (state.randomPoolType === "cafe") {
-        pool = STORES_DATA.filter(s => s.category === "카페 및 디저트");
-      } else if (state.randomPoolType === "room") {
-        pool = STORES_DATA.filter(s => s.room === true);
-      }
-
+      const pool = getRandomCandidates();
+      if (pool.length === 0) return;
       const picked = pool[Math.floor(Math.random() * pool.length)];
       const repMenu = picked.menus.find(m => m.is_rep) || picked.menus[0];
 
-      const card = document.getElementById("randomResultCard");
-      card.innerHTML = `
-        <span class="px-2.5 py-0.5 rounded-full text-xs font-bold border ${getCategoryStyle(picked.category)}">${picked.category}</span>
-        <h4 class="text-xl font-extrabold text-brand-dark mt-2">${picked.name}</h4>
-        ${repMenu ? `<p class="text-sm font-bold text-brand-blue mt-1">추천 대표메뉴: ${repMenu.name} (${repMenu.price})</p>` : ""}
-        <p class="text-xs text-slate-400 mt-2">${picked.address}</p>
+      const box = document.getElementById("randomResultBox");
+      box.innerHTML = `
+        <div class="animate-pop w-full">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-brand-light text-brand-blue border border-sky-200 mb-2">
+            <span>${picked.category}</span>
+            ${picked.scale ? `<span>· ${picked.scale}</span>` : ""}
+            ${picked.room ? `<span>· 🚪 단체룸</span>` : ""}
+          </div>
+          <h4 class="text-2xl font-extrabold text-brand-dark">${picked.name}</h4>
+          <p class="text-xs text-slate-500 mt-1">${picked.address}</p>
+
+          ${repMenu ? `
+            <div class="mt-4 bg-white rounded-2xl p-3.5 border border-slate-200 shadow-sm flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded bg-brand-blue text-white text-xs font-extrabold">추천 대표메뉴</span>
+                <span class="font-bold text-brand-dark text-sm">${repMenu.name}</span>
+              </div>
+              <span class="font-extrabold text-brand-blue text-sm">${repMenu.price}</span>
+            </div>
+          ` : ""}
+
+          <div class="mt-3 flex items-center justify-center gap-3 text-xs text-slate-500">
+            <span>⏰ ${formatScheduleText(picked.hours)}</span>
+            <span>·</span>
+            <span>📞 ${picked.phone}</span>
+          </div>
+        </div>
       `;
 
       const detailBtn = document.getElementById("randomViewDetailBtn");
-      detailBtn.onclick = function () {
+      detailBtn.onclick = () => {
         closeRandomPickerModal();
         openStoreDetailModal(picked.id);
       };
     }
 
-    function copyStoreAddress(address) {
-      const tempInput = document.createElement("textarea");
-      tempInput.value = address;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand("copy");
-      document.body.removeChild(tempInput);
+    // Close modals when clicking backdrop
+    window.addEventListener("click", (e) => {
+      const detailModal = document.getElementById("detailModal");
+      const randomModal = document.getElementById("randomModal");
+      if (e.target === detailModal) closeStoreDetailModal();
+      if (e.target === randomModal) closeRandomPickerModal();
+    });
 
-      const toast = document.getElementById("toastBox");
-      const msg = document.getElementById("toastMessage");
-      msg.textContent = `주소 복사 완료: ${address}`;
-      toast.classList.remove("hidden");
-      toast.classList.add("flex");
-      setTimeout(() => {
-        toast.classList.add("hidden");
-        toast.classList.remove("flex");
-      }, 2500);
-    }
-
-    function googleTranslateElementInit() {
-      try {
-        if (window.google && window.google.translate) {
-          new google.translate.TranslateElement(
-            {
-              pageLanguage: "ko",
-              includedLanguages: "ko,en,zh-CN,ja",
-              autoDisplay: false
-            },
-            "google_translate_element"
-          );
-        }
-      } catch (e) {
-        // Fallback silently if external script fails
-      }
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
+    // Initialize Application on Load
+    window.onload = function () {
       renderCategoryTabs();
       renderSmartFilters();
       renderStoreGrid();
-    });
+    };
   </script>
-
-  <!-- Google Website Translator Script (Async / Non-blocking) -->
-  <script async defer src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
