@@ -56,6 +56,18 @@
       background-color: #F8FAFC;
       color: #283339;
       overflow-x: hidden;
+      top: 0px !important;
+    }
+    /* Hide Google Translate top banner cleanly while keeping auto-translation active */
+    .goog-te-banner-frame.skiptranslate,
+    .goog-te-gadget-icon,
+    #goog-gt-tt,
+    .goog-te-balloon-frame {
+      display: none !important;
+    }
+    .goog-text-highlight {
+      background-color: transparent !important;
+      box-shadow: none !important;
     }
     /* Custom Scrollbar for horizontal category tabs */
     .no-scrollbar::-webkit-scrollbar {
@@ -89,6 +101,9 @@
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-blue selection:text-white">
+
+  <!-- Hidden Google Translate Container for Full Page / DB Item Auto Translation -->
+  <div id="google_translate_element" class="hidden" aria-hidden="true"></div>
 
   <!-- Reusable SVG Templates (Hidden) -->
   <svg class="hidden" aria-hidden="true">
@@ -177,36 +192,115 @@
         <circle cx="51" cy="28" r="4.5" />
         <circle cx="88" cy="36" r="4.5" />
         <circle cx="94" cy="40" r="4.5" />
-            <!-- Brand Typography & Subtitle -->
+        <circle cx="87" cy="43" r="4.5" />
+      </g>
+      <!-- Golden Laurel Leaves -->
+      <g fill="#FBC02D" stroke="#16325C" stroke-width="2" stroke-linejoin="round">
+        <path d="M 38 28 Q 28 24 26 32 Q 34 34 38 28 Z" />
+        <path d="M 35 34 Q 24 34 24 41 Q 32 41 35 34 Z" />
+        <path d="M 74 22 Q 84 18 86 25 Q 78 27 74 22 Z" />
+        <path d="M 78 27 Q 88 26 88 33 Q 80 33 78 27 Z" />
+      </g>
+      <!-- Golden Goblet on Left -->
+      <g stroke="#16325C" stroke-width="2.4" stroke-linejoin="round">
+        <path d="M 16 78 H 32 C 32 88, 28 92, 24 92 C 20 92, 16 88, 16 78 Z" fill="#FBC02D" />
+        <line x1="24" y1="92" x2="24" y2="100" stroke="#16325C" stroke-width="3" />
+        <path d="M 18 100 H 30" stroke="#FBC02D" stroke-width="3" stroke-linecap="round" />
+        <circle cx="24" cy="96" r="4" fill="#FFE0CC" />
+      </g>
+    </symbol>
+  </svg>
+
+  <!-- Top Multilingual Bar (Korean Default, English, Japanese, Chinese) -->
+  <div class="bg-brand-dark text-white border-b border-slate-800 notranslate">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-1.5 text-xs text-sky-200 font-medium">
+        <i class="ph-fill ph-globe-hemisphere-east text-brand-blue text-base"></i>
+        <span id="langBarTitle">다국어 안내 (Language)</span>
+      </div>
+      <div class="flex items-center gap-1 sm:gap-1.5" role="group" aria-label="Language Selector">
+        <button
+          onclick="changeLanguage('ko')"
+          data-lang="ko"
+          class="lang-btn px-2.5 py-1 rounded-lg text-xs font-extrabold transition-all bg-brand-blue text-white shadow-sm flex items-center gap-1"
+        >
+          <span>🇰🇷</span>
+          <span>한국어</span>
+        </button>
+        <button
+          onclick="changeLanguage('en')"
+          data-lang="en"
+          class="lang-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-white/10 text-slate-200 hover:bg-white/20 flex items-center gap-1"
+        >
+          <span>🇺🇸</span>
+          <span>English</span>
+        </button>
+        <button
+          onclick="changeLanguage('ja')"
+          data-lang="ja"
+          class="lang-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-white/10 text-slate-200 hover:bg-white/20 flex items-center gap-1"
+        >
+          <span>🇯🇵</span>
+          <span>日本語</span>
+        </button>
+        <button
+          onclick="changeLanguage('zh-CN')"
+          data-lang="zh-CN"
+          class="lang-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-white/10 text-slate-200 hover:bg-white/20 flex items-center gap-1"
+        >
+          <span>🇨🇳</span>
+          <span>中文</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header Section -->
+  <header class="bg-white border-b border-slate-200">
+    <!-- Top Santorini Accent Bar -->
+    <div class="h-1.5 w-full bg-gradient-to-r from-brand-dark via-brand-blue to-sky-300"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+        
+        <!-- Left: Official Logo Emblem + Title & Summary -->
+        <div class="flex items-start sm:items-center gap-3.5 sm:gap-4">
+          <div class="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0">
+            <svg class="w-full h-full drop-shadow-sm">
+              <use href="#jijunghae-logo-emblem"></use>
+            </svg>
+          </div>
+
+          <!-- Brand Typography & Subtitle -->
           <div>
             <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-              <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-brand-dark">
+              <h1 id="ui-brand-title" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-brand-dark notranslate">
                 지중해마을
               </h1>
-              <span class="font-serifbrand text-xs sm:text-sm font-bold tracking-widest text-brand-blue">
+              <span class="font-serifbrand text-xs sm:text-sm font-bold tracking-widest text-brand-blue notranslate">
                 JIJUNGHAE MAEUL
               </span>
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-brand-light text-brand-blue border border-sky-200">
+              <span id="ui-brand-badge" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-brand-light text-brand-blue border border-sky-200 notranslate">
                 ✈️ 여권없이 떠나는 지중해마을
               </span>
             </div>
 
-            <p class="mt-1 text-slate-500 text-xs sm:text-sm">
+            <p id="ui-brand-desc" class="mt-1 text-slate-500 text-xs sm:text-sm notranslate">
               여권없이 떠나는 지중해마을 <strong class="text-brand-dark font-bold">66개 매장</strong>의 대표 메뉴·가격·편의시설을 한눈에 찾아보세요.
             </p>
 
             <!-- Minimal Stat Pills & Official Channel Links -->
-            <div class="mt-2.5 flex flex-wrap items-center gap-1.5 text-xs">
-              <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-brand-dark font-semibold">
+            <div class="mt-2.5 flex flex-wrap items-center gap-1.5 text-xs notranslate">
+              <span id="ui-stat-all" class="px-2.5 py-1 rounded-lg bg-slate-100 text-brand-dark font-semibold">
                 전체 <strong class="text-brand-blue">66</strong>곳
               </span>
-              <span class="px-2.5 py-1 rounded-lg bg-slate-50 text-slate-600 border border-slate-200/80">
+              <span id="ui-stat-fb" class="px-2.5 py-1 rounded-lg bg-slate-50 text-slate-600 border border-slate-200/80">
                 🍽️ 식음료 <strong class="text-brand-dark">44</strong>
               </span>
-              <span class="px-2.5 py-1 rounded-lg bg-slate-50 text-slate-600 border border-slate-200/80">
+              <span id="ui-stat-shop" class="px-2.5 py-1 rounded-lg bg-slate-50 text-slate-600 border border-slate-200/80">
                 🛍️ 쇼핑·공방·뷰티 <strong class="text-brand-dark">22</strong>
               </span>
-              <span class="px-2.5 py-1 rounded-lg bg-slate-50 text-slate-600 border border-slate-200/80">
+              <span id="ui-stat-room" class="px-2.5 py-1 rounded-lg bg-slate-50 text-slate-600 border border-slate-200/80">
                 🚪 단체룸 완비 <strong class="text-brand-blue">12</strong>
               </span>
             </div>
@@ -214,7 +308,7 @@
         </div>
 
         <!-- Right: Official SNS Links + Single Tasteful Mascot Placement ('오늘 뭐 먹지?' Concierge Button) -->
-        <div class="flex flex-col sm:flex-row lg:flex-col xl:flex-row items-stretch sm:items-center gap-2.5 flex-shrink-0">
+        <div class="flex flex-col sm:flex-row lg:flex-col xl:flex-row items-stretch sm:items-center gap-2.5 flex-shrink-0 notranslate">
           <!-- Official SNS & Festival Quick Links -->
           <div class="flex items-center gap-1.5">
             <a
@@ -225,7 +319,7 @@
               title="지중해마을 공식 유튜브"
             >
               <i class="ph-fill ph-youtube-logo text-red-600 text-base group-hover:scale-110 transition-transform"></i>
-              <span>유튜브</span>
+              <span id="ui-sns-youtube">유튜브</span>
             </a>
 
             <a
@@ -236,7 +330,7 @@
               title="지중해마을 공식 인스타그램"
             >
               <i class="ph-fill ph-instagram-logo text-pink-600 text-base group-hover:scale-110 transition-transform"></i>
-              <span>인스타</span>
+              <span id="ui-sns-insta">인스타</span>
             </a>
 
             <a
@@ -247,7 +341,7 @@
               title="지중해마을 축제정보 (공식 블로그)"
             >
               <i class="ph-fill ph-confetti text-emerald-600 text-base group-hover:scale-110 transition-transform"></i>
-              <span>축제정보</span>
+              <span id="ui-sns-festival">축제정보</span>
             </a>
           </div>
 
@@ -264,9 +358,9 @@
 
             <div class="text-left">
               <div class="inline-flex items-center gap-1 text-[11px] font-bold text-brand-grape">
-                <span>🍇 지중해마을 마스코트 추천</span>
+                <span id="ui-mascot-tag">🍇 지중해마을 마스코트 추천</span>
               </div>
-              <div class="text-sm sm:text-base font-extrabold text-brand-dark group-hover:text-brand-blue transition-colors">
+              <div id="ui-mascot-cta" class="text-sm sm:text-base font-extrabold text-brand-dark group-hover:text-brand-blue transition-colors">
                 오늘 뭐 먹지? 랜덤 메뉴 뽑기
               </div>
             </div>
@@ -282,7 +376,7 @@
   </header>
 
   <!-- Sticky Control Bar: Search, Category Tabs, Smart Filters -->
-  <section class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+  <section class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm notranslate">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 space-y-3">
       
       <!-- Search & Sort Row -->
@@ -309,16 +403,16 @@
 
         <!-- Sort Select -->
         <div class="flex items-center gap-2 flex-shrink-0">
-          <div class="relative w-full sm:w-48">
+          <div class="relative w-full sm:w-52">
             <select
               id="sortSelect"
               onchange="handleSortChange(this.value)"
               class="w-full appearance-none pl-3.5 pr-9 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-santorini-600 cursor-pointer"
             >
-              <option value="id_asc">📋 기본 순번순</option>
-              <option value="scale_desc">👥 좌석 규모 큰 순</option>
-              <option value="price_asc">💰 대표메뉴 가격 낮은 순</option>
-              <option value="name_asc">🔤 상호명 가나다순</option>
+              <option id="ui-sort-id" value="id_asc">📋 기본 순번순</option>
+              <option id="ui-sort-scale" value="scale_desc">👥 좌석 규모 큰 순</option>
+              <option id="ui-sort-price" value="price_asc">💰 대표메뉴 가격 낮은 순</option>
+              <option id="ui-sort-name" value="name_asc">🔤 상호명 가나다순</option>
             </select>
             <i class="ph-bold ph-caret-down absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none"></i>
           </div>
@@ -342,7 +436,7 @@
           class="hidden flex-shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 transition-colors"
         >
           <i class="ph-bold ph-arrow-counter-clockwise"></i>
-          초기화
+          <span id="ui-reset-btn">초기화</span>
         </button>
       </div>
     </div>
@@ -351,7 +445,7 @@
   <!-- Main Content Area -->
   <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 flex-grow">
     <!-- Active Result Summary Bar -->
-    <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+    <div class="flex flex-wrap items-center justify-between gap-2 mb-5 notranslate">
       <div class="flex items-center gap-2">
         <h2 id="resultCountTitle" class="text-base sm:text-lg font-bold text-slate-800">
           전체 매장 <span class="text-santorini-700">66</span>곳
@@ -360,7 +454,7 @@
       </div>
       <div class="text-xs text-slate-500 flex items-center gap-1.5">
         <i class="ph-fill ph-info text-santorini-500"></i>
-        <span>카드를 클릭하면 상세정보 및 네이버·카카오 지도 검색으로 연결됩니다.</span>
+        <span id="ui-click-guide">카드를 클릭하면 상세정보 및 네이버·카카오 지도 검색으로 연결됩니다.</span>
       </div>
     </div>
 
@@ -370,14 +464,14 @@
     </div>
 
     <!-- Empty State (2nd subtle placement of Mascot) -->
-    <div id="emptyState" class="hidden bg-white rounded-3xl border border-slate-200 p-10 sm:p-12 text-center my-8 max-w-lg mx-auto shadow-sm">
+    <div id="emptyState" class="hidden bg-white rounded-3xl border border-slate-200 p-10 sm:p-12 text-center my-8 max-w-lg mx-auto shadow-sm notranslate">
       <div class="w-20 h-20 mx-auto mb-4 mascot-float">
         <svg class="w-full h-full">
           <use href="#jijunghae-mascot"></use>
         </svg>
       </div>
-      <h3 class="text-lg font-bold text-brand-dark">조건에 맞는 매장을 찾지 못했어요</h3>
-      <p class="text-sm text-slate-500 mt-1 mb-6">
+      <h3 id="ui-empty-title" class="text-lg font-bold text-brand-dark">조건에 맞는 매장을 찾지 못했어요</h3>
+      <p id="ui-empty-desc" class="text-sm text-slate-500 mt-1 mb-6">
         검색어를 바꾸거나 선택된 스마트 필터를 해제해 보세요.
       </p>
       <button
@@ -385,13 +479,13 @@
         class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-dark hover:bg-brand-blue text-white text-sm font-semibold shadow transition-colors"
       >
         <i class="ph-bold ph-arrow-counter-clockwise"></i>
-        전체 매장 다시 보기
+        <span id="ui-empty-btn">전체 매장 다시 보기</span>
       </button>
     </div>
   </main>
 
   <!-- Footer with Minimal Official Brand Lockup -->
-  <footer class="bg-white text-slate-500 py-8 border-t border-slate-200 mt-12">
+  <footer class="bg-white text-slate-500 py-8 border-t border-slate-200 mt-12 notranslate">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 flex-shrink-0">
@@ -401,15 +495,15 @@
         </div>
         <div>
           <div class="font-extrabold text-brand-dark text-sm flex items-center gap-2">
-            <span>지중해마을</span>
+            <span id="ui-footer-title">지중해마을</span>
             <span class="font-serifbrand text-[11px] font-bold text-brand-blue tracking-wider">JIJUNGHAE MAEUL</span>
           </div>
-          <p class="mt-0.5 text-slate-400 text-xs">여권없이 떠나는 지중해마을 · 충청남도 아산시 탕정면 탕정면로8번길 일원</p>
+          <p id="ui-footer-addr" class="mt-0.5 text-slate-400 text-xs">여권없이 떠나는 지중해마을 · 충청남도 아산시 탕정면 탕정면로8번길 일원</p>
         </div>
       </div>
       <div class="text-center sm:text-right text-slate-400 text-xs">
-        <p>본 가이드는 지중해마을 66개 매장 공식 DB를 기반으로 제작되었습니다.</p>
-        <p class="mt-0.5">매장 사정에 따라 영업시간 및 메뉴 가격이 변동될 수 있습니다.</p>
+        <p id="ui-footer-notice1">본 가이드는 지중해마을 66개 매장 공식 DB를 기반으로 제작되었습니다.</p>
+        <p id="ui-footer-notice2" class="mt-0.5">매장 사정에 따라 영업시간 및 메뉴 가격이 변동될 수 있습니다.</p>
       </div>
     </div>
   </footer>
@@ -427,7 +521,7 @@
   <!-- Random Menu Roulette Modal (Hosted by Mascot) -->
   <div id="randomModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
     <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-slate-100 overflow-hidden animate-pop">
-      <div class="bg-brand-dark p-6 text-white relative border-b-4 border-brand-blue">
+      <div class="bg-brand-dark p-6 text-white relative border-b-4 border-brand-blue notranslate">
         <button
           onclick="closeRandomPickerModal()"
           class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
@@ -442,26 +536,26 @@
             </svg>
           </div>
           <div>
-            <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-brand-blue/25 border border-brand-blue/40 text-sky-200 text-[11px] font-bold mb-1">
+            <div id="ui-rand-badge" class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-brand-blue/25 border border-brand-blue/40 text-sky-200 text-[11px] font-bold mb-1">
               🍇 지중해마을 오늘 뭐 먹지?
             </div>
-            <h3 class="text-lg sm:text-xl font-extrabold">마스코트 랜덤 맛집 추천</h3>
-            <p class="text-xs text-slate-300 mt-0.5">식음료 44곳 중 오늘 방문하기 좋은 곳을 골라드려요!</p>
+            <h3 id="ui-rand-title" class="text-lg sm:text-xl font-extrabold">마스코트 랜덤 맛집 추천</h3>
+            <p id="ui-rand-desc" class="text-xs text-slate-300 mt-0.5">식음료 44곳 중 오늘 방문하기 좋은 곳을 골라드려요!</p>
           </div>
         </div>
 
         <!-- Sub-filter inside random modal -->
         <div class="mt-4 flex flex-wrap gap-1.5" id="randomThemeButtons">
-          <button onclick="setRandomPool('all_fb')" data-pool="all_fb" class="random-pool-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-blue text-white shadow-sm">
+          <button id="ui-pool-all" onclick="setRandomPool('all_fb')" data-pool="all_fb" class="random-pool-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-blue text-white shadow-sm">
             🍽️ 식음료 전체 (44)
           </button>
-          <button onclick="setRandomPool('meal')" data-pool="meal" class="random-pool-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-200 hover:bg-white/20">
+          <button id="ui-pool-meal" onclick="setRandomPool('meal')" data-pool="meal" class="random-pool-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-200 hover:bg-white/20">
             🍚 든든한 식사 (31)
           </button>
-          <button onclick="setRandomPool('cafe')" data-pool="cafe" class="random-pool-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-200 hover:bg-white/20">
+          <button id="ui-pool-cafe" onclick="setRandomPool('cafe')" data-pool="cafe" class="random-pool-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-200 hover:bg-white/20">
             ☕ 카페·디저트 (13)
           </button>
-          <button onclick="setRandomPool('group')" data-pool="group" class="random-pool-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-200 hover:bg-white/20">
+          <button id="ui-pool-group" onclick="setRandomPool('group')" data-pool="group" class="random-pool-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-200 hover:bg-white/20">
             🚪 단체룸 회식 (12)
           </button>
         </div>
@@ -472,20 +566,20 @@
           <!-- Populated by JS -->
         </div>
 
-        <div class="mt-5 flex gap-2.5">
+        <div class="mt-5 flex gap-2.5 notranslate">
           <button
             onclick="spinRandomStore()"
             class="flex-1 py-3.5 px-4 rounded-xl bg-brand-dark hover:bg-slate-800 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all"
           >
             <i class="ph-bold ph-arrows-clockwise text-base"></i>
-            다시 뽑기
+            <span id="ui-rand-again">다시 뽑기</span>
           </button>
           <button
             id="randomViewDetailBtn"
             onclick=""
             class="py-3.5 px-4 rounded-xl bg-brand-blue hover:bg-sky-600 text-white font-bold text-sm shadow-md flex items-center justify-center gap-1.5 transition-all"
           >
-            <span>상세보기</span>
+            <span id="ui-rand-detail">상세보기</span>
             <i class="ph-bold ph-arrow-right"></i>
           </button>
         </div>
@@ -496,7 +590,7 @@
   <!-- Toast Notification -->
   <div
     id="toastBox"
-    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300 transform translate-y-2"
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300 transform translate-y-2 notranslate"
   >
     <div class="bg-slate-900/95 text-white px-4 py-2.5 rounded-full shadow-xl border border-slate-700 flex items-center gap-2 text-xs sm:text-sm font-medium">
       <i class="ph-fill ph-check-circle text-emerald-400 text-lg"></i>
@@ -504,7 +598,7 @@
     </div>
   </div>
 
-  <!-- Application Script & Full 66 Stores Dataset -->
+  <!-- Application Script & Full 66 Stores Dataset (100% Untouched Original DB) -->
   <script>
     const STORES_DATA = [
       {"id": 1, "category": "한식", "name": "친정엄마한식뷔페", "address": "충남 아산시 탕정면 탕정면로22번길 23", "holiday": "없음", "hours": "09:30~21:00", "phone": "041-533-4530", "scale": "84석", "scale_num": 84, "egg": false, "room": false, "takeout": false, "reserve": false, "menus": [{"name": "14세이상", "price": "9,900원", "price_num": 9900, "is_rep": true}, {"name": "13세이하", "price": "7,700원", "price_num": 7700, "is_rep": false}, {"name": "7세이하", "price": "5,000원", "price_num": 5000, "is_rep": false}], "sns": ""},
@@ -576,37 +670,516 @@
     ];
 
     const CATEGORIES = [
-      { key: "전체", label: "전체", count: 66, icon: "ph-squares-four" },
-      { key: "한식", label: "한식", count: 8, icon: "ph-bowl-food" },
-      { key: "중식", label: "중식", count: 5, icon: "ph-fire" },
-      { key: "일식", label: "일식", count: 4, icon: "ph-fish-simple" },
-      { key: "양식", label: "양식", count: 4, icon: "ph-pizza" },
-      { key: "분식", label: "분식", count: 2, icon: "ph-cooking-pot" },
-      { key: "고기구이", label: "고기구이", count: 5, icon: "ph-flame" },
-      { key: "주점", label: "주점", count: 3, icon: "ph-beer-stein" },
-      { key: "카페 및 디저트", label: "카페 및 디저트", count: 13, icon: "ph-coffee" },
-      { key: "의류 및 패션", label: "의류 및 패션", count: 7, icon: "ph-t-shirt" },
-      { key: "공방 및 스튜디오", label: "공방 및 스튜디오", count: 5, icon: "ph-paint-brush" },
-      { key: "기타쇼핑 및 뷰티", label: "기타쇼핑 및 뷰티", count: 10, icon: "ph-sparkle" }
+      { key: "전체", count: 66, icon: "ph-squares-four" },
+      { key: "한식", count: 8, icon: "ph-bowl-food" },
+      { key: "중식", count: 5, icon: "ph-fire" },
+      { key: "일식", count: 4, icon: "ph-fish-simple" },
+      { key: "양식", count: 4, icon: "ph-pizza" },
+      { key: "분식", count: 2, icon: "ph-cooking-pot" },
+      { key: "고기구이", count: 5, icon: "ph-flame" },
+      { key: "주점", count: 3, icon: "ph-beer-stein" },
+      { key: "카페 및 디저트", count: 13, icon: "ph-coffee" },
+      { key: "의류 및 패션", count: 7, icon: "ph-t-shirt" },
+      { key: "공방 및 스튜디오", count: 5, icon: "ph-paint-brush" },
+      { key: "기타쇼핑 및 뷰티", count: 10, icon: "ph-sparkle" }
     ];
 
     const SMART_FILTERS = [
-      { key: "room", label: "🚪 단체룸 완비 (12)", check: (s) => s.room === true },
-      { key: "large", label: "👥 50석 이상 대형매장 (24)", check: (s) => s.scale_num >= 50 },
-      { key: "reserve", label: "📅 예약 가능 (45)", check: (s) => s.reserve === true },
-      { key: "takeout", label: "🛍️ 포장 가능 (38)", check: (s) => s.takeout === true },
-      { key: "egg", label: "🍳 계란프라이 제공 (1)", check: (s) => s.egg === true },
-      { key: "sns", label: "🔗 SNS/블로그 보유 (27)", check: (s) => s.sns !== "" }
+      { key: "room", check: (s) => s.room === true },
+      { key: "large", check: (s) => s.scale_num >= 50 },
+      { key: "reserve", check: (s) => s.reserve === true },
+      { key: "takeout", check: (s) => s.takeout === true },
+      { key: "egg", check: (s) => s.egg === true },
+      { key: "sns", check: (s) => s.sns !== "" }
     ];
+
+    // 4-Language Dictionary (ko, en, ja, zh-CN) for UI elements
+    const I18N = {
+      "ko": {
+        langBarTitle: "다국어 안내 (Language)",
+        brandTitle: "지중해마을",
+        brandBadge: "✈️ 여권없이 떠나는 지중해마을",
+        brandDesc: '여권없이 떠나는 지중해마을 <strong class="text-brand-dark font-bold">66개 매장</strong>의 대표 메뉴·가격·편의시설을 한눈에 찾아보세요.',
+        statAll: '전체 <strong class="text-brand-blue">66</strong>곳',
+        statFb: '🍽️ 식음료 <strong class="text-brand-dark">44</strong>',
+        statShop: '🛍️ 쇼핑·공방·뷰티 <strong class="text-brand-dark">22</strong>',
+        statRoom: '🚪 단체룸 완비 <strong class="text-brand-blue">12</strong>',
+        snsYoutube: "유튜브",
+        snsInsta: "인스타",
+        snsFestival: "축제정보",
+        mascotTag: "🍇 지중해마을 마스코트 추천",
+        mascotCta: "오늘 뭐 먹지? 랜덤 메뉴 뽑기",
+        searchPlaceholder: "메뉴명(삼겹살, 빙수, 짬뽕, 두부, 돈까스) 또는 상호명 검색...",
+        sortId: "📋 기본 순번순",
+        sortScale: "👥 좌석 규모 큰 순",
+        sortPrice: "💰 대표메뉴 가격 낮은 순",
+        sortName: "🔤 상호명 가나다순",
+        resetBtn: "초기화",
+        clickGuide: "카드를 클릭하면 상세정보 및 네이버·카카오 지도 검색으로 연결됩니다.",
+        emptyTitle: "조건에 맞는 매장을 찾지 못했어요",
+        emptyDesc: "검색어를 바꾸거나 선택된 스마트 필터를 해제해 보세요.",
+        emptyBtn: "전체 매장 다시 보기",
+        footerTitle: "지중해마을",
+        footerAddr: "여권없이 떠나는 지중해마을 · 충청남도 아산시 탕정면 탕정면로8번길 일원",
+        footerNotice1: "본 가이드는 지중해마을 66개 매장 공식 DB를 기반으로 제작되었습니다.",
+        footerNotice2: "매장 사정에 따라 영업시간 및 메뉴 가격이 변동될 수 있습니다.",
+        randBadge: "🍇 지중해마을 오늘 뭐 먹지?",
+        randTitle: "마스코트 랜덤 맛집 추천",
+        randDesc: "식음료 44곳 중 오늘 방문하기 좋은 곳을 골라드려요!",
+        poolAll: "🍽️ 식음료 전체 (44)",
+        poolMeal: "🍚 든든한 식사 (31)",
+        poolCafe: "☕ 카페·디저트 (13)",
+        poolGroup: "🚪 단체룸 회식 (12)",
+        randAgain: "다시 뽑기",
+        randDetail: "상세보기",
+        randRepLabel: "추천 대표메뉴",
+        categories: {
+          "전체": "전체",
+          "한식": "한식",
+          "중식": "중식",
+          "일식": "일식",
+          "양식": "양식",
+          "분식": "분식",
+          "고기구이": "고기구이",
+          "주점": "주점",
+          "카페 및 디저트": "카페 및 디저트",
+          "의류 및 패션": "의류 및 패션",
+          "공방 및 스튜디오": "공방 및 스튜디오",
+          "기타쇼핑 및 뷰티": "기타쇼핑 및 뷰티"
+        },
+        smartFilters: {
+          "room": "🚪 단체룸 완비 (12)",
+          "large": "👥 50석 이상 대형매장 (24)",
+          "reserve": "📅 예약 가능 (45)",
+          "takeout": "🛍️ 포장 가능 (38)",
+          "egg": "🍳 계란프라이 제공 (1)",
+          "sns": "🔗 SNS/블로그 보유 (27)"
+        },
+        allStoresTitle: "전체 매장",
+        countUnit: "곳",
+        searchPrefix: "검색어",
+        badgeRoom: "🚪 룸 완비",
+        badgeReserve: "📅 예약가능",
+        badgeTakeout: "🛍️ 포장가능",
+        badgeEgg: "🍳 계란프라이",
+        repBadge: "대표",
+        repMenuFull: "대표메뉴",
+        noMenuTitle: "✨ 매장 방문 문의 / 상품별 상이",
+        noMenuSub: "(패션·리빙·체험 매장)",
+        labelHours: "영업시간",
+        labelHoliday: "휴무/참고",
+        btnCall: "전화걸기",
+        btnCopy: "주소복사",
+        toastCopied: "📍 주소가 복사되었습니다: ",
+        modalIdPrefix: "고유번호",
+        modalRoomTitle: "단체룸",
+        modalRoomYes: "보유 (O)",
+        modalRoomNo: "없음",
+        modalResTitle: "예약",
+        modalResYes: "가능 (O)",
+        modalResNo: "불가/문의",
+        modalTakeTitle: "포장",
+        modalTakeYes: "가능 (O)",
+        modalTakeNo: "불가/문의",
+        modalEggTitle: "계란프라이",
+        modalEggYes: "제공 (O)",
+        modalMenuHeader: "대표 메뉴 및 가격 정보",
+        modalNoMenuDesc: "패션·공방·리빙·뷰티 매장으로 방문 시 상품별 상세 안내를 받으실 수 있습니다.",
+        modalHoursHeader: "⏰ 영업시간",
+        modalHolidayHeader: "🗓️ 정기휴무 / 요일별 안내",
+        modalMapHeader: "🗺️ 지도 검색 및 바로가기",
+        naverMapBtn: "네이버 지도 검색",
+        kakaoMapBtn: "카카오맵 검색"
+      },
+      "en": {
+        langBarTitle: "Language Selection",
+        brandTitle: "Jijunghae Maeul",
+        brandBadge: "✈️ Mediterranean Village in Asan",
+        brandDesc: 'Explore signature menus, prices, and amenities of all <strong class="text-brand-dark font-bold">66 stores</strong> at a glance.',
+        statAll: 'Total <strong class="text-brand-blue">66</strong>',
+        statFb: '🍽️ Dining & Cafe <strong class="text-brand-dark">44</strong>',
+        statShop: '🛍️ Shop·Studio·Beauty <strong class="text-brand-dark">22</strong>',
+        statRoom: '🚪 Group Rooms <strong class="text-brand-blue">12</strong>',
+        snsYoutube: "YouTube",
+        snsInsta: "Instagram",
+        snsFestival: "Festival Info",
+        mascotTag: "🍇 Mascot's Pick",
+        mascotCta: "What to Eat? Random Pick",
+        searchPlaceholder: "Search by menu (BBQ, Bingsu, Ramen, Tofu, Cutlet) or store name...",
+        sortId: "📋 Default Order",
+        sortScale: "👥 Most Seats First",
+        sortPrice: "💰 Lowest Price First",
+        sortName: "🔤 Name Order",
+        resetBtn: "Reset",
+        clickGuide: "Click any card for full details and Naver / Kakao Map directions.",
+        emptyTitle: "No matching stores found",
+        emptyDesc: "Try changing your search keyword or clearing active filters.",
+        emptyBtn: "Show All 66 Stores",
+        footerTitle: "Jijunghae Maeul",
+        footerAddr: "Mediterranean Village · Tangjeongmyeon-ro 8beon-gil, Tangjeong-myeon, Asan-si, Chungnam",
+        footerNotice1: "This guide is based on the official database of 66 stores in Jijunghae Maeul.",
+        footerNotice2: "Operating hours and menu prices are subject to change depending on store circumstances.",
+        randBadge: "🍇 What to Eat Today?",
+        randTitle: "Mascot Random Food Pick",
+        randDesc: "We pick a great spot for you among 44 dining & cafe venues!",
+        poolAll: "🍽️ All Food & Cafe (44)",
+        poolMeal: "🍚 Meals & Dining (31)",
+        poolCafe: "☕ Cafe & Dessert (13)",
+        poolGroup: "🚪 Group Room (12)",
+        randAgain: "Spin Again",
+        randDetail: "View Details",
+        randRepLabel: "Signature",
+        categories: {
+          "전체": "All",
+          "한식": "Korean",
+          "중식": "Chinese",
+          "일식": "Japanese",
+          "양식": "Western",
+          "분식": "Snack Bar",
+          "고기구이": "BBQ / Meat",
+          "주점": "Pub & Bar",
+          "카페 및 디저트": "Cafe & Dessert",
+          "의류 및 패션": "Fashion",
+          "공방 및 스튜디오": "Craft & Studio",
+          "기타쇼핑 및 뷰티": "Shopping & Beauty"
+        },
+        smartFilters: {
+          "room": "🚪 Private Room (12)",
+          "large": "👥 50+ Seats Large (24)",
+          "reserve": "📅 Reservation (45)",
+          "takeout": "🛍️ Takeout (38)",
+          "egg": "🍳 Fried Egg Service (1)",
+          "sns": "🔗 Official SNS/Blog (27)"
+        },
+        allStoresTitle: "All Stores",
+        countUnit: "",
+        searchPrefix: "Search",
+        badgeRoom: "🚪 Private Room",
+        badgeReserve: "📅 Reservation",
+        badgeTakeout: "🛍️ Takeout",
+        badgeEgg: "🍳 Fried Egg",
+        repBadge: "Best",
+        repMenuFull: "Signature",
+        noMenuTitle: "✨ Inquire In-Store / Varies by Item",
+        noMenuSub: "(Fashion · Living · Studio Store)",
+        labelHours: "Hours",
+        labelHoliday: "Closed / Note",
+        btnCall: "Call",
+        btnCopy: "Copy Addr",
+        toastCopied: "📍 Address copied: ",
+        modalIdPrefix: "Store ID",
+        modalRoomTitle: "Group Room",
+        modalRoomYes: "Yes (O)",
+        modalRoomNo: "None",
+        modalResTitle: "Reservation",
+        modalResYes: "Available",
+        modalResNo: "Inquire",
+        modalTakeTitle: "Takeout",
+        modalTakeYes: "Available",
+        modalTakeNo: "Inquire",
+        modalEggTitle: "Fried Egg",
+        modalEggYes: "Included",
+        modalMenuHeader: "Signature Menus & Prices",
+        modalNoMenuDesc: "Visit the store for detailed product and experience information.",
+        modalHoursHeader: "⏰ Operating Hours",
+        modalHolidayHeader: "🗓️ Regular Holiday / Notes",
+        modalMapHeader: "🗺️ Map Search & Directions",
+        naverMapBtn: "Naver Map",
+        kakaoMapBtn: "Kakao Map"
+      },
+      "ja": {
+        langBarTitle: "多言語ガイド (Language)",
+        brandTitle: "地中海マウル",
+        brandBadge: "✈️ パスポート不要の地中海村",
+        brandDesc: 'パスポート不要で行ける地中海マウル<strong class="text-brand-dark font-bold">全66店舗</strong>の代表メニュー・価格・設備を一目でチェック！',
+        statAll: '全体 <strong class="text-brand-blue">66</strong>店',
+        statFb: '🍽️ グルメ・カフェ <strong class="text-brand-dark">44</strong>',
+        statShop: '🛍️ ショップ・工房・美容 <strong class="text-brand-dark">22</strong>',
+        statRoom: '🚪 団体ルーム完備 <strong class="text-brand-blue">12</strong>',
+        snsYoutube: "YouTube",
+        snsInsta: "インスタ",
+        snsFestival: "祭り情報",
+        mascotTag: "🍇 マスコットのおすすめ",
+        mascotCta: "今日何食べる？ランダム抽選",
+        searchPlaceholder: "メニュー名（サムギョプサル、ピンス、ちゃんぽん、豆腐、トンカツ）または店名検索...",
+        sortId: "📋 基本番号順",
+        sortScale: "👥 座席数が多い順",
+        sortPrice: "💰 代表メニューが安い順",
+        sortName: "🔤 店名順",
+        resetBtn: "リセット",
+        clickGuide: "カードをクリックすると詳細情報やネイバー・カカオマップ検索に繋がります。",
+        emptyTitle: "条件に合う店舗が見つかりませんでした",
+        emptyDesc: "検索ワードを変更するか、フィルターを解除してみてください。",
+        emptyBtn: "全店舗を再表示",
+        footerTitle: "地中海マウル",
+        footerAddr: "パスポート不要の地中海マウル · 忠清南道牙山市湯井面湯井面路8番ギル一帯",
+        footerNotice1: "本ガイドは地中海マウル66店舗の公式DBを基に制作されました。",
+        footerNotice2: "店舗の都合により営業時間やメニュー価格が変動する場合があります。",
+        randBadge: "🍇 今日何食べる？",
+        randTitle: "マスコットのランダムグルメ推薦",
+        randDesc: "飲食店・カフェ44店舗の中から今日ぴったりの場所を選びます！",
+        poolAll: "🍽️ 飲食すべて (44)",
+        poolMeal: "🍚 しっかり食事 (31)",
+        poolCafe: "☕ カフェ・デザート (13)",
+        poolGroup: "🚪 団体ルーム (12)",
+        randAgain: "もう一度引く",
+        randDetail: "詳細を見る",
+        randRepLabel: "代表メニュー",
+        categories: {
+          "전체": "すべて",
+          "한식": "韓国料理",
+          "중식": "中華料理",
+          "일식": "日本料理",
+          "양식": "洋食",
+          "분식": "粉食・軽食",
+          "고기구이": "焼肉・ホルモン",
+          "주점": "居酒屋・パブ",
+          "카페 및 디저트": "カフェ・デザート",
+          "의류 및 패션": "衣類・ファッション",
+          "공방 및 스튜디오": "工房・スタジオ",
+          "기타쇼핑 및 뷰티": "ショッピング・美容"
+        },
+        smartFilters: {
+          "room": "🚪 団体ルーム完備 (12)",
+          "large": "👥 50席以上の大型店 (24)",
+          "reserve": "📅 予約可能 (45)",
+          "takeout": "🛍️ テイクアウト可 (38)",
+          "egg": "🍳 目玉焼き提供 (1)",
+          "sns": "🔗 SNS/ブログあり (27)"
+        },
+        allStoresTitle: "全店舗",
+        countUnit: "店",
+        searchPrefix: "検索",
+        badgeRoom: "🚪 個室完備",
+        badgeReserve: "📅 予約可",
+        badgeTakeout: "🛍️ 持帰り可",
+        badgeEgg: "🍳 目玉焼き",
+        repBadge: "代表",
+        repMenuFull: "代表メニュー",
+        noMenuTitle: "✨ 店舗へお問い合わせ / 商品別",
+        noMenuSub: "(ファッション・雑貨・体験店舗)",
+        labelHours: "営業時間",
+        labelHoliday: "定休日/備考",
+        btnCall: "電話する",
+        btnCopy: "住所コピー",
+        toastCopied: "📍 住所をコピーしました: ",
+        modalIdPrefix: "店舗番号",
+        modalRoomTitle: "団体ルーム",
+        modalRoomYes: "あり (O)",
+        modalRoomNo: "なし",
+        modalResTitle: "予約",
+        modalResYes: "可能 (O)",
+        modalResNo: "不可/要問合",
+        modalTakeTitle: "テイクアウト",
+        modalTakeYes: "可能 (O)",
+        modalTakeNo: "不可/要問合",
+        modalEggTitle: "目玉焼き",
+        modalEggYes: "提供 (O)",
+        modalMenuHeader: "代表メニューおよび価格情報",
+        modalNoMenuDesc: "ファッション・工房・ビューティー店舗のため、ご来店時に商品別の案内を受けられます。",
+        modalHoursHeader: "⏰ 営業時間",
+        modalHolidayHeader: "🗓️ 定休日 / 曜日別案内",
+        modalMapHeader: "🗺️ 地図検索・アクセス",
+        naverMapBtn: "NAVERマップ検索",
+        kakaoMapBtn: "カカオマップ検索"
+      },
+      "zh-CN": {
+        langBarTitle: "多语言指南 (Language)",
+        brandTitle: "地中海村",
+        brandBadge: "✈️ 免护照畅游地中海村",
+        brandDesc: '一目了然地查看免护照地中海村<strong class="text-brand-dark font-bold">66家店铺</strong>的招牌菜单、价格与便利设施。',
+        statAll: '全部 <strong class="text-brand-blue">66</strong>家',
+        statFb: '🍽️ 餐饮·咖啡 <strong class="text-brand-dark">44</strong>',
+        statShop: '🛍️ 购物·工坊·美业 <strong class="text-brand-dark">22</strong>',
+        statRoom: '🚪 备有包间 <strong class="text-brand-blue">12</strong>',
+        snsYoutube: "YouTube",
+        snsInsta: "Instagram",
+        snsFestival: "庆典信息",
+        mascotTag: "🍇 吉祥物为您推荐",
+        mascotCta: "今天吃什么？随机抽选菜单",
+        searchPlaceholder: "搜索菜品名称（五花肉、刨冰、海鲜面、豆腐、炸猪排）或店名...",
+        sortId: "📋 默认编号排序",
+        sortScale: "👥 座位规模从大到小",
+        sortPrice: "💰 招牌菜价格从低到高",
+        sortName: "🔤 店名排序",
+        resetBtn: "重置",
+        clickGuide: "点击卡片即可查看详情并跳转至 Naver / Kakao 地图搜索。",
+        emptyTitle: "未找到符合条件的店铺",
+        emptyDesc: "请尝试更换搜索词或取消已选的筛选条件。",
+        emptyBtn: "重新查看全部店铺",
+        footerTitle: "地中海村",
+        footerAddr: "免护照畅游地中海村 · 忠清南道牙山市汤井面汤井面路8番街一带",
+        footerNotice1: "本指南基于地中海村66家店铺官方数据库制作。",
+        footerNotice2: "营业时间及菜单价格可能会根据店铺实际情况有所变动。",
+        randBadge: "🍇 地中海村今天吃什么？",
+        randTitle: "吉祥物随机美食推荐",
+        randDesc: "从44家餐饮咖啡店中为您挑选今天值得一去的好店！",
+        poolAll: "🍽️ 全部餐饮 (44)",
+        poolMeal: "🍚 丰盛正餐 (31)",
+        poolCafe: "☕ 咖啡·甜点 (13)",
+        poolGroup: "🚪 团体包间 (12)",
+        randAgain: "重新抽取",
+        randDetail: "查看详情",
+        randRepLabel: "推荐招牌菜",
+        categories: {
+          "전체": "全部",
+          "한식": "韩餐",
+          "중식": "中餐",
+          "일식": "日料",
+          "양식": "西餐",
+          "분식": "韩式小吃",
+          "고기구이": "烤肉",
+          "주점": "酒馆",
+          "카페 및 디저트": "咖啡与甜点",
+          "의류 및 패션": "服装与时尚",
+          "공방 및 스튜디오": "工坊与摄影",
+          "기타쇼핑 및 뷰티": "购物与美业"
+        },
+        smartFilters: {
+          "room": "🚪 备有包间 (12)",
+          "large": "👥 50座以上大店 (24)",
+          "reserve": "📅 可预约 (45)",
+          "takeout": "🛍️ 可打包 (38)",
+          "egg": "🍳 提供煎蛋 (1)",
+          "sns": "🔗 拥有SNS/博客 (27)"
+        },
+        allStoresTitle: "全部店铺",
+        countUnit: "家",
+        searchPrefix: "搜索词",
+        badgeRoom: "🚪 备有包间",
+        badgeReserve: "📅 可预约",
+        badgeTakeout: "🛍️ 可打包",
+        badgeEgg: "🍳 煎蛋服务",
+        repBadge: "招牌",
+        repMenuFull: "招牌菜单",
+        noMenuTitle: "✨ 到店咨询 / 按商品而定",
+        noMenuSub: "(时尚·生活·体验店铺)",
+        labelHours: "营业时间",
+        labelHoliday: "休息日/备注",
+        btnCall: "拨打电话",
+        btnCopy: "复制地址",
+        toastCopied: "📍 地址已复制: ",
+        modalIdPrefix: "店铺编号",
+        modalRoomTitle: "团体包间",
+        modalRoomYes: "有 (O)",
+        modalRoomNo: "无",
+        modalResTitle: "预约",
+        modalResYes: "可以 (O)",
+        modalResNo: "不可/咨询",
+        modalTakeTitle: "打包",
+        modalTakeYes: "可以 (O)",
+        modalTakeNo: "不可/咨询",
+        modalEggTitle: "煎蛋",
+        modalEggYes: "提供 (O)",
+        modalMenuHeader: "招牌菜单及价格信息",
+        modalNoMenuDesc: "本店为时尚·工坊·家居·美业店铺，到店可咨询具体商品详情。",
+        modalHoursHeader: "⏰ 营业时间",
+        modalHolidayHeader: "🗓️ 定期休假 / 按日说明",
+        modalMapHeader: "🗺️ 地图搜索与导航",
+        naverMapBtn: "Naver 地图搜索",
+        kakaoMapBtn: "Kakao 地图搜索"
+      }
+    };
 
     // App State
     let state = {
+      lang: "ko",
       searchQuery: "",
       selectedCategory: "전체",
       activeSmartFilters: new Set(),
       sortBy: "id_asc",
-      randomPoolType: "all_fb"
+      randomPoolType: "all_fb",
+      currentDetailStoreId: null,
+      currentRandomStoreId: null
     };
+
+    function t() {
+      return I18N[state.lang] || I18N["ko"];
+    }
+
+    // Trigger Google Translate Widget for Dynamic Store DB Elements (when available)
+    function triggerGoogleTranslate(langCode) {
+      const combo = document.querySelector(".goog-te-combo");
+      if (combo) {
+        combo.value = langCode;
+        combo.dispatchEvent(new Event("change"));
+      }
+    }
+
+    // Change Language Handler (ko, en, ja, zh-CN)
+    function changeLanguage(langCode) {
+      state.lang = langCode;
+      document.documentElement.lang = langCode;
+
+      // Update Top Language Selector Button Styles
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        if (btn.getAttribute("data-lang") === langCode) {
+          btn.className = "lang-btn px-2.5 py-1 rounded-lg text-xs font-extrabold transition-all bg-brand-blue text-white shadow-sm flex items-center gap-1";
+        } else {
+          btn.className = "lang-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-white/10 text-slate-200 hover:bg-white/20 flex items-center gap-1";
+        }
+      });
+
+      const dict = t();
+
+      // Update Static Header, Controls, Empty State & Footer UI Texts
+      document.getElementById("langBarTitle").textContent = dict.langBarTitle;
+      document.getElementById("ui-brand-title").textContent = dict.brandTitle;
+      document.getElementById("ui-brand-badge").textContent = dict.brandBadge;
+      document.getElementById("ui-brand-desc").innerHTML = dict.brandDesc;
+      document.getElementById("ui-stat-all").innerHTML = dict.statAll;
+      document.getElementById("ui-stat-fb").innerHTML = dict.statFb;
+      document.getElementById("ui-stat-shop").innerHTML = dict.statShop;
+      document.getElementById("ui-stat-room").innerHTML = dict.statRoom;
+
+      document.getElementById("ui-sns-youtube").textContent = dict.snsYoutube;
+      document.getElementById("ui-sns-insta").textContent = dict.snsInsta;
+      document.getElementById("ui-sns-festival").textContent = dict.snsFestival;
+      document.getElementById("ui-mascot-tag").textContent = dict.mascotTag;
+      document.getElementById("ui-mascot-cta").textContent = dict.mascotCta;
+
+      document.getElementById("searchInput").placeholder = dict.searchPlaceholder;
+      document.getElementById("ui-sort-id").textContent = dict.sortId;
+      document.getElementById("ui-sort-scale").textContent = dict.sortScale;
+      document.getElementById("ui-sort-price").textContent = dict.sortPrice;
+      document.getElementById("ui-sort-name").textContent = dict.sortName;
+      document.getElementById("ui-reset-btn").textContent = dict.resetBtn;
+      document.getElementById("ui-click-guide").textContent = dict.clickGuide;
+
+      document.getElementById("ui-empty-title").textContent = dict.emptyTitle;
+      document.getElementById("ui-empty-desc").textContent = dict.emptyDesc;
+      document.getElementById("ui-empty-btn").textContent = dict.emptyBtn;
+
+      document.getElementById("ui-footer-title").textContent = dict.footerTitle;
+      document.getElementById("ui-footer-addr").textContent = dict.footerAddr;
+      document.getElementById("ui-footer-notice1").textContent = dict.footerNotice1;
+      document.getElementById("ui-footer-notice2").textContent = dict.footerNotice2;
+
+      document.getElementById("ui-rand-badge").textContent = dict.randBadge;
+      document.getElementById("ui-rand-title").textContent = dict.randTitle;
+      document.getElementById("ui-rand-desc").textContent = dict.randDesc;
+      document.getElementById("ui-pool-all").textContent = dict.poolAll;
+      document.getElementById("ui-pool-meal").textContent = dict.poolMeal;
+      document.getElementById("ui-pool-cafe").textContent = dict.poolCafe;
+      document.getElementById("ui-pool-group").textContent = dict.poolGroup;
+      document.getElementById("ui-rand-again").textContent = dict.randAgain;
+      document.getElementById("ui-rand-detail").textContent = dict.randDetail;
+
+      renderCategoryTabs();
+      renderSmartFilters();
+      renderStoreGrid();
+
+      // Re-render open modals if currently visible
+      if (!document.getElementById("detailModal").classList.contains("hidden") && state.currentDetailStoreId) {
+        openStoreDetailModal(state.currentDetailStoreId);
+      }
+      if (!document.getElementById("randomModal").classList.contains("hidden") && state.currentRandomStoreId) {
+        renderRandomPickedStore(state.currentRandomStoreId);
+      }
+
+      // Sync Google Translate for DB strings if loaded
+      triggerGoogleTranslate(langCode);
+    }
 
     // Category Badge Color Helper
     function getCategoryStyle(category) {
@@ -636,9 +1209,11 @@
 
     // Render Category Tabs
     function renderCategoryTabs() {
+      const dict = t();
       const container = document.getElementById("categoryTabsContainer");
       container.innerHTML = CATEGORIES.map(cat => {
         const isActive = state.selectedCategory === cat.key;
+        const labelText = dict.categories[cat.key] || cat.key;
         return `
           <button
             onclick="selectCategory('${cat.key}')"
@@ -649,7 +1224,7 @@
             }"
           >
             <i class="ph-bold ${cat.icon}"></i>
-            <span>${cat.label}</span>
+            <span>${labelText}</span>
             <span class="px-1.5 py-0.5 rounded-full text-[11px] ${
               isActive ? "bg-brand-blue text-white" : "bg-white text-slate-600"
             }">${cat.count}</span>
@@ -660,9 +1235,11 @@
 
     // Render Smart Filter Chips
     function renderSmartFilters() {
+      const dict = t();
       const container = document.getElementById("smartFilterContainer");
       container.innerHTML = SMART_FILTERS.map(f => {
         const isActive = state.activeSmartFilters.has(f.key);
+        const labelText = dict.smartFilters[f.key] || f.key;
         return `
           <button
             onclick="toggleSmartFilter('${f.key}')"
@@ -672,7 +1249,7 @@
                 : "bg-white hover:bg-slate-50 text-slate-700 border-slate-300"
             }"
           >
-            <span>${f.label}</span>
+            <span>${labelText}</span>
             ${isActive ? '<i class="ph-bold ph-check text-xs ml-0.5"></i>' : ''}
           </button>
         `;
@@ -745,19 +1322,27 @@
 
     // Render Store Cards
     function renderStoreGrid() {
+      const dict = t();
       const stores = getFilteredStores();
       const grid = document.getElementById("storeGrid");
       const emptyState = document.getElementById("emptyState");
       const titleEl = document.getElementById("resultCountTitle");
       const summaryEl = document.getElementById("activeFilterSummary");
 
-      titleEl.innerHTML = `${state.selectedCategory === "전체" ? "전체 매장" : state.selectedCategory} <span class="text-santorini-700">${stores.length}</span>곳`;
+      const catTitle = state.selectedCategory === "전체"
+        ? dict.allStoresTitle
+        : (dict.categories[state.selectedCategory] || state.selectedCategory);
+
+      titleEl.innerHTML = `${catTitle} <span class="text-santorini-700">${stores.length}</span>${dict.countUnit}`;
 
       const activeLabels = [];
-      if (state.searchQuery.trim() !== "") activeLabels.push(`검색어: "${state.searchQuery.trim()}"`);
+      if (state.searchQuery.trim() !== "") activeLabels.push(`${dict.searchPrefix}: "${state.searchQuery.trim()}"`);
       if (state.activeSmartFilters.size > 0) {
         SMART_FILTERS.forEach(f => {
-          if (state.activeSmartFilters.has(f.key)) activeLabels.push(f.label.replace(/\s*\(\d+\)/, ""));
+          if (state.activeSmartFilters.has(f.key)) {
+            const rawLabel = dict.smartFilters[f.key] || f.key;
+            activeLabels.push(rawLabel.replace(/\s*\(\d+\)/, ""));
+          }
         });
       }
       summaryEl.textContent = activeLabels.length > 0 ? `(${activeLabels.join(" · ")})` : "";
@@ -772,17 +1357,18 @@
 
       grid.innerHTML = stores.map(store => {
         const catBadgeClass = getCategoryStyle(store.category);
+        const catDisplay = dict.categories[store.category] || store.category;
         const repMenu = store.menus.find(m => m.is_rep) || store.menus[0];
         const subMenus = store.menus.filter(m => m !== repMenu);
 
         // Amenity badges
         const amenities = [];
-        if (store.room) amenities.push(`<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">🚪 룸 완비</span>`);
-        if (store.reserve) amenities.push(`<span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">📅 예약가능</span>`);
-        if (store.takeout) amenities.push(`<span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-sky-50 text-sky-700 border border-sky-200">🛍️ 포장가능</span>`);
-        if (store.egg) amenities.push(`<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-300">🍳 계란프라이</span>`);
+        if (store.room) amenities.push(`<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 notranslate">${dict.badgeRoom}</span>`);
+        if (store.reserve) amenities.push(`<span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 notranslate">${dict.badgeReserve}</span>`);
+        if (store.takeout) amenities.push(`<span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-sky-50 text-sky-700 border border-sky-200 notranslate">${dict.badgeTakeout}</span>`);
+        if (store.egg) amenities.push(`<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-300 notranslate">${dict.badgeEgg}</span>`);
 
-        // Menu Box HTML
+        // Menu Box HTML (Original DB menu names and prices preserved)
         let menuBoxHtml = "";
         if (store.menus && store.menus.length > 0) {
           menuBoxHtml = `
@@ -790,7 +1376,7 @@
               <!-- Representative Menu -->
               <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-1.5 min-w-0">
-                  <span class="flex-shrink-0 px-2 py-0.5 rounded-md bg-brand-blue text-white text-[11px] font-extrabold tracking-tight">대표</span>
+                  <span class="flex-shrink-0 px-2 py-0.5 rounded-md bg-brand-blue text-white text-[11px] font-extrabold tracking-tight notranslate">${dict.repBadge}</span>
                   <span class="font-bold text-brand-dark text-sm truncate">${repMenu.name}</span>
                 </div>
                 <span class="flex-shrink-0 font-extrabold text-brand-dark text-sm">${repMenu.price}</span>
@@ -810,9 +1396,9 @@
           `;
         } else {
           menuBoxHtml = `
-            <div class="bg-slate-50 rounded-2xl p-4 border border-dashed border-slate-200 text-center flex flex-col items-center justify-center min-h-[96px]">
-              <span class="text-xs font-semibold text-slate-500">✨ 매장 방문 문의 / 상품별 상이</span>
-              <span class="text-[11px] text-slate-400 mt-0.5">(패션·리빙·체험 매장)</span>
+            <div class="bg-slate-50 rounded-2xl p-4 border border-dashed border-slate-200 text-center flex flex-col items-center justify-center min-h-[96px] notranslate">
+              <span class="text-xs font-semibold text-slate-500">${dict.noMenuTitle}</span>
+              <span class="text-[11px] text-slate-400 mt-0.5">${dict.noMenuSub}</span>
             </div>
           `;
         }
@@ -829,10 +1415,10 @@
               <!-- Card Top Row: Badges -->
               <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-1.5">
-                  <span class="px-2.5 py-0.5 rounded-full text-xs font-bold border ${catBadgeClass}">
-                    ${store.category}
+                  <span class="px-2.5 py-0.5 rounded-full text-xs font-bold border ${catBadgeClass} notranslate">
+                    ${catDisplay}
                   </span>
-                  <span class="text-xs font-bold text-slate-400">#${store.id}</span>
+                  <span class="text-xs font-bold text-slate-400 notranslate">#${store.id}</span>
                 </div>
                 ${store.scale ? `
                   <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700">
@@ -864,14 +1450,14 @@
               <!-- Hours & Holiday Info -->
               <div class="grid grid-cols-2 gap-2 pt-1 text-xs">
                 <div class="bg-slate-50 rounded-xl px-3 py-2 border border-slate-100">
-                  <div class="text-[11px] text-slate-400 font-medium flex items-center gap-1">
-                    <i class="ph-bold ph-clock text-brand-blue"></i> 영업시간
+                  <div class="text-[11px] text-slate-400 font-medium flex items-center gap-1 notranslate">
+                    <i class="ph-bold ph-clock text-brand-blue"></i> ${dict.labelHours}
                   </div>
                   <div class="font-bold text-slate-700 mt-0.5 truncate" title="${hoursText}">${hoursText}</div>
                 </div>
                 <div class="bg-slate-50 rounded-xl px-3 py-2 border border-slate-100">
-                  <div class="text-[11px] text-slate-400 font-medium flex items-center gap-1">
-                    <i class="ph-bold ph-calendar-x text-rose-500"></i> 휴무/참고
+                  <div class="text-[11px] text-slate-400 font-medium flex items-center gap-1 notranslate">
+                    <i class="ph-bold ph-calendar-x text-rose-500"></i> ${dict.labelHoliday}
                   </div>
                   <div class="font-bold text-slate-700 mt-0.5 truncate" title="${holidayText}">${holidayText}</div>
                 </div>
@@ -881,21 +1467,21 @@
             <!-- Action Buttons Footer -->
             <div
               onclick="event.stopPropagation()"
-              class="px-4 py-3 bg-slate-50/80 border-t border-slate-100 flex items-center gap-2"
+              class="px-4 py-3 bg-slate-50/80 border-t border-slate-100 flex items-center gap-2 notranslate"
             >
               <a
                 href="tel:${store.phone}"
                 class="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-brand-dark hover:bg-brand-blue text-white text-xs font-bold shadow-sm transition-colors"
               >
                 <i class="ph-fill ph-phone-call text-sm"></i>
-                <span>전화걸기</span>
+                <span>${dict.btnCall}</span>
               </a>
               <button
                 onclick="copyStoreAddress('${store.address.replace(/'/g, "\\'")}')"
                 class="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-bold transition-colors"
               >
                 <i class="ph-bold ph-copy text-sm text-brand-blue"></i>
-                <span>주소복사</span>
+                <span>${dict.btnCopy}</span>
               </button>
               ${store.sns ? `
                 <a
@@ -975,17 +1561,18 @@
       renderStoreGrid();
     }
 
-    // Copy Address Helper (Using textarea fallback for iframe compatibility)
+    // Copy Address Helper
     function copyStoreAddress(address) {
+      const dict = t();
       const tempInput = document.createElement("textarea");
       tempInput.value = address;
       document.body.appendChild(tempInput);
       tempInput.select();
       try {
         document.execCommand("copy");
-        showToast(`📍 주소가 복사되었습니다: ${address}`);
+        showToast(`${dict.toastCopied}${address}`);
       } catch (err) {
-        showToast("주소 복사에 실패했습니다.");
+        showToast("Copy failed");
       }
       document.body.removeChild(tempInput);
     }
@@ -1009,7 +1596,10 @@
     function openStoreDetailModal(storeId) {
       const store = STORES_DATA.find(s => s.id === storeId);
       if (!store) return;
+      state.currentDetailStoreId = storeId;
 
+      const dict = t();
+      const catDisplay = dict.categories[store.category] || store.category;
       const modal = document.getElementById("detailModal");
       const content = document.getElementById("detailModalContent");
       const naverMapUrl = `https://map.naver.com/p/search/${encodeURIComponent("아산 지중해마을 " + store.name)}`;
@@ -1028,10 +1618,10 @@
             <i class="ph-bold ph-x text-lg"></i>
           </button>
           <div class="flex items-center gap-2 mb-2">
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand-blue text-white">
-              ${store.category}
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand-blue text-white notranslate">
+              ${catDisplay}
             </span>
-            <span class="text-xs text-slate-300 font-semibold">고유번호 #${store.id}</span>
+            <span class="text-xs text-slate-300 font-semibold notranslate">${dict.modalIdPrefix} #${store.id}</span>
             ${store.scale ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-white/15 text-white">👥 ${store.scale}</span>` : ""}
           </div>
           <h3 class="text-2xl font-extrabold tracking-tight">${store.name}</h3>
@@ -1044,34 +1634,34 @@
         <!-- Modal Body -->
         <div class="p-6 overflow-y-auto space-y-5">
           <!-- Amenity Status Grid -->
-          <div class="grid grid-cols-4 gap-2 text-center">
+          <div class="grid grid-cols-4 gap-2 text-center notranslate">
             <div class="p-2.5 rounded-2xl border ${store.room ? 'bg-indigo-50 border-indigo-200 text-indigo-800' : 'bg-slate-50 border-slate-200 text-slate-400'}">
               <div class="text-lg">🚪</div>
-              <div class="text-[11px] font-bold mt-0.5">단체룸</div>
-              <div class="text-[10px] font-semibold">${store.room ? '보유 (O)' : '없음'}</div>
+              <div class="text-[11px] font-bold mt-0.5">${dict.modalRoomTitle}</div>
+              <div class="text-[10px] font-semibold">${store.room ? dict.modalRoomYes : dict.modalRoomNo}</div>
             </div>
             <div class="p-2.5 rounded-2xl border ${store.reserve ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-slate-50 border-slate-200 text-slate-400'}">
               <div class="text-lg">📅</div>
-              <div class="text-[11px] font-bold mt-0.5">예약</div>
-              <div class="text-[10px] font-semibold">${store.reserve ? '가능 (O)' : '불가/문의'}</div>
+              <div class="text-[11px] font-bold mt-0.5">${dict.modalResTitle}</div>
+              <div class="text-[10px] font-semibold">${store.reserve ? dict.modalResYes : dict.modalResNo}</div>
             </div>
             <div class="p-2.5 rounded-2xl border ${store.takeout ? 'bg-sky-50 border-sky-200 text-sky-800' : 'bg-slate-50 border-slate-200 text-slate-400'}">
               <div class="text-lg">🛍️</div>
-              <div class="text-[11px] font-bold mt-0.5">포장</div>
-              <div class="text-[10px] font-semibold">${store.takeout ? '가능 (O)' : '불가/문의'}</div>
+              <div class="text-[11px] font-bold mt-0.5">${dict.modalTakeTitle}</div>
+              <div class="text-[10px] font-semibold">${store.takeout ? dict.modalTakeYes : dict.modalTakeNo}</div>
             </div>
             <div class="p-2.5 rounded-2xl border ${store.egg ? 'bg-amber-50 border-amber-300 text-amber-900' : 'bg-slate-50 border-slate-200 text-slate-400'}">
               <div class="text-lg">🍳</div>
-              <div class="text-[11px] font-bold mt-0.5">계란프라이</div>
-              <div class="text-[10px] font-semibold">${store.egg ? '제공 (O)' : '-'}</div>
+              <div class="text-[11px] font-bold mt-0.5">${dict.modalEggTitle}</div>
+              <div class="text-[10px] font-semibold">${store.egg ? dict.modalEggYes : '-'}</div>
             </div>
           </div>
 
           <!-- Full Menu List -->
           <div>
-            <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-2.5 flex items-center gap-1.5">
+            <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-2.5 flex items-center gap-1.5 notranslate">
               <i class="ph-fill ph-book-open-text text-brand-blue text-sm"></i>
-              대표 메뉴 및 가격 정보
+              ${dict.modalMenuHeader}
             </h4>
             ${store.menus && store.menus.length > 0 ? `
               <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 space-y-2.5">
@@ -1079,7 +1669,7 @@
                   <div class="flex items-center justify-between gap-2 ${m.is_rep ? 'pb-2 border-b border-slate-200' : ''}">
                     <div class="flex items-center gap-2">
                       ${m.is_rep
-                        ? '<span class="px-2 py-0.5 rounded-md bg-brand-blue text-white text-xs font-extrabold">대표메뉴</span>'
+                        ? `<span class="px-2 py-0.5 rounded-md bg-brand-blue text-white text-xs font-extrabold notranslate">${dict.repMenuFull}</span>`
                         : '<span class="w-1.5 h-1.5 rounded-full bg-slate-400 ml-1"></span>'}
                       <span class="${m.is_rep ? 'font-extrabold text-brand-dark text-base' : 'font-semibold text-slate-700 text-sm'}">${m.name}</span>
                     </div>
@@ -1088,8 +1678,8 @@
                 `).join("")}
               </div>
             ` : `
-              <div class="bg-slate-50 rounded-2xl p-5 border border-dashed border-slate-200 text-center text-sm text-slate-500">
-                패션·공방·리빙·뷰티 매장으로 방문 시 상품별 상세 안내를 받으실 수 있습니다.
+              <div class="bg-slate-50 rounded-2xl p-5 border border-dashed border-slate-200 text-center text-sm text-slate-500 notranslate">
+                ${dict.modalNoMenuDesc}
               </div>
             `}
           </div>
@@ -1097,18 +1687,18 @@
           <!-- Operating Info -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
             <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
-              <div class="text-slate-400 font-semibold mb-1">⏰ 영업시간</div>
+              <div class="text-slate-400 font-semibold mb-1 notranslate">${dict.modalHoursHeader}</div>
               <div class="text-slate-800 font-bold text-sm">${hoursText}</div>
             </div>
             <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
-              <div class="text-slate-400 font-semibold mb-1">🗓️ 정기휴무 / 요일별 안내</div>
+              <div class="text-slate-400 font-semibold mb-1 notranslate">${dict.modalHolidayHeader}</div>
               <div class="text-slate-800 font-bold text-sm">${holidayText}</div>
             </div>
           </div>
 
           <!-- Map & External Links -->
-          <div class="space-y-2">
-            <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400">🗺️ 지도 검색 및 바로가기</div>
+          <div class="space-y-2 notranslate">
+            <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400">${dict.modalMapHeader}</div>
             <div class="grid grid-cols-2 gap-2">
               <a
                 href="${naverMapUrl}"
@@ -1117,7 +1707,7 @@
                 class="py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-colors"
               >
                 <i class="ph-bold ph-navigation-arrow"></i>
-                네이버 지도 검색
+                ${dict.naverMapBtn}
               </a>
               <a
                 href="${kakaoMapUrl}"
@@ -1126,27 +1716,27 @@
                 class="py-2.5 px-3 rounded-xl bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-colors"
               >
                 <i class="ph-bold ph-map-trifold"></i>
-                카카오맵 검색
+                ${dict.kakaoMapBtn}
               </a>
             </div>
           </div>
         </div>
 
         <!-- Modal Footer -->
-        <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center gap-2">
+        <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center gap-2 notranslate">
           <a
             href="tel:${store.phone}"
             class="flex-1 py-3 px-4 rounded-xl bg-brand-dark hover:bg-brand-blue text-white font-bold text-sm flex items-center justify-center gap-2 shadow transition-colors"
           >
             <i class="ph-fill ph-phone-call"></i>
-            <span>${store.phone} 전화걸기</span>
+            <span>${store.phone} ${dict.btnCall}</span>
           </a>
           <button
             onclick="copyStoreAddress('${store.address.replace(/'/g, "\\'")}')"
             class="py-3 px-4 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 font-bold text-sm flex items-center justify-center gap-1.5 transition-colors"
           >
             <i class="ph-bold ph-copy"></i>
-            <span>주소복사</span>
+            <span>${dict.btnCopy}</span>
           </button>
           ${store.sns ? `
             <a
@@ -1214,19 +1804,20 @@
       modal.classList.remove("flex");
     }
 
-    function spinRandomStore() {
-      const pool = getRandomCandidates();
-      if (pool.length === 0) return;
-      const picked = pool[Math.floor(Math.random() * pool.length)];
+    function renderRandomPickedStore(storeId) {
+      const picked = STORES_DATA.find(s => s.id === storeId);
+      if (!picked) return;
+      const dict = t();
+      const catDisplay = dict.categories[picked.category] || picked.category;
       const repMenu = picked.menus.find(m => m.is_rep) || picked.menus[0];
 
       const box = document.getElementById("randomResultBox");
       box.innerHTML = `
         <div class="animate-pop w-full">
           <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-brand-light text-brand-blue border border-sky-200 mb-2">
-            <span>${picked.category}</span>
+            <span class="notranslate">${catDisplay}</span>
             ${picked.scale ? `<span>· ${picked.scale}</span>` : ""}
-            ${picked.room ? `<span>· 🚪 단체룸</span>` : ""}
+            ${picked.room ? `<span class="notranslate">· ${dict.badgeRoom}</span>` : ""}
           </div>
           <h4 class="text-2xl font-extrabold text-brand-dark">${picked.name}</h4>
           <p class="text-xs text-slate-500 mt-1">${picked.address}</p>
@@ -1234,7 +1825,7 @@
           ${repMenu ? `
             <div class="mt-4 bg-white rounded-2xl p-3.5 border border-slate-200 shadow-sm flex items-center justify-between">
               <div class="flex items-center gap-2">
-                <span class="px-2 py-0.5 rounded bg-brand-blue text-white text-xs font-extrabold">추천 대표메뉴</span>
+                <span class="px-2 py-0.5 rounded bg-brand-blue text-white text-xs font-extrabold notranslate">${dict.randRepLabel}</span>
                 <span class="font-bold text-brand-dark text-sm">${repMenu.name}</span>
               </div>
               <span class="font-extrabold text-brand-blue text-sm">${repMenu.price}</span>
@@ -1256,6 +1847,14 @@
       };
     }
 
+    function spinRandomStore() {
+      const pool = getRandomCandidates();
+      if (pool.length === 0) return;
+      const picked = pool[Math.floor(Math.random() * pool.length)];
+      state.currentRandomStoreId = picked.id;
+      renderRandomPickedStore(picked.id);
+    }
+
     // Close modals when clicking backdrop
     window.addEventListener("click", (e) => {
       const detailModal = document.getElementById("detailModal");
@@ -1264,6 +1863,17 @@
       if (e.target === randomModal) closeRandomPickerModal();
     });
 
+    // Optional Google Translate Script Initialization
+    function googleTranslateElementInit() {
+      if (window.google && window.google.translate) {
+        new google.translate.TranslateElement({
+          pageLanguage: 'ko',
+          includedLanguages: 'ko,en,ja,zh-CN',
+          autoDisplay: false
+        }, 'google_translate_element');
+      }
+    }
+
     // Initialize Application on Load
     window.onload = function () {
       renderCategoryTabs();
@@ -1271,5 +1881,6 @@
       renderStoreGrid();
     };
   </script>
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
 </body>
 </html>
